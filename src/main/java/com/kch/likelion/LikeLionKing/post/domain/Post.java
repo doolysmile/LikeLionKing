@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class Post {
 
-    private final Long seq;
+    private final Long postSeq;
 
     private String title;
 
@@ -15,13 +15,13 @@ public class Post {
     public Post(String title, String content) {
         this(null, title, content);
     }
-    public Post(Long seq, String title, String content) {
-        this.seq = seq;
+    public Post(Long postSeq, String title, String content) {
+        this.postSeq = postSeq;
         this.title = title;
         this.content = content;
     }
     static public class Builder {
-        private Long seq;
+        private Long postSeq;
         private String title;
         private String content;
 
@@ -29,13 +29,13 @@ public class Post {
         }
 
         public Builder(Post post) {
-            this.seq = post.seq;
+            this.postSeq = post.postSeq;
             this.title= post.title;
             this.content = post.content;
         }
 
-        public Builder seq(Long seq) {
-            this.seq = seq;
+        public Builder seq(Long postSeq) {
+            this.postSeq = postSeq;
             return this;
         }
 
@@ -51,7 +51,7 @@ public class Post {
 
 
         public Post build() {
-            return new Post(seq, title, content);
+            return new Post(postSeq, title, content);
         }
     }
 }
