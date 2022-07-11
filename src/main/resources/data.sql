@@ -1,0 +1,1 @@
+INSERT INTO posts(title,content) VALUES ('test1','this is test');
