@@ -1,0 +1,23 @@
+spring:
+  h2:
+    console:
+      enabled: true # H2 웹 콘솔을 사용
+      path: /h2-console # 콘솔의 경로
+    datasource:
+      driver-class-name: org.h2.Driver # h2 드라이버 설정
+      url: "jdbc:h2:mem:sns_server;MODE=MYSQL;DB_CLOSE_DELAY=-1"        # MODE=MYSQL : MySQL Compatibility Mode, DB_CLOSE_DELAY=-1: DB 연결을 닫아도 VM에서 살아서 Content를 지킴
+      username: sa
+      password:
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 5
+      pool-name: H2_DB
+
+  sql:
+    init:
+      platform: h2
+
+#  jpa:
+#    defer-datasource-initialization: true
+server:
+  port: 8080
