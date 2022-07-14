@@ -31,23 +31,23 @@ public class PostController {
         if(newPost != null){
             return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(true, "가입완료"));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(true, "가입실패"));
+        return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(false, "가입실패"));
     }
     // TODO : 실패 했을 때 예외 처리 해줘야함.
     @PostMapping("update")
     public ResponseEntity<Object> updatePost(@RequestBody PostRequestDto postWriteRequest){
         postService.update(postWriteRequest.newPost());
 
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(true, "수정완료"));
     }
     // TODO : 실패 했을 때 예외 처리 해줘야함.
     @GetMapping("delete/{postId}")
     public ResponseEntity<Object> deletePost(@PathVariable Long postId){
         postService.delete(postId);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(true, "삭제완료"));
     }
 
-    // TODO : 성공 메세지를 함꼐 출력 할 수 있도록 만들기.
+    // TODO : 성공 여부와 객체 리턴을 함꼐 출력 할 수 있도록 만들기.
     @GetMapping("list")
     public ResponseEntity<List<Object>> listPost(){
         List<Post> all = postService.findAll();
