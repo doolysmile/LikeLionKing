@@ -29,9 +29,9 @@ public class PostController {
         Post newPost = postService.insert(postRequest.newPost());
         System.out.println(newPost.getPostSeq());
         if(newPost != null){
-            return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(true, "가입완료"));
+            return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(true, "등록완료"));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(false, "가입실패"));
+        return ResponseEntity.status(HttpStatus.OK).body(new PostResponseDto(false, "등록실패"));
     }
     // TODO : 실패 했을 때 예외 처리 해줘야함.
     @PostMapping("update")
