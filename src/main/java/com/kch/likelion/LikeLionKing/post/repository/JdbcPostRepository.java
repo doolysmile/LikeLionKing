@@ -25,7 +25,7 @@ public class JdbcPostRepository implements PostRepository{
     public Post insert(Post post) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(conn -> {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO posts(title,content) VALUES (?,?)", new String[]{"seq"});
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO posts(title,content) VALUES (?,?)", new String[]{"postSeq"});
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getContent());
             return ps;
@@ -34,24 +34,24 @@ public class JdbcPostRepository implements PostRepository{
         Number key = keyHolder.getKey();
         long generatedSeq = key != null ? key.longValue() : -1;
         return new Post.Builder(post)
-                .seq(generatedSeq)
+                .postSeq(generatedSeq)
                 .build();
     }
 
     @Override
     public void update(Post post) {
         jdbcTemplate.update(
-                "UPDATE posts SET title=?,content=? WHERE seq=?",
+                "UPDATE posts SET title=?,content=? WHERE postSeq=?",
                 post.getTitle(),
                 post.getContent(),
-                post.getSeq()
+                post.getPostSeq()
         );
     }
 
     @Override
     public void delete(long postId) {
         jdbcTemplate.update(
-                "DELETE FROM POSTS WHERE seq=?",
+                "DELETE FROM POSTS WHERE postSeq=?",
                 postId
         );
     }
@@ -64,7 +64,7 @@ public class JdbcPostRepository implements PostRepository{
         return results;
     }
     static RowMapper<Post> mapper = (rs, rowNum) -> new Post.Builder()
-            .seq(rs.getLong("seq"))
+            .postSeq(rs.getLong("postSeq"))
             .title(rs.getString("title"))
             .content(rs.getString("content"))
             .build();

@@ -34,7 +34,7 @@ public class Post {
             this.content = post.content;
         }
 
-        public Builder seq(Long postSeq) {
+        public Builder postSeq(Long postSeq) {
             this.postSeq = postSeq;
             return this;
         }
