@@ -1,23 +1,16 @@
-package com.hsy.likelion.LikeLionKing.domain;
+package com.hsy.likelion.LikeLionKing.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Member {
-    @JsonProperty("id")
+public class MemberDto {
     private Long id;        // 회원 id
-    @JsonProperty("login_id")
     private String loginId; // 회원 로그인 id
-    @JsonProperty("login_pw")
     private String loginPw; // 회원 로그인 pw
 
-    public Member() {
-    }
-
-    public Member(Long id, String loginId, String loginPw) {
+    public MemberDto(Long id, String loginId, String loginPw) {
         this.id = id;
         this.loginId = loginId;
         this.loginPw = loginPw;

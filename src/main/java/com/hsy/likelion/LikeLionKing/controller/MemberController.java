@@ -1,6 +1,7 @@
 package com.hsy.likelion.LikeLionKing.controller;
 
 import com.hsy.likelion.LikeLionKing.domain.Member;
+import com.hsy.likelion.LikeLionKing.dto.MemberDto;
 import com.hsy.likelion.LikeLionKing.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,10 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<Object> createMember(@RequestBody Member member) {
-        return ResponseEntity.status(HttpStatus.OK).body(memberService.signUp(member));
+    public ResponseEntity<Object> createMember(@RequestBody MemberDto memberDto) {
+        Member member = convertToEntity(memberDto);
+        Member memberCreated = memberService.signUp(member);
+        return ResponseEntity.status(HttpStatus.OK).body(convertToDto(memberCreated));
     }
 
     @GetMapping("/info")
@@ -30,9 +33,9 @@ public class MemberController {
     }
 
     @PutMapping("/info")
-    public Member modifyMember(@RequestBody Member member) {
+    public void modifyMember(@RequestBody MemberDto memberDto) {
+        Member member = convertToEntity(memberDto);
         memberService.update(member);
-        return member;
         //return ResponseEntity.status(HttpStatus.OK).body(memberRepository.update(member));
     }
 
@@ -42,33 +45,13 @@ public class MemberController {
         return id;
     }
 
-//    @GetMapping("/signUp")
-//    public ResponseEntity<Object> createMember(@RequestParam("loginId") String loginId, @RequestParam("loginPw") String loginPw) {
-//        Member member = new Member();
-//        member.setLoginId(loginId);
-//        member.setLoginPw(loginPw);
-//        return ResponseEntity.status(HttpStatus.OK).body(memberService.signUp(member));
-//    }
-//
-//    @GetMapping("/info")
-//    public ResponseEntity<Optional<Member>> getMember(@RequestParam("id") Long id) {
-//        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMember(id));
-//    }
-//
-//    @GetMapping("/info/modify")
-//    public Member modifyMember(@RequestParam("id") Long id, @RequestParam("loginId") String loginId, @RequestParam("loginPw") String loginPw) {
-//        Member member = new Member();
-//        member.setId(id);
-//        member.setLoginId(loginId);
-//        member.setLoginPw(loginPw);
-//        memberService.update(member);
-//        return member;
-//        //return ResponseEntity.status(HttpStatus.OK).body(memberRepository.update(member));
-//    }
-//
-//    @GetMapping("/info/{id}")
-//    public Long deleteMember(@PathVariable("id") Long id) {
-//        memberService.delete(id);
-//        return id;
-//    }
+    // MemberDto -> Member 변환
+    private Member convertToEntity(MemberDto memberDto) {
+        return new Member(memberDto.getId(), memberDto.getLoginId(), memberDto.getLoginPw());
+    }
+
+    // Member -> MemberDto로 변환
+    private MemberDto convertToDto(Member member) {
+        return new MemberDto(member.getId(), member.getLoginId(), member.getLoginPw());
+    }
 }
