@@ -13,4 +13,13 @@ public class Post {
     private String title;   // 게시글 제목
     @JsonProperty("content")
     private String content; // 게시글 내용
+
+    public Post() {
+    }
+
+    public Post(Long id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
 }
