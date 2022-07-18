@@ -1,6 +1,6 @@
 package com.study.LikeLionKing.service;
 
-import com.study.LikeLionKing.dto.User;
+import com.study.LikeLionKing.domain.User;
 import com.study.LikeLionKing.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

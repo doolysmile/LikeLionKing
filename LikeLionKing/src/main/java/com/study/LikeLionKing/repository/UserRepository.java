@@ -1,6 +1,6 @@
 package com.study.LikeLionKing.repository;
 
-import com.study.LikeLionKing.dto.User;
+import com.study.LikeLionKing.domain.User;
 
 import java.util.List;
 import java.util.Optional;

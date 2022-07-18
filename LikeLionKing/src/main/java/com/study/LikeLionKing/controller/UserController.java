@@ -1,7 +1,7 @@
 package com.study.LikeLionKing.controller;
 
 
-import com.study.LikeLionKing.dto.User;
+import com.study.LikeLionKing.domain.User;
 import com.study.LikeLionKing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

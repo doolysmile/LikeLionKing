@@ -1,6 +1,6 @@
 package com.study.LikeLionKing.service;
 
-import com.study.LikeLionKing.dto.Post;
+import com.study.LikeLionKing.domain.Post;
 import com.study.LikeLionKing.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

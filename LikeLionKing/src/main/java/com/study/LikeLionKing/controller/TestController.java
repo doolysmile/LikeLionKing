@@ -1,7 +1,7 @@
 package com.study.LikeLionKing.controller;
 
 
-import com.study.LikeLionKing.dto.Post;
+import com.study.LikeLionKing.domain.Post;
 import com.study.LikeLionKing.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

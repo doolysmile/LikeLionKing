@@ -1,6 +1,6 @@
 package com.study.LikeLionKing.repository;
 
-import com.study.LikeLionKing.dto.Post;
+import com.study.LikeLionKing.domain.Post;
 
 import java.util.List;
 import java.util.Optional;

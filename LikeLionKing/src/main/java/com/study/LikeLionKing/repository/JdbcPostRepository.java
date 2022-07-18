@@ -1,6 +1,6 @@
 package com.study.LikeLionKing.repository;
 
-import com.study.LikeLionKing.dto.Post;
+import com.study.LikeLionKing.domain.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
