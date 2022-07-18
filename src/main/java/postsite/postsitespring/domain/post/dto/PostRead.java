@@ -3,7 +3,7 @@ package postsite.postsitespring.domain.post.dto;
 import lombok.Getter;
 import postsite.postsitespring.domain.post.domain.Post;
 
-public class PostSave {
+public class PostRead {
     // private Long boardId;
 
     @Getter

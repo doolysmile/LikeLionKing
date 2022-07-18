@@ -3,7 +3,7 @@ package postsite.postsitespring.domain.user.dto;
 import lombok.Getter;
 import postsite.postsitespring.domain.user.domain.User;
 
-public class UserSave {
+public class UserRead {
 
     @Getter
     public static class ResponseDto {

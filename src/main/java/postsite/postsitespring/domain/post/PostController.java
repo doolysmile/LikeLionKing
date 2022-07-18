@@ -1,10 +1,12 @@
 package postsite.postsitespring.domain.post;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.domain.post.domain.Post;
 import postsite.postsitespring.domain.post.dto.PostCreate;
-import postsite.postsitespring.domain.post.dto.PostSave;
+import postsite.postsitespring.domain.post.dto.PostRead;
 import postsite.postsitespring.domain.post.dto.PostUpdate;
 
 import java.util.List;
@@ -25,19 +27,21 @@ public class PostController {
 
     // Create
     @PostMapping()
-    public PostCreate.ResponseDto articleDoWrite(
+    public ResponseEntity<PostCreate.ResponseDto> articleDoWrite(
             @RequestBody PostCreate.RequestDto body
-            ) {
+    ) {
         Post post = body.toEntity();
         long id = postService.save(post);
         post.setId(id);
 
-        return new PostCreate.ResponseDto(post);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new PostCreate.ResponseDto(post));
     }
 
     // Read
-    @GetMapping("")
-    public List<PostSave.ResponseDto> articleList(
+    @GetMapping()
+    public ResponseEntity<List<PostRead.ResponseDto>> articleList(
             @RequestParam() Long boardId,
             @RequestParam(defaultValue = "0") Long page,
             @RequestParam(required = false) String searchKeyword
@@ -46,22 +50,29 @@ public class PostController {
                 postService.findAll(boardId, page) :
                 postService.findAll(boardId, page, searchKeyword);
 
-        return posts.stream()
-                .map(post -> new PostSave.ResponseDto(post))
-                .collect(Collectors.toList());
+        List<PostRead.ResponseDto> responseBody = posts.stream()
+                .map(PostRead.ResponseDto::new)
+                .toList();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseBody);
     }
 
     @GetMapping("/{articleId}")
-    public PostSave.ResponseDto articleDetail(
+    public ResponseEntity<PostRead.ResponseDto> articleDetail(
             @PathVariable() Long articleId
     ) {
         Post post = postService.findById(articleId);
-        return new PostSave.ResponseDto(post);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new PostRead.ResponseDto(post));
     }
 
     // Update
     @PutMapping("/{atricleId}")
-    public String articleModify(
+    public ResponseEntity<String> articleModify(
             @PathVariable Long atricleId,
             @RequestBody PostUpdate.RequestDto body
             ) {
@@ -70,17 +81,21 @@ public class PostController {
 
         postService.update(post);
 
-        return "success";
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("success");
     }
 
     //Delete
     @DeleteMapping("/{atricleId}")
-    public String deleteArticle(
+    public ResponseEntity<String> deleteArticle(
             @PathVariable Long atricleId
     ) {
-        //postService
         postService.delete(atricleId);
-        return "success";
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("success");
     }
 
 }

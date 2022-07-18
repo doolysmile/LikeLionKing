@@ -1,13 +1,14 @@
 package postsite.postsitespring.domain.user;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.domain.user.domain.User;
 import postsite.postsitespring.domain.user.dto.UserCreate;
-import postsite.postsitespring.domain.user.dto.UserSave;
+import postsite.postsitespring.domain.user.dto.UserRead;
 import postsite.postsitespring.domain.user.dto.UserUpdate;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usr/member")
@@ -19,34 +20,46 @@ public class UserController {
 
     // Create
     @PostMapping()
-    public UserCreate.ResponseDto createMember(@RequestBody UserCreate.RequestDto body){
+    public ResponseEntity<UserCreate.ResponseDto> createMember(
+            @RequestBody UserCreate.RequestDto body
+    ){
         User user = body.toEntity();
         long id = this.userService.createMember(user);
         user.setId(id);
 
-        return new UserCreate.ResponseDto(user);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new UserCreate.ResponseDto(user));
     }
 
     // Read
     @GetMapping()
-    public List<UserSave.ResponseDto> allMembers(){
+    public ResponseEntity<List<UserRead.ResponseDto>> allMembers(){
         List<User> users = this.userService.allMembers();
-        return users.stream()
-                .map(user -> new UserSave.ResponseDto(user))
-                .collect(Collectors.toList());
+
+        List<UserRead.ResponseDto> responseBody = users.stream()
+                .map(UserRead.ResponseDto::new).
+                toList();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseBody);
     }
 
     @GetMapping({"/{memberId}"})
-    public UserSave.ResponseDto oneMember(
+    public ResponseEntity<UserRead.ResponseDto> oneMember(
             @PathVariable Long memberId
     ){
         User user =  this.userService.oneMember(memberId);
-        return new UserSave.ResponseDto(user);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new UserRead.ResponseDto(user));
     }
 
     // Update
     @PutMapping({"/{memberId}"})
-    public String updateMember(
+    public ResponseEntity<String> updateMember(
             @PathVariable Long memberId,
             @RequestBody UserUpdate.RequestDto body
     ){
@@ -54,17 +67,20 @@ public class UserController {
         user.setId(memberId);
         this.userService.updateMember(user);
 
-        return "success";
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("success");
     }
 
     // Delete
     @DeleteMapping({"/{memberId}"})
-    public String deleteMember(
+    public ResponseEntity<String> deleteMember(
             @PathVariable Long memberId
     ){
         this.userService.deleteMember(memberId);
-        return "success";
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("success");
     }
-
-
 }
