@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.domain.post.domain.Post;
 import postsite.postsitespring.domain.post.dto.PostCreate;
+import postsite.postsitespring.domain.post.dto.PostSave;
 import postsite.postsitespring.domain.post.dto.PostUpdate;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -33,26 +35,31 @@ public class PostController {
         return new PostCreate.ResponseDto(post);
     }
 
-
+    // Read
     @GetMapping("")
-    public List<Post> articleList(
+    public List<PostSave.ResponseDto> articleList(
             @RequestParam() Long boardId,
             @RequestParam(defaultValue = "0") Long page,
             @RequestParam(required = false) String searchKeyword
     ) {
-        return Objects.isNull(searchKeyword) ?
+        List<Post> posts =  Objects.isNull(searchKeyword) ?
                 postService.findAll(boardId, page) :
                 postService.findAll(boardId, page, searchKeyword);
+
+        return posts.stream()
+                .map(post -> new PostSave.ResponseDto(post))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{articleId}")
-    public Post articleDetail(
+    public PostSave.ResponseDto articleDetail(
             @PathVariable() Long articleId
     ) {
-        return postService.findById(articleId);
+        Post post = postService.findById(articleId);
+        return new PostSave.ResponseDto(post);
     }
 
-    // put이 더 좋음.
+    // Update
     @PutMapping("/{atricleId}")
     public String articleModify(
             @PathVariable Long atricleId,
@@ -66,6 +73,7 @@ public class PostController {
         return "success";
     }
 
+    //Delete
     @DeleteMapping("/{atricleId}")
     public String deleteArticle(
             @PathVariable Long atricleId

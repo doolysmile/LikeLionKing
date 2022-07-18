@@ -3,9 +3,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.domain.user.domain.User;
 import postsite.postsitespring.domain.user.dto.UserCreate;
+import postsite.postsitespring.domain.user.dto.UserSave;
 import postsite.postsitespring.domain.user.dto.UserUpdate;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usr/member")
@@ -27,15 +29,19 @@ public class UserController {
 
     // Read
     @GetMapping()
-    public List<User> allMembers(){
-        return this.userService.allMembers();
+    public List<UserSave.ResponseDto> allMembers(){
+        List<User> users = this.userService.allMembers();
+        return users.stream()
+                .map(user -> new UserSave.ResponseDto(user))
+                .collect(Collectors.toList());
     }
 
     @GetMapping({"/{memberId}"})
-    public User oneMember(
+    public UserSave.ResponseDto oneMember(
             @PathVariable Long memberId
     ){
-        return this.userService.oneMember(memberId);
+        User user =  this.userService.oneMember(memberId);
+        return new UserSave.ResponseDto(user);
     }
 
     // Update
