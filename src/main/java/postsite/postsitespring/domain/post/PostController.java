@@ -3,8 +3,8 @@ package postsite.postsitespring.domain.post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.domain.post.domain.Post;
-import postsite.postsitespring.domain.post.dto.ArticleDoUpdateDto;
-import postsite.postsitespring.domain.post.dto.ArticleDoWriteDto;
+import postsite.postsitespring.domain.post.dto.PostCreate;
+import postsite.postsitespring.domain.post.dto.PostUpdate;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,11 +21,16 @@ public class PostController {
         this.postService = postService;
     }
 
+    // Create
     @PostMapping()
-    public Post articleDoWrite(
-            @RequestBody ArticleDoWriteDto body
+    public PostCreate.ResponseDto articleDoWrite(
+            @RequestBody PostCreate.RequestDto body
             ) {
-        return postService.save(body);
+        Post post = body.toEntity();
+        long id = postService.save(post);
+        post.setId(id);
+
+        return new PostCreate.ResponseDto(post);
     }
 
 
@@ -48,12 +53,16 @@ public class PostController {
     }
 
     // put이 더 좋음.
-    @PatchMapping("/{atricleId}")
+    @PutMapping("/{atricleId}")
     public String articleModify(
             @PathVariable Long atricleId,
-            @RequestBody ArticleDoUpdateDto body
+            @RequestBody PostUpdate.RequestDto body
             ) {
-        postService.update(atricleId, body);
+        Post post = body.toEntity();
+        post.setId(atricleId);
+
+        postService.update(post);
+
         return "success";
     }
 

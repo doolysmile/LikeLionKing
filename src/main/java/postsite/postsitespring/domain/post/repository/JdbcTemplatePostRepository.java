@@ -1,13 +1,11 @@
 package postsite.postsitespring.domain.post.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import postsite.postsitespring.domain.post.dto.ArticleDoUpdateDto;
 import postsite.postsitespring.domain.post.domain.Post;
-import postsite.postsitespring.domain.post.dto.ArticleDoWriteDto;
+import postsite.postsitespring.domain.post.dto.PostCreate;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -23,16 +21,16 @@ public class JdbcTemplatePostRepository implements PostRepository{
     }
 
     @Override
-    public Post save(ArticleDoWriteDto body) {
+    public long save(Post post) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("title", body.getTitle());
-        parameters.put("content", body.getContent());
+        parameters.put("title", post.getTitle());
+        parameters.put("content", post.getContent());
 
         Long id = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters)).longValue();
 
-        return new Post(id, body.getTitle(),body.getContent());
+        return id;
     }
 
     @Override
@@ -56,9 +54,9 @@ public class JdbcTemplatePostRepository implements PostRepository{
     }
 
     @Override
-    public void update(Long id, ArticleDoUpdateDto body) {
+    public void update(Post post) {
         final String sql = "UPDATE post SET title=?, content=? WHERE id=?";
-        jdbcTemplate.update(sql, body.getTitle(), body.getContent(), id);
+        jdbcTemplate.update(sql, post.getTitle(), post.getContent(), post.getId());
     }
 
     @Override

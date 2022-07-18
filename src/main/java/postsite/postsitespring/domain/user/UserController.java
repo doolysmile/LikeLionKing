@@ -2,8 +2,8 @@ package postsite.postsitespring.domain.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.domain.user.domain.User;
-import postsite.postsitespring.domain.user.dto.CreateMemberBodyDto;
-import postsite.postsitespring.domain.user.dto.UpdateMemberBodyDto;
+import postsite.postsitespring.domain.user.dto.UserCreate;
+import postsite.postsitespring.domain.user.dto.UserUpdate;
 
 import java.util.List;
 
@@ -17,8 +17,12 @@ public class UserController {
 
     // Create
     @PostMapping()
-    public User createMember(@RequestBody CreateMemberBodyDto body){
-        return this.userService.createMember(body);
+    public UserCreate.ResponseDto createMember(@RequestBody UserCreate.RequestDto body){
+        User user = body.toEntity();
+        long id = this.userService.createMember(user);
+        user.setId(id);
+
+        return new UserCreate.ResponseDto(user);
     }
 
     // Read
@@ -35,12 +39,15 @@ public class UserController {
     }
 
     // Update
-    @PatchMapping({"/{memberId}"})
+    @PutMapping({"/{memberId}"})
     public String updateMember(
             @PathVariable Long memberId,
-            @RequestBody UpdateMemberBodyDto body
+            @RequestBody UserUpdate.RequestDto body
     ){
-        this.userService.updateMember(memberId, body);
+        User user = body.toEntity();
+        user.setId(memberId);
+        this.userService.updateMember(user);
+
         return "success";
     }
 

@@ -1,8 +1,8 @@
 package postsite.postsitespring.domain.user;
 
 import postsite.postsitespring.domain.user.domain.User;
-import postsite.postsitespring.domain.user.dto.CreateMemberBodyDto;
-import postsite.postsitespring.domain.user.dto.UpdateMemberBodyDto;
+import postsite.postsitespring.domain.user.dto.UserCreate;
+import postsite.postsitespring.domain.user.dto.UserUpdate;
 import postsite.postsitespring.domain.user.repository.UserRepository;
 
 import java.util.List;
@@ -12,8 +12,8 @@ public class UserService {
 
     public UserService(UserRepository userRepository) { this.userRepository = userRepository; }
 
-    public User createMember(CreateMemberBodyDto body){
-        return userRepository.save(body);
+    public long createMember(User user){
+        return userRepository.save(user);
     }
 
     public List<User> allMembers(){
@@ -24,8 +24,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public void updateMember(Long id, UpdateMemberBodyDto body){
-        userRepository.update(id, body);
+    public void updateMember(User user){
+        userRepository.update(user);
     }
 
     public void deleteMember(Long id){

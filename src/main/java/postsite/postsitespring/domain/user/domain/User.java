@@ -1,5 +1,12 @@
 package postsite.postsitespring.domain.user.domain;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
 public class User {
     private Long id;
     private String loginId;
@@ -13,16 +20,4 @@ public class User {
         this.loginId = loginId;
         this.loginPw = loginPw;
     }
-
-    public Long getId() { return id; }
-
-    public void setId(Long id) { this.id = id; }
-
-    public String getLoginId() { return loginId; }
-
-    public void setLoginId(String loginId) { this.loginId = loginId; }
-
-    public String getLoginPw() { return loginPw; }
-
-    public void setLoginPw(String loginPw) { this.loginPw = loginPw; }
 }

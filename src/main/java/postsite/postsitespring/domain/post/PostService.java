@@ -1,8 +1,8 @@
 package postsite.postsitespring.domain.post;
 
-import postsite.postsitespring.domain.post.dto.ArticleDoUpdateDto;
+import org.springframework.stereotype.Service;
 import postsite.postsitespring.domain.post.domain.Post;
-import postsite.postsitespring.domain.post.dto.ArticleDoWriteDto;
+import postsite.postsitespring.domain.post.dto.PostCreate;
 import postsite.postsitespring.domain.post.repository.PostRepository;
 
 import java.util.List;
@@ -15,8 +15,8 @@ public class PostService {
     }
 
     // post 생성
-    public Post save(ArticleDoWriteDto body){
-        return postRepository.save(body);
+    public long save(Post post){
+        return postRepository.save(post);
     }
     // 전체 post 조회
     public List<Post> findAll(Long boardId, Long page){
@@ -32,8 +32,8 @@ public class PostService {
     }
 
     // post update
-    public void update(Long id, ArticleDoUpdateDto body){
-        postRepository.update(id, body);
+    public void update(Post post){
+        postRepository.update(post);
     }
 
     //post delete
