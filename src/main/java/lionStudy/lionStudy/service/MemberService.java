@@ -2,8 +2,6 @@ package lionStudy.lionStudy.service;
 
 import lionStudy.lionStudy.domain.Member;
 import lionStudy.lionStudy.repository.MemberRepository;
-import lionStudy.lionStudy.repository.MemoryMemberRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

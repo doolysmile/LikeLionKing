@@ -30,6 +30,9 @@ public class JdbcTemplatePostRepository implements PostRepository{
 
         parameters.put("title", post.getTitle());
         parameters.put("content", post.getContent());
+        parameters.put("views", post.getViews());
+        parameters.put("recommended", post.getRecommended());
+
 
         Number key = jdbcInsert.executeAndReturnKey(new
                 MapSqlParameterSource(parameters));
@@ -76,6 +79,9 @@ public class JdbcTemplatePostRepository implements PostRepository{
             post.setId(rs.getLong("id"));
             post.setTitle(rs.getString("title"));
             post.setContent(rs.getString("content"));
+            post.setViews(rs.getLong("views"));
+            post.setRecommended(rs.getLong("recommended"));
+
             return post;
 
         };

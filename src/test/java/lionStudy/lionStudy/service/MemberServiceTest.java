@@ -1,12 +1,7 @@
 package lionStudy.lionStudy.service;
 
 import lionStudy.lionStudy.domain.Member;
-import lionStudy.lionStudy.domain.MemberStatus;
-import lionStudy.lionStudy.repository.JdbcTemplateMemberRepository;
 import lionStudy.lionStudy.repository.MemberRepository;
-import lionStudy.lionStudy.repository.MemoryMemberRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
