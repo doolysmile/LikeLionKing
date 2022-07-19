@@ -1,6 +1,7 @@
 package lionStudy.lionStudy.service;
 
 import lionStudy.lionStudy.domain.Member;
+import lionStudy.lionStudy.domain.MemberStatus;
 import lionStudy.lionStudy.repository.JdbcTemplateMemberRepository;
 import lionStudy.lionStudy.repository.MemberRepository;
 import lionStudy.lionStudy.repository.MemoryMemberRepository;
@@ -24,6 +25,7 @@ class MemberServiceIntegrationTest {
         //Given
         Member member = new Member();
         member.setName("hello");
+        member.setStatus(MemberStatus.ADMIN);
         //When
         Long saveId = memberService.join(member);
         //Then

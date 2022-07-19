@@ -1,6 +1,7 @@
 package lionStudy.lionStudy.repository;
 
 import lionStudy.lionStudy.domain.Member;
+import lionStudy.lionStudy.domain.MemberStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -30,6 +31,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
         jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", member.getName());
+        parameters.put("status", member.getStatus());
         Number key = jdbcInsert.executeAndReturnKey(new
                 MapSqlParameterSource(parameters));
         member.setId(key.longValue());
@@ -59,6 +61,9 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
             Member member = new Member();
             member.setId(rs.getLong("id"));
             member.setName(rs.getString("name"));
+
+            member.setStatus(MemberStatus.values()[rs.getInt("status")]); // enumType
+
             return member;
 
         };
