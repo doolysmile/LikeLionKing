@@ -10,15 +10,22 @@ public class User {
 
     private String loginId;
     private String loginPw;
+    private String nickName;
+    private UserRole userRole;
 
-    public User(String loginId, String loginPw){
-        this(null, loginId, loginPw);
+
+    public User(String loginId, String loginPw, String nickName){
+        this(null, loginId, loginPw, nickName, UserRole.NORMAL_USER);
     }
-
-    public User(Long userSeq, String loginId, String loginPw){
+    public User(Long userSeq, String loginId, String loginPw, String nickName){
+        this(userSeq, loginId, loginPw, nickName, UserRole.NORMAL_USER);
+    }
+    public User(Long userSeq, String loginId, String loginPw, String nickName, UserRole userRole){
         this.userSeq = userSeq;
         this.loginId = loginId;
-        this.loginId = loginPw;
+        this.loginPw = loginPw;
+        this.nickName = nickName;
+        this.userRole = userRole;
     }
 
     static public class Builder {
@@ -26,6 +33,8 @@ public class User {
         private String loginId;
         private String loginPw;
 
+        private String nickName;
+        private UserRole userRole;
         public Builder(){
 
         }
@@ -34,6 +43,8 @@ public class User {
             this.userSeq = user.userSeq;
             this.loginId = user.getLoginId();
             this.loginPw = user.getLoginPw();
+            this.nickName = user.getNickName();
+            this.userRole = user.getUserRole();
         }
 
         public Builder userSeq(Long userSeq){
@@ -49,8 +60,16 @@ public class User {
             this.loginPw = loginPw;
             return this;
         }
+        public Builder nickName(String nickName){
+            this.nickName = nickName;
+            return this;
+        }
+        public Builder userRole(UserRole userRole){
+            this.userRole = userRole;
+            return this;
+        }
         public User build() {
-            return new User(userSeq, loginId, loginPw);
+            return new User(userSeq, loginId, loginPw, nickName, userRole);
         }
     }
 

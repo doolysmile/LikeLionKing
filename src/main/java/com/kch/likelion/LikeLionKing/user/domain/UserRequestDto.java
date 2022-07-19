@@ -9,10 +9,11 @@ public class UserRequestDto {
     private String loginId;
     private String loginPw;
 
+    private String nickName;
     public User newUser(){
         if(userSeq != null){
-            return new User(this.userSeq, this.loginId, this.loginPw);
+            return new User(this.loginId, this.loginPw, this.nickName);
         }
-        return new User(this.loginId, this.loginPw);
+        return new User(this.userSeq, this.loginId, this.loginPw, this.nickName);
     }
 }
