@@ -1,9 +1,11 @@
 package com.study.LikeLionKing.domain;
 
 import lombok.*;
+import org.springframework.data.relational.core.mapping.Column;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class Post {
     private Long id;

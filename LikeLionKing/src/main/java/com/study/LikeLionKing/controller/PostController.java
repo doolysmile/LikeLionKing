@@ -2,6 +2,7 @@ package com.study.LikeLionKing.controller;
 
 
 import com.study.LikeLionKing.domain.Post;
+import com.study.LikeLionKing.domain.dto.PostDto;
 import com.study.LikeLionKing.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,33 +23,34 @@ public class PostController {
 
     @GetMapping("/test/c")
     String create(){
-        Post post = new Post();
-        post.setTitle("asd");
-        post.setContent("aqwe");
-        Long id = postService.save(post);
+        PostDto postDto = new PostDto();
+        postDto.setTitle("asd");
+        postDto.setContent("aqwe");
+        Long id = postService.save(postDto);
         System.out.println(postService.findById(id));
         return postService.findById(id).toString();
     }
     @GetMapping("/test/r")
     String retrieve(){
-        Post temp = postService.findById(1L).get();
+        PostDto temp = postService.findById(1L).get();
         System.out.println(temp);
         return temp.toString();
     }
+    // TODO 오류발생
     @GetMapping("/test/ra")
     String retrieveAll(){
-        List<Post> temp = postService.findAll();
+        List<PostDto> temp = postService.findAll();
         System.out.println(temp.toString());
         return temp.toString();
     }
     @GetMapping("/test/u")
     String update(){
-        Post post = postService.findById(1L).get();
-        post.setTitle("바꿈");
-        post.setContent("바꿈 내용");
-        postService.update(post);
-        System.out.println(post.toString());
-        return post.toString();
+        PostDto postDto = postService.findById(1L).get();
+        postDto.setTitle("바꿈");
+        postDto.setContent("바꿈 내용");
+        postService.update(postDto);
+        System.out.println(postDto.toString());
+        return postDto.toString();
     }
     @GetMapping("/test/d")
     String delete(){

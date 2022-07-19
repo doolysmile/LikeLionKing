@@ -6,6 +6,7 @@ import com.study.LikeLionKing.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,8 @@ public class PostService {
     }
 
     public long save(PostDto post){
+        LocalDateTime now = LocalDateTime.now();
+        post.setWritten(now.toString());
         Long id = postRepository.save(post.toEntity());
         return id;
     }
@@ -47,7 +50,7 @@ public class PostService {
     }
 
     public List<PostDto> findAll(){
-        List<Post> posts = new ArrayList<>();
+        List<Post> posts = postRepository.findAll();
         List<PostDto> postDtos = new ArrayList<>();
         for(Post temp : posts){
             PostDto postDto = PostDto.builder()
@@ -61,12 +64,15 @@ public class PostService {
                     .recommended(temp.getRecommended())
                     .views(temp.getViews())
                     .build();
+            System.out.println(postDto);
             postDtos.add(postDto);
         }
         return postDtos;
     }
 
     public Post update(PostDto postDto){
+        LocalDateTime now = LocalDateTime.now();
+        postDto.setLastModified(now.toString());
         postRepository.update(postDto.toEntity());
         return postDto.toEntity();
     }

@@ -31,7 +31,7 @@ public class JdbcUserRepository implements UserRepository{
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("loginId",user.getLoginId());
         parameters.put("loginPw",user.getLoginPw());
-
+        parameters.put("userRole",user.getUserRole());
         Number key = jdbcInsert.executeAndReturnKey(new
                 MapSqlParameterSource(parameters));
         user.setId(key.longValue());
@@ -65,6 +65,7 @@ public class JdbcUserRepository implements UserRepository{
             user.setId(rs.getLong("id"));
             user.setLoginId(rs.getString("loginId"));
             user.setLoginPw(rs.getString("loginPw"));
+            user.setUserRole(rs.getInt("userRole"));
             return user;
         };
     }

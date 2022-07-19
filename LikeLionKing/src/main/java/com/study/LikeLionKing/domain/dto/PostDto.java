@@ -1,8 +1,12 @@
 package com.study.LikeLionKing.domain.dto;
 
 import com.study.LikeLionKing.domain.Post;
-import lombok.Builder;
+import lombok.*;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class PostDto {
 
     private Long id;

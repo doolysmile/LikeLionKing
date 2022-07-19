@@ -1,13 +1,11 @@
 package com.study.LikeLionKing.domain.dto;
 
 import com.study.LikeLionKing.domain.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class UserDto {
     private Long id;

@@ -53,8 +53,8 @@ public class UserService {
         return userDtos;
     }
 
-    public User update(User user){
-        userRepository.update(user);
+    public UserDto update(UserDto user){
+        userRepository.update(user.toEntity());
         return user;
     }
 

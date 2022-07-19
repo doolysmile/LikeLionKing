@@ -31,6 +31,12 @@ public class JdbcPostRepository implements PostRepository
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("title", post.getTitle());
         parameters.put("content",post.getContent());
+        parameters.put("memberId",post.getMemberId());
+        parameters.put("written",post.getWritten());
+        parameters.put("lastModified",post.getLastModified());
+        parameters.put("views",post.getViews());
+        parameters.put("recommended",post.getRecommended());
+        parameters.put("postRole",post.getPostRole());
         Number key = jdbcInsert.executeAndReturnKey(new
                 MapSqlParameterSource(parameters));
         post.setId(key.longValue());
@@ -64,6 +70,12 @@ public class JdbcPostRepository implements PostRepository
             post.setId(rs.getLong("id"));
             post.setTitle(rs.getString("title"));
             post.setContent(rs.getString("content"));
+            post.setMemberId(rs.getLong("memberId"));
+            post.setWritten(rs.getString("written"));
+            post.setLastModified(rs.getString("lastModified"));
+            post.setViews(rs.getLong("views"));
+            post.setRecommended(rs.getLong("recommended"));
+            post.setPostRole(rs.getInt("postRole"));
             return post;
         };
     }

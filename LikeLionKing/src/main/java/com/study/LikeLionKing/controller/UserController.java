@@ -2,6 +2,7 @@ package com.study.LikeLionKing.controller;
 
 
 import com.study.LikeLionKing.domain.User;
+import com.study.LikeLionKing.domain.dto.UserDto;
 import com.study.LikeLionKing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class UserController {
 
     @GetMapping("/test/uc")
     String create(){
-        User user = new User();
+        UserDto user = new UserDto();
         user.setLoginId("u1");
         user.setLoginPw("u1");
         Long id = userService.save(user);
@@ -31,20 +32,20 @@ public class UserController {
 
     @GetMapping("/test/ur")
     String find(){
-        User user  = userService.findById(1L).get();
+        UserDto user  = userService.findById(1L);
         System.out.println(user);
         return user.toString();
     }
     @GetMapping("/test/ura")
     String findAll(){
-        List<User> users  = userService.findAll();
+        List<UserDto> users  = userService.findAll();
         System.out.println(users);
         return users.toString();
     }
 
     @GetMapping("/test/uu")
     String update(){
-        User user = userService.findById(1L).get();
+        UserDto user = userService.findById(1L);
         user.setLoginId("change");
         user.setLoginPw("change");
         userService.update(user);
