@@ -1,5 +1,6 @@
 package lionStudy.lionStudy.repository;
 
+import lionStudy.lionStudy.domain.DTO.MemberDto;
 import lionStudy.lionStudy.domain.Member;
 import lionStudy.lionStudy.domain.MemberStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
     }
 
     @Override
-    public Member save(Member member) {
+    public Member save(MemberDto member) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
@@ -37,7 +38,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
         Number key = jdbcInsert.executeAndReturnKey(new
                 MapSqlParameterSource(parameters));
         member.setId(key.longValue());
-        return member;
+        return member.toEntity();
     }
 
     @Override

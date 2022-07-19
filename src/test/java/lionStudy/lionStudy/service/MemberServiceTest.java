@@ -20,8 +20,7 @@ class MemberServiceIntegrationTest {
     public void 회원가입() throws Exception {
         //Given
         MemberDto member = new MemberDto();
-        member.setId(4L);
-        member.setName("hello4");
+        member.setName("hello5");
         member.setLoginId("likeLion");
         member.setLoginPwd("pbs");
         member.setRole(2);

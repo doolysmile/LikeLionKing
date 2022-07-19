@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository {
-    Member save(Member member);
+    Member save(MemberDto member);
 
     /**
      * Optional -> find 했는데 null일 경우를 처리해줌
