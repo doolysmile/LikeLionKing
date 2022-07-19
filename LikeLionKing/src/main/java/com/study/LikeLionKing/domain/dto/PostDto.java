@@ -15,7 +15,7 @@ public class PostDto {
     private String content; // 내용
     private int postRole; // 1일때 공지사항 2일 때 자유게시판
 
-    Post toEntity(){
+    public Post toEntity(){
         Post post = Post.builder()
                 .id(id)
                 .memberId(memberId)
@@ -31,7 +31,6 @@ public class PostDto {
     }
 
     @Builder
-
     public PostDto(Long id, Long memberId, String written, String lastModified, Long views, Long recommended, String title, String content, int postRole) {
         this.id = id;
         this.memberId = memberId;

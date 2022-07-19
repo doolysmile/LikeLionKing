@@ -1,9 +1,11 @@
 package com.study.LikeLionKing.service;
 
 import com.study.LikeLionKing.domain.User;
+import com.study.LikeLionKing.domain.dto.UserDto;
 import com.study.LikeLionKing.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,18 +18,39 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Long save (User user){
-        Long id = userRepository.save(user);
+    public Long save (UserDto userDto){
+        Long id = userRepository.save(userDto.toEntity());
         return id;
     }
 
-    public Optional<User> findById(Long id){
-        return userRepository.findById(id);
+    public UserDto findById(Long id){
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()){
+            return null;
+        }
+        User temp = user.get();
+        UserDto userDto = UserDto.builder()
+                .id(temp.getId())
+                .loginId(temp.getLoginId())
+                .loginPw(temp.getLoginPw())
+                .userRole(temp.getUserRole())
+                .build();
+        return userDto;
     }
 
-    public List<User> findAll(){
+    public List<UserDto> findAll(){
         List<User> users = userRepository.findAll();
-        return users;
+        List<UserDto> userDtos = new ArrayList<>();
+        for(User temp : users){
+            UserDto userDto = UserDto.builder()
+                    .id(temp.getId())
+                    .loginId(temp.getLoginId())
+                    .loginPw(temp.getLoginPw())
+                    .userRole(temp.getUserRole())
+                    .build();
+            userDtos.add(userDto);
+        }
+        return userDtos;
     }
 
     public User update(User user){
