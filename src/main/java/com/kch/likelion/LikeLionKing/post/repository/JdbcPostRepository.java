@@ -1,6 +1,7 @@
 package com.kch.likelion.LikeLionKing.post.repository;
 
 
+import com.kch.likelion.LikeLionKing.post.domain.BoardType;
 import com.kch.likelion.LikeLionKing.post.domain.Post;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -10,6 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -25,9 +27,14 @@ public class JdbcPostRepository implements PostRepository{
     public Post insert(Post post) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(conn -> {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO posts(title,content) VALUES (?,?)", new String[]{"postSeq"});
-            ps.setString(1, post.getTitle());
-            ps.setString(2, post.getContent());
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO posts(userSeq,views,likes,title,content,boardType,creatAt) VALUES (?,?,?,?,?,?,?)", new String[]{"postSeq"});
+            ps.setLong(1, post.getUserSeq());
+            ps.setInt(2, post.getViews());
+            ps.setInt(3, post.getLikes());
+            ps.setString(4, post.getTitle());
+            ps.setString(5, post.getContent());
+            ps.setInt(6, post.getBoardType().value());
+            ps.setTimestamp(7, Timestamp.valueOf(post.getCreateAt()));
             return ps;
         }, keyHolder);
 
@@ -65,7 +72,12 @@ public class JdbcPostRepository implements PostRepository{
     }
     static RowMapper<Post> mapper = (rs, rowNum) -> new Post.Builder()
             .postSeq(rs.getLong("postSeq"))
+            .userSeq(rs.getLong("userSeq"))
+            .views(rs.getInt("views"))
+            .likes(rs.getInt("likes"))
             .title(rs.getString("title"))
             .content(rs.getString("content"))
+            .boardType(BoardType.valueOf(rs.getInt("boardType")))
+            .createAt(rs.getTimestamp("creatAt").toLocalDateTime())
             .build();
 }
