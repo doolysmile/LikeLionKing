@@ -1,6 +1,7 @@
 package com.hsy.likelion.LikeLionKing.controller;
 
 import com.hsy.likelion.LikeLionKing.domain.Member;
+import com.hsy.likelion.LikeLionKing.dto.MemberCreateDto;
 import com.hsy.likelion.LikeLionKing.dto.MemberDto;
 import com.hsy.likelion.LikeLionKing.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<Object> createMember(@RequestBody MemberDto memberDto) {
-        Member member = memberDto.toEntity(memberDto);
+    public ResponseEntity<MemberCreateDto> createMember(@RequestBody MemberCreateDto memberCreateDto) {
+        // MemberCreateDto 적용
+        Member member = MemberCreateDto.toEntity(memberCreateDto);
         Member memberCreated = memberService.signUp(member);
-        return ResponseEntity.status(HttpStatus.OK).body(memberDto.toDto(memberCreated));
+        return ResponseEntity.status(HttpStatus.OK).body(MemberCreateDto.toDto(memberCreated));
     }
 
     @GetMapping("/info")
