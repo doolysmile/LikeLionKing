@@ -10,11 +10,14 @@ public class UserUpdate {
         private long id;
         private String loginId;
         private String loginPw;
+        private String nickname;
 
-        public User toEntity(){
+        public User toEntity(long id){
             User user = User.builder()
+                    .id(id)
                     .loginId(loginId)
                     .loginPw(loginPw)
+                    .nickname(nickname)
                     .build();
             return user;
         }

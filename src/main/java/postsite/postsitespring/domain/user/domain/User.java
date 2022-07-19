@@ -3,21 +3,17 @@ package postsite.postsitespring.domain.user.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import postsite.postsitespring.common.entity.BaseEntity;
 
 @Getter
 @Setter
-@Builder
-public class User {
-    private Long id;
+@SuperBuilder
+public class User extends BaseEntity {
     private String loginId;
     private String loginPw;
-
-    public User(){
-
-    }
-    public User(Long id, String loginId, String loginPw) {
-        this.id = id;
-        this.loginId = loginId;
-        this.loginPw = loginPw;
-    }
+    private String nickname;
+    private short level;
+    private UserRoleTypeEnum role;
 }
+

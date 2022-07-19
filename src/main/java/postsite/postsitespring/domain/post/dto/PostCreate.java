@@ -4,7 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import postsite.postsitespring.domain.post.domain.Post;
 
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.temporal.Temporal;
 import java.util.Date;
 
 public class PostCreate {
@@ -40,8 +42,8 @@ public class PostCreate {
         private boolean isNotice;
         private int views;
         private int likes;
-        private Date createdAt;
-        private Date updatedAt;
+        private Timestamp createdAt;
+        private Timestamp updatedAt;
 
         // entity -> dto
         public ResponseDto(Post post) {

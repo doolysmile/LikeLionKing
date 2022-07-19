@@ -2,9 +2,12 @@ package postsite.postsitespring.domain.user.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import postsite.postsitespring.domain.user.domain.User;
+import postsite.postsitespring.domain.user.domain.UserRoleTypeEnum;
 import postsite.postsitespring.domain.user.dto.UserCreate;
 import postsite.postsitespring.domain.user.dto.UserUpdate;
 
@@ -21,13 +24,24 @@ public class JdbcTemplateUserRepository implements UserRepository{
 
     @Override
     public long save(User user) {
+        // jdbc setting
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("user").usingGeneratedKeyColumns("id");
-        Map<String, Object> params = new HashMap<>();
-        params.put("loginId", user.getLoginId());
-        params.put("loginPw", user.getLoginPw());
 
-        long id = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(params)).longValue();
+        // getter를 통해 자동으로 객체의 필드값 추출
+        SqlParameterSource params = new BeanPropertySqlParameterSource(user){
+            // enum bug fix
+            @Override
+            public Object getValue(String paramName) throws IllegalArgumentException {
+                Object value = super.getValue(paramName);
+                if (value instanceof Enum) {
+                    return value.toString();
+                }
+                return value;
+            }
+        };
+
+        long id = jdbcInsert.executeAndReturnKey(params).longValue();
 
         return id;
     }
@@ -46,8 +60,8 @@ public class JdbcTemplateUserRepository implements UserRepository{
 
     @Override
     public void update(User user) {
-        final String sql = "UPDATE user SET loginId=?, loginPw=? WHERE id=?";
-        jdbcTemplate.update(sql, user.getLoginId(), user.getLoginPw(), user.getId());
+        final String sql = "UPDATE user SET login_id=?, login_pw=?, nickname=? WHERE id=?";
+        jdbcTemplate.update(sql, user.getLoginId(), user.getLoginPw(), user.getNickname(), user.getId());
     }
 
     @Override
@@ -58,10 +72,16 @@ public class JdbcTemplateUserRepository implements UserRepository{
 
     private RowMapper<User> userRowMapper(){
         return (rs, rowNum) -> {
-            User user = new User();
-            user.setId(rs.getLong("id"));
-            user.setLoginId(rs.getString("loginId"));
-            user.setLoginPw(rs.getString("loginPw"));
+            User user = User.builder()
+                    .id(rs.getLong("id"))
+                    .loginId(rs.getString("login_id"))
+                    .loginPw(rs.getString("login_pw"))
+                    .nickname(rs.getString("nickname"))
+                    .role(UserRoleTypeEnum.valueOf(rs.getString("role")))
+                    .level(rs.getShort("level"))
+                    .createdAt(rs.getTimestamp("created_at"))
+                    .updatedAt(rs.getTimestamp("updated_at"))
+                    .build();
             return user;
         };
     }

@@ -37,6 +37,7 @@ public class UserController {
     public ResponseEntity<List<UserRead.ResponseDto>> allMembers(){
         List<User> users = this.userService.allMembers();
 
+        // entity => dto
         List<UserRead.ResponseDto> responseBody = users.stream()
                 .map(UserRead.ResponseDto::new).
                 toList();
@@ -63,8 +64,8 @@ public class UserController {
             @PathVariable Long memberId,
             @RequestBody UserUpdate.RequestDto body
     ){
-        User user = body.toEntity();
-        user.setId(memberId);
+        User user = body.toEntity(memberId);
+
         this.userService.updateMember(user);
 
         return ResponseEntity
