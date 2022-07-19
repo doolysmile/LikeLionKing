@@ -31,7 +31,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
         jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", member.getName());
-        parameters.put("status", member.getStatus());
+        parameters.put("role", member.getRole());
         Number key = jdbcInsert.executeAndReturnKey(new
                 MapSqlParameterSource(parameters));
         member.setId(key.longValue());
@@ -61,8 +61,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
             Member member = new Member();
             member.setId(rs.getLong("id"));
             member.setName(rs.getString("name"));
-
-            member.setStatus(MemberStatus.values()[rs.getInt("status")]); // enumType
+            member.setRole(rs.getInt("role"));
 
             return member;
 

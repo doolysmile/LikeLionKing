@@ -24,8 +24,9 @@ class MemberServiceIntegrationTest {
     public void 회원가입() throws Exception {
         //Given
         Member member = new Member();
-        member.setName("hello");
-        member.setStatus(MemberStatus.ADMIN);
+        member.setId(2L);
+        member.setName("hello2");
+        member.setRole(2);
         //When
         Long saveId = memberService.join(member);
         //Then
