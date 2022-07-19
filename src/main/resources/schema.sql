@@ -17,8 +17,10 @@ CREATE TABLE posts
 
 CREATE TABLE users
 (
-    userSeq  bigint    NOT NULL AUTO_INCREMENT,     -- user PK
-    loginId  varchar(200)  NOT NULL,
-    loginPw  varchar(500)  NOT NULL,
+    userSeq     bigint          NOT NULL AUTO_INCREMENT,     -- user PK
+    loginId     varchar(200)    ,
+    loginPw     varchar(500)    ,
+    nickName    varchar(200)    ,
+    userRole    int             DEFAULT 0,
     PRIMARY KEY (userSeq)
 );
