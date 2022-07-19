@@ -29,7 +29,7 @@ public class PostService {
         return id;
     }
 
-    public Optional<PostDto> findById(Long id){
+    public PostDto findById(Long id){
         Optional<Post> post = postRepository.findById(id);
         if(post.isEmpty()){
             return null;
@@ -46,7 +46,7 @@ public class PostService {
                 .recommended(temp.getRecommended())
                 .views(temp.getViews())
                 .build();
-        return Optional.ofNullable(postDto);
+        return postDto;
     }
 
     public List<PostDto> findAll(){
