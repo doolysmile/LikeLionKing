@@ -20,12 +20,14 @@ class MemberServiceIntegrationTest {
     public void 회원가입() throws Exception {
         //Given
         MemberDto member = new MemberDto();
-        member.setName("hello1");
+        member.setId(4L);
+        member.setName("hello4");
         member.setLoginId("likeLion");
         member.setLoginPwd("pbs");
         member.setRole(2);
         //When
         Long saveId = memberService.join(member);
+        System.out.println("saveId = " + saveId);
         //Then
         Member findMember = memberRepository.findById(saveId).get();
         assertEquals(member.getName(), findMember.getName());

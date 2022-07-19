@@ -25,13 +25,6 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    /**
-     *     private Long id;
-     *     private Long loginId;  // 로그인 아이디
-     *     private Long loginPwd; // 로그인 비밀번호
-     *     private String name;
-     *     private int role; // ADMIN, USER;
-     */
     @Override
     public Member save(Member member) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
