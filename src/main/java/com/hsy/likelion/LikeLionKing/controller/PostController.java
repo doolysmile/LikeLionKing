@@ -3,6 +3,7 @@ package com.hsy.likelion.LikeLionKing.controller;
 import com.hsy.likelion.LikeLionKing.domain.Post;
 import com.hsy.likelion.LikeLionKing.dto.PostCreateDto;
 import com.hsy.likelion.LikeLionKing.dto.PostDto;
+import com.hsy.likelion.LikeLionKing.dto.PostReadDto;
 import com.hsy.likelion.LikeLionKing.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,13 +34,19 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity<Optional<Post>> getDetailPost(@RequestParam("id") Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
+    public ResponseEntity<PostReadDto> getDetailPost(@RequestParam("id") Long id) {
+        Post post = postService.findById(id).orElse(null);// 없으면 null로 반환
+        // null 처리 추가구현 필요
+        return ResponseEntity.status(HttpStatus.OK).body(PostReadDto.toDto(post));
     }
 
     @GetMapping
-    public ResponseEntity<List<Post>> getPosts() {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.findAll());
+    public ResponseEntity<List<PostReadDto>> getPosts() {
+        // List의 Post를 도두 PostReadDto로 변환하여 List로 반환
+        List<PostReadDto> postReadDtos = postService.findAll().stream()
+                .map(p -> PostReadDto.toDto(p))
+                .toList();
+        return ResponseEntity.status(HttpStatus.OK).body(postReadDtos);
     }
 
     @PutMapping("/doModify")
@@ -50,9 +57,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public Long deletePost(@PathVariable("postId") Long postId) {
+    public void deletePost(@PathVariable("postId") Long postId) {
         postService.delete(postId);
-        return postId;
     }
 
 //    private Post convertToEntity(PostDto postDto) throws ParseException {
