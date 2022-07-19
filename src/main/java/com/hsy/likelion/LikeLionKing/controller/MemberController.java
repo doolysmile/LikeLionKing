@@ -3,6 +3,7 @@ package com.hsy.likelion.LikeLionKing.controller;
 import com.hsy.likelion.LikeLionKing.domain.Member;
 import com.hsy.likelion.LikeLionKing.dto.MemberCreateDto;
 import com.hsy.likelion.LikeLionKing.dto.MemberDto;
+import com.hsy.likelion.LikeLionKing.dto.MemberReadDto;
 import com.hsy.likelion.LikeLionKing.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,10 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<Optional<Member>> getMember(@RequestParam("id") Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMember(id));
+    public ResponseEntity<MemberReadDto> getMember(@RequestParam("id") Long id) {
+        Member member = memberService.getMember(id).orElse(null);   // 없으면 null로 반환
+        // null에 대한 처리를 어떻게 해야할까
+        return ResponseEntity.status(HttpStatus.OK).body(MemberReadDto.toDto(member));
     }
 
     @PutMapping("/info")
