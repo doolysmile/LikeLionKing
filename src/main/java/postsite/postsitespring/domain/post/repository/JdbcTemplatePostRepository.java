@@ -2,7 +2,9 @@ package postsite.postsitespring.domain.post.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import postsite.postsitespring.domain.post.domain.Post;
 import postsite.postsitespring.domain.post.dto.PostCreate;
@@ -22,13 +24,17 @@ public class JdbcTemplatePostRepository implements PostRepository{
 
     @Override
     public long save(Post post) {
+        // jdbc 설정
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("title", post.getTitle());
-        parameters.put("content", post.getContent());
+//        Map<String, Object> parameters = new HashMap<>();
+//        parameters.put("title", post.getTitle());
+//        parameters.put("content", post.getContent());
 
-        Long id = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters)).longValue();
+        // getter를 통해 자동으로 객체의 필드값 추출.
+        SqlParameterSource params = new BeanPropertySqlParameterSource(post);
+
+        Long id = jdbcInsert.executeAndReturnKey(params).longValue();
 
         return id;
     }
@@ -67,10 +73,16 @@ public class JdbcTemplatePostRepository implements PostRepository{
 
     private RowMapper<Post> postRowMapper(){
         return (rs, rowNum) -> {
-            Post post = new Post();
-            post.setId(rs.getLong("id"));
-            post.setTitle(rs.getString("title"));
-            post.setContent(rs.getString("content"));
+            Post post = Post.builder()
+                    .id(rs.getLong("id"))
+                    .title(rs.getString("title"))
+                    .content(rs.getString("content"))
+                    .isNotice(rs.getInt("is_notice") > 0)
+                    .views(rs.getInt("views"))
+                    .likes(rs.getInt("likes"))
+                    .createdAt(rs.getTimestamp("created_at"))
+                    .updatedAt(rs.getTimestamp("updated_at"))
+                    .build();
             return post;
         };
     }

@@ -31,6 +31,7 @@ public class PostController {
             @RequestBody PostCreate.RequestDto body
     ) {
         Post post = body.toEntity();
+
         long id = postService.save(post);
         post.setId(id);
 
@@ -50,6 +51,7 @@ public class PostController {
                 postService.findAll(boardId, page) :
                 postService.findAll(boardId, page, searchKeyword);
 
+        // entity => dto
         List<PostRead.ResponseDto> responseBody = posts.stream()
                 .map(PostRead.ResponseDto::new)
                 .toList();
@@ -76,8 +78,7 @@ public class PostController {
             @PathVariable Long atricleId,
             @RequestBody PostUpdate.RequestDto body
             ) {
-        Post post = body.toEntity();
-        post.setId(atricleId);
+        Post post = body.toEntity(atricleId);
 
         postService.update(post);
 

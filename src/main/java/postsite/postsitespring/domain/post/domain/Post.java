@@ -1,23 +1,20 @@
 package postsite.postsitespring.domain.post.domain;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import postsite.postsitespring.common.entity.BaseEntity;
+
+import java.util.Date;
 
 @Getter
 @Setter
-@Builder
-public class Post {
-    private Long id;
+@SuperBuilder
+public class Post extends BaseEntity {
     private String title;
     private String content;
+    private boolean isNotice;
+    private int views;
+    private int likes;
 
-    public Post(){
-
-    }
-    public Post(Long id,String title,String content){
-        this.id = id;
-        this.title = title;
-        this.content = content;
-    }
 }
