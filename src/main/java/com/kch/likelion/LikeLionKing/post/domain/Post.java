@@ -22,6 +22,7 @@ public class Post {
     public Post(String title, String content) {
         this(null, 0L, 0, 0, title, content, BoardType.NOTICE_BOARD, null);
     }
+    // TODO : userSeq와 BoardType 초기값 설정 해준 것을 상황에 맞게 바꾸기
     public Post(Long postSeq, String title, String content) {
         this(postSeq, 0L, 0, 0, title, content, BoardType.FREE_BOARD, null);
     }
