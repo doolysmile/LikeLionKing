@@ -1,9 +1,9 @@
 package com.hsy.likelion.LikeLionKing.controller;
 
 import com.hsy.likelion.LikeLionKing.domain.Post;
-import com.hsy.likelion.LikeLionKing.dto.PostCreateDto;
-import com.hsy.likelion.LikeLionKing.dto.PostReadDto;
-import com.hsy.likelion.LikeLionKing.dto.PostUpdateDto;
+import com.hsy.likelion.LikeLionKing.dto.post.PostCreateDto;
+import com.hsy.likelion.LikeLionKing.dto.post.PostReadDto;
+import com.hsy.likelion.LikeLionKing.dto.post.PostUpdateDto;
 import com.hsy.likelion.LikeLionKing.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,17 +1,14 @@
 package com.hsy.likelion.LikeLionKing.controller;
 
 import com.hsy.likelion.LikeLionKing.domain.Member;
-import com.hsy.likelion.LikeLionKing.dto.MemberCreateDto;
-import com.hsy.likelion.LikeLionKing.dto.MemberDto;
-import com.hsy.likelion.LikeLionKing.dto.MemberReadDto;
-import com.hsy.likelion.LikeLionKing.dto.MemberUpdateDto;
+import com.hsy.likelion.LikeLionKing.dto.member.MemberCreateDto;
+import com.hsy.likelion.LikeLionKing.dto.member.MemberReadDto;
+import com.hsy.likelion.LikeLionKing.dto.member.MemberUpdateDto;
 import com.hsy.likelion.LikeLionKing.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usr/member")

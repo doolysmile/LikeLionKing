@@ -1,4 +1,4 @@
-package com.hsy.likelion.LikeLionKing.dto;
+package com.hsy.likelion.LikeLionKing.dto.member;
 
 import com.hsy.likelion.LikeLionKing.domain.Member;
 import lombok.Getter;
