@@ -2,8 +2,8 @@ package com.hsy.likelion.LikeLionKing.controller;
 
 import com.hsy.likelion.LikeLionKing.domain.Post;
 import com.hsy.likelion.LikeLionKing.dto.PostCreateDto;
-import com.hsy.likelion.LikeLionKing.dto.PostDto;
 import com.hsy.likelion.LikeLionKing.dto.PostReadDto;
+import com.hsy.likelion.LikeLionKing.dto.PostUpdateDto;
 import com.hsy.likelion.LikeLionKing.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 // @RestController = @Controller + @ResponseBody
@@ -50,9 +49,8 @@ public class PostController {
     }
 
     @PutMapping("/doModify")
-    public void updatePost(@RequestBody PostDto postDto) {
-        // postDto -> post로 변환
-        Post post = convertToEntity(postDto);
+    public void updatePost(@RequestBody PostUpdateDto postUpdateDto) {
+        Post post = PostUpdateDto.toEntity(postUpdateDto);
         postService.update(post);
     }
 
