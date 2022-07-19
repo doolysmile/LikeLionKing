@@ -1,5 +1,6 @@
 package lionStudy.lionStudy.service;
 
+import lionStudy.lionStudy.domain.DTO.MemberDto;
 import lionStudy.lionStudy.domain.Member;
 import lionStudy.lionStudy.repository.MemberRepository;
 
@@ -16,15 +17,14 @@ public class MemberService {
     /**
      * 회원가입
      */
-    public Long join(Member member){
-
+    public Long join(MemberDto member){
         validateDuplicateMember(member);
-        memberRepository.save(member);
+        memberRepository.save(member.toEntity());
 
         return member.getId();
     }
 
-    private void validateDuplicateMember(Member member) {
+    private void validateDuplicateMember(MemberDto member) {
         memberRepository.findByName(member.getName())
                 .ifPresent(m -> {
                throw new IllegalStateException("이미 존재하는 회원입니다.");

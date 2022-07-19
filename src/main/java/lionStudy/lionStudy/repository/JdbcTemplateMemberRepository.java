@@ -25,11 +25,20 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /**
+     *     private Long id;
+     *     private Long loginId;  // 로그인 아이디
+     *     private Long loginPwd; // 로그인 비밀번호
+     *     private String name;
+     *     private int role; // ADMIN, USER;
+     */
     @Override
     public Member save(Member member) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
+        parameters.put("loginId", member.getLoginId());
+        parameters.put("loginPwd", member.getLoginPwd());
         parameters.put("name", member.getName());
         parameters.put("role", member.getRole());
         Number key = jdbcInsert.executeAndReturnKey(new
@@ -60,6 +69,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
         return (rs, rowNum) -> {
             Member member = new Member();
             member.setId(rs.getLong("id"));
+            member.setLoginId("loginId");
+            member.setLoginPwd("loginPwd");
             member.setName(rs.getString("name"));
             member.setRole(rs.getInt("role"));
 

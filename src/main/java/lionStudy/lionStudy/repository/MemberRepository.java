@@ -1,5 +1,6 @@
 package lionStudy.lionStudy.repository;
 
+import lionStudy.lionStudy.domain.DTO.MemberDto;
 import lionStudy.lionStudy.domain.Member;
 
 import java.util.List;
