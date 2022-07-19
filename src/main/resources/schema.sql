@@ -4,9 +4,14 @@ DROP TABLE IF EXISTS users CASCADE;
 -- POST DATA
 CREATE TABLE posts
 (
-    postSeq  bigint    NOT NULL AUTO_INCREMENT,     -- post PK
-    title    varchar(200)  NOT NULL,
-    content  varchar(500)  NOT NULL,
+    postSeq     bigint          NOT NULL AUTO_INCREMENT,     -- post PK
+    userSeq     bigint          ,
+    views       int             DEFAULT 0,
+    likes       int             DEFAULT 0,
+    title       varchar(200)    ,
+    content     varchar(500)    ,
+    boardType   int             DEFAULT 0,
+    creatAt     datetime        DEFAULT CURRENT_TIMESTAMP(),
     PRIMARY KEY (postSeq)
 );
 
