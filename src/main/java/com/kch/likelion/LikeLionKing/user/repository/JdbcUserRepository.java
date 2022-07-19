@@ -2,6 +2,7 @@ package com.kch.likelion.LikeLionKing.user.repository;
 
 import com.kch.likelion.LikeLionKing.post.domain.Post;
 import com.kch.likelion.LikeLionKing.user.domain.User;
+import com.kch.likelion.LikeLionKing.user.domain.UserRole;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -23,9 +24,11 @@ public class JdbcUserRepository implements UserRepository{
     public User insert(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(conn -> {
-            PreparedStatement ps = conn.prepareStatement("INSET INTO users(loginId,loginPw) VALUES (?,?)", new String[]{"userSeq"});
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO users(loginId,loginPw,nickName,userRole) VALUES (?,?,?,?)", new String[]{"userSeq"});
             ps.setString(1, user.getLoginId());
             ps.setString(2, user.getLoginPw());
+            ps.setString(3, user.getNickName());
+            ps.setInt(4,user.getUserRole().value());
             return ps;
         }, keyHolder);
 
@@ -67,5 +70,7 @@ public class JdbcUserRepository implements UserRepository{
             .userSeq(rs.getLong("userSeq"))
             .loginId(rs.getString("loginId"))
             .loginPw(rs.getString("loginPw"))
+            .nickName(rs.getString("nickName"))
+            .userRole(UserRole.valueOf(rs.getInt("userRole")))
             .build();
 }
