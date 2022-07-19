@@ -4,6 +4,7 @@ import com.hsy.likelion.LikeLionKing.domain.Member;
 import com.hsy.likelion.LikeLionKing.dto.MemberCreateDto;
 import com.hsy.likelion.LikeLionKing.dto.MemberDto;
 import com.hsy.likelion.LikeLionKing.dto.MemberReadDto;
+import com.hsy.likelion.LikeLionKing.dto.MemberUpdateDto;
 import com.hsy.likelion.LikeLionKing.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,15 +39,14 @@ public class MemberController {
     }
 
     @PutMapping("/info")
-    public void modifyMember(@RequestBody MemberDto memberDto) {
-        Member member = memberDto.toEntity(memberDto);
+    public void modifyMember(@RequestBody MemberUpdateDto memberUpdateDto) {
+        Member member = MemberUpdateDto.toEntity(memberUpdateDto);
         memberService.update(member);
         //return ResponseEntity.status(HttpStatus.OK).body(memberRepository.update(member));
     }
 
     @DeleteMapping("/info/{id}")
-    public Long deleteMember(@PathVariable("id") Long id) {
+    public void deleteMember(@PathVariable("id") Long id) {
         memberService.delete(id);
-        return id;
     }
 }
