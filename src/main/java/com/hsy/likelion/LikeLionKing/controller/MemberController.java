@@ -22,9 +22,9 @@ public class MemberController {
 
     @PostMapping("/signUp")
     public ResponseEntity<Object> createMember(@RequestBody MemberDto memberDto) {
-        Member member = convertToEntity(memberDto);
+        Member member = memberDto.toEntity(memberDto);
         Member memberCreated = memberService.signUp(member);
-        return ResponseEntity.status(HttpStatus.OK).body(convertToDto(memberCreated));
+        return ResponseEntity.status(HttpStatus.OK).body(memberDto.toDto(memberCreated));
     }
 
     @GetMapping("/info")
@@ -34,7 +34,7 @@ public class MemberController {
 
     @PutMapping("/info")
     public void modifyMember(@RequestBody MemberDto memberDto) {
-        Member member = convertToEntity(memberDto);
+        Member member = memberDto.toEntity(memberDto);
         memberService.update(member);
         //return ResponseEntity.status(HttpStatus.OK).body(memberRepository.update(member));
     }
@@ -43,15 +43,5 @@ public class MemberController {
     public Long deleteMember(@PathVariable("id") Long id) {
         memberService.delete(id);
         return id;
-    }
-
-    // MemberDto -> Member 변환
-    private Member convertToEntity(MemberDto memberDto) {
-        return new Member(memberDto.getId(), memberDto.getLoginId(), memberDto.getLoginPw());
-    }
-
-    // Member -> MemberDto로 변환
-    private MemberDto convertToDto(Member member) {
-        return new MemberDto(member.getId(), member.getLoginId(), member.getLoginPw());
     }
 }
