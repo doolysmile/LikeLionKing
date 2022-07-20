@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PostServiceIntegrationTest {
 
+
     private Long id = 2L;
     @Autowired PostService postService;
     @Autowired

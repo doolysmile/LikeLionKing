@@ -10,12 +10,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @SpringBootTest
-//
 class MemberServiceIntegrationTest {
     @Autowired MemberService memberService;
     @Autowired
     MemberRepository memberRepository;
+
+
+
+
     @Test
     public void 회원가입() throws Exception {
         //Given
