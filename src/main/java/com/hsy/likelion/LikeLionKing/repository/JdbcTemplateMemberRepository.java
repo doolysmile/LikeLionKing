@@ -31,6 +31,11 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("login_id", member.getLoginId());
         parameters.put("login_pw", member.getLoginPw());
+        // 추가된 컬럼
+        parameters.put("nickname", member.getNickname());
+        parameters.put("email", member.getEmail());
+        parameters.put("phone", member.getPhone());
+        parameters.put("role", member.getRole());
         // DB에서
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         member.setId(key.longValue());
@@ -45,7 +50,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     @Override
     public void update(Member member) {
-        jdbcTemplate.update("update member set login_pw = ? where id = ?", member.getLoginPw(), member.getId());
+        jdbcTemplate.update("update member set login_pw = ?, nickname = ?, eamil= ?, phone = ? where id = ?", member.getLoginPw(), member.getNickname(), member.getEmail(), member.getPhone(), member.getId());
     }
 
     @Override
@@ -62,6 +67,10 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
             member.setId(rs.getLong("id"));
             member.setLoginId(rs.getString("login_id"));
             member.setLoginPw(rs.getString("login_pw"));
+            member.setNickname(rs.getString("nickname"));
+            member.setEmail(rs.getString("email"));
+            member.setPhone(rs.getString("phone"));
+            member.setRole(rs.getInt("role"));
             return member;
         };
     }
