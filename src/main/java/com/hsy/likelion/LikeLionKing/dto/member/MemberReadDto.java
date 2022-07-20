@@ -15,9 +15,9 @@ public class MemberReadDto {
     private String nickname;    // 닉네임
     private String email;   // email
     private String phone;   // 핸드폰 번호
-    private int role;       // 회원 종류
+    private Integer role;       // 회원 종류
 
-    public MemberReadDto(String loginId, String loginPw, int role) {
+    public MemberReadDto(String loginId, String loginPw, Integer role) {
         this.loginId = loginId;
         this.loginPw = loginPw;
         this.role = role;

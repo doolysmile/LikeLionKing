@@ -13,7 +13,6 @@ public class MemberUpdateDto {
     private String nickname;    // 닉네임
     private String email;   // email
     private String phone;   // 핸드폰 번호
-    private int role;       // 회원 종류
 
     public MemberUpdateDto(Long id, String loginPw) {
         this.id = id;
