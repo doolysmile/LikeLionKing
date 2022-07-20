@@ -11,7 +11,7 @@ import lombok.Setter;
 public class PostDto {
 
     private Long id; // 식별자
-    private Long userId; // 작성자 ID
+    private Long userId; // 작성자 ID, 외래키
     private String title; // 제목
     private String content; // 내용
 
@@ -28,18 +28,11 @@ public class PostDto {
         this.recommended = post.getRecommended();
     }
 
-//    public Post toEntity(){
-//        Post post = Post.builder()
-//                .id(id)
-//                .userId(userId)
-//                .title(title)
-//                .content(content)
-//                .views(views)
-//                .recommended(recommended)
-//                .build();
-//
-//        return post;
-//
-//    }
+    public Post toEntity(){
+        Post post = new Post.Builder(id, userId, title, content, views, recommended).build();
+
+        return post;
+
+    }
 
 }

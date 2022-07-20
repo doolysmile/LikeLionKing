@@ -30,7 +30,10 @@ class PostServiceIntegrationTest {
     public void 게시글_등록() throws Exception {
         //Given
         Post post = new Post();
+        post.setUserId(2L);
         post.setTitle("test1");
+        post.setContent("testContent");
+        post.setViews(30L);
         post.setContent("content1");
         //When
         Long saveId = postService.register(post);

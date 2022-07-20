@@ -28,6 +28,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
 
+        parameters.put("userId", post.getUserId());
         parameters.put("title", post.getTitle());
         parameters.put("content", post.getContent());
         parameters.put("views", post.getViews());
@@ -77,6 +78,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         return (rs, rowNum) -> {
             Post post = new Post();
             post.setId(rs.getLong("id"));
+            post.setUserId(rs.getLong("userId"));
             post.setTitle(rs.getString("title"));
             post.setContent(rs.getString("content"));
             post.setViews(rs.getLong("views"));

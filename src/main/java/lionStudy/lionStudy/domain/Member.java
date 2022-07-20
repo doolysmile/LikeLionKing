@@ -8,6 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Member {
+    /**
+     * 고민 -> loginId 자체를 primaryKey 지정을 할지,,
+     */
     private Long id;
     private String loginId;  // 로그인 아이디
     private String loginPwd; // 로그인 비밀번호
