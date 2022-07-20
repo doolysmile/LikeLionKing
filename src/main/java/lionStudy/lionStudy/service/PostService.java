@@ -1,5 +1,6 @@
 package lionStudy.lionStudy.service;
 
+import lionStudy.lionStudy.domain.DTO.PostDto;
 import lionStudy.lionStudy.domain.Member;
 import lionStudy.lionStudy.domain.Post;
 import lionStudy.lionStudy.repository.MemberRepository;
@@ -18,7 +19,7 @@ public class PostService {
     /**
      * 포스트 등록 CRUD- C
      */
-    public Long register(Post post){
+    public Long register(PostDto post){
 
         postRepository.save(post);
 

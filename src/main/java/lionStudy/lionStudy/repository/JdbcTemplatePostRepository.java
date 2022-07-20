@@ -1,5 +1,6 @@
 package lionStudy.lionStudy.repository;
 
+import lionStudy.lionStudy.domain.DTO.PostDto;
 import lionStudy.lionStudy.domain.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +24,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
     }
 
     @Override
-    public Post save(Post post) {
+    public Post save(PostDto post) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
@@ -38,7 +39,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         Number key = jdbcInsert.executeAndReturnKey(new
                 MapSqlParameterSource(parameters));
         post.setId(key.longValue());
-        return post;
+        return post.toEntity();
     }
 
     @Override

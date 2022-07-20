@@ -18,6 +18,7 @@ public class PostDto {
     private Long views; // 조회수
     private Long recommended; // 추천수
 
+    public PostDto(){}
     @Builder
     public PostDto(Post post) {
         this.id = post.getId();

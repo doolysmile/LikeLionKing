@@ -1,5 +1,6 @@
 package lionStudy.lionStudy.repository;
 
+import lionStudy.lionStudy.domain.DTO.PostDto;
 import lionStudy.lionStudy.domain.Post;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Optional;
 
 public interface PostRepository {
 
-    Post save(Post post);
+    Post save(PostDto post);
     Optional<Post> findById(Long id);
     List<Post> findAll();
 

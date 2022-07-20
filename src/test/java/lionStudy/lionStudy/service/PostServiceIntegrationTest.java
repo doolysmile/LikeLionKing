@@ -1,5 +1,6 @@
 package lionStudy.lionStudy.service;
 
+import lionStudy.lionStudy.domain.DTO.PostDto;
 import lionStudy.lionStudy.domain.Member;
 import lionStudy.lionStudy.domain.Post;
 import lionStudy.lionStudy.repository.MemberRepository;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PostServiceIntegrationTest {
 
-    private Long id = 3L;
+    private Long id = 2L;
     @Autowired PostService postService;
     @Autowired
     PostRepository postRepository;
@@ -29,12 +30,12 @@ class PostServiceIntegrationTest {
     @Test
     public void 게시글_등록() throws Exception {
         //Given
-        Post post = new Post();
-        post.setUserId(2L);
-        post.setTitle("test1");
+        PostDto post = new PostDto();
+        post.setUserId(1L);
+        post.setTitle("test2");
         post.setContent("testContent");
         post.setViews(30L);
-        post.setContent("content1");
+        post.setContent("content2");
         //When
         Long saveId = postService.register(post);
         //Then
