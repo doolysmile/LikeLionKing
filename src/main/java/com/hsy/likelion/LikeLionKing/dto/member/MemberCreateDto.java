@@ -17,16 +17,6 @@ public class MemberCreateDto {
     private String phone;   // 핸드폰 번호
     private Integer role;       // 회원 종류
 
-    public MemberCreateDto(Long id, String loginId, String loginPw, Integer role) {
-        this.id = id;
-        this.loginId = loginId;
-        this.loginPw = loginPw;
-        this.nickname = nickname;
-        this.email = email;
-        this.phone = phone;
-        this.role = role;
-    }
-
     // MemberDto -> Member 변환
     public static Member toEntity(MemberCreateDto memberCreateDto) {
         // id는 DB에서 자동 생성되어 부여되기 떄문에 전달X

@@ -50,7 +50,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     @Override
     public void update(Member member) {
-        jdbcTemplate.update("update member set login_pw = ?, nickname = ?, eamil= ?, phone = ? where id = ?", member.getLoginPw(), member.getNickname(), member.getEmail(), member.getPhone(), member.getId());
+        jdbcTemplate.update("update member set login_pw = ?, nickname = ?, email= ?, phone = ? where id = ?", member.getLoginPw(), member.getNickname(), member.getEmail(), member.getPhone(), member.getId());
     }
 
     @Override

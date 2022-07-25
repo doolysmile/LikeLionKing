@@ -20,7 +20,7 @@ public class Member {
     public Member() {
     }
 
-    public Member(Long id, String loginId, String loginPw, String nickname, String email, String phone, int role) {
+    public Member(Long id, String loginId, String loginPw, String nickname, String email, String phone, Integer role) {
         this.id = id;
         this.loginId = loginId;
         this.loginPw = loginPw;

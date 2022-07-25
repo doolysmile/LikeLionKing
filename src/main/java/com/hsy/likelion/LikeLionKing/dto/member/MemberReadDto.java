@@ -17,16 +17,10 @@ public class MemberReadDto {
     private String phone;   // 핸드폰 번호
     private Integer role;       // 회원 종류
 
-    public MemberReadDto(String loginId, String loginPw, Integer role) {
-        this.loginId = loginId;
-        this.loginPw = loginPw;
-        this.role = role;
-    }
-
-
     // Member -> MemberDto로 변환(of)
     public static MemberReadDto toDto(Member member) {
         MemberReadDto memberReadDto = MemberReadDto.builder()
+                .id(member.getId())
                 .loginId(member.getLoginId())
                 .loginPw(member.getLoginPw())
                 .nickname(member.getNickname())
