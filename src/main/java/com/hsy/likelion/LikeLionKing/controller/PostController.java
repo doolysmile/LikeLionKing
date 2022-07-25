@@ -41,7 +41,7 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<PostReadDto>> getPosts() {
-        // List의 Post를 도두 PostReadDto로 변환하여 List로 반환
+        // List의 Post를 모두 PostReadDto로 변환하여 List로 반환
         List<PostReadDto> postReadDtos = postService.findAll().stream()
                 .map(p -> PostReadDto.toDto(p))
                 .toList();

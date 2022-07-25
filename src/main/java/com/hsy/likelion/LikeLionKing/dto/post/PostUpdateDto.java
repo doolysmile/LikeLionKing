@@ -9,15 +9,9 @@ import lombok.Setter;
 @Setter
 @Builder
 public class PostUpdateDto {
-    private Long id;
-    private String title;
-    private String content;
-
-    public PostUpdateDto(Long id, String title, String content) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-    }
+    private Long id;        // 게시글 id
+    private String title;   // 게시글 제목
+    private String content; // 게시글 내용
 
     // PostCreateDto -> Post 변환
     public static Post toEntity(PostUpdateDto postCreateDto) {

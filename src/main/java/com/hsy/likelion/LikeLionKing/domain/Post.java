@@ -13,22 +13,22 @@ public class Post {
     private Integer categoryId; // 게시글 카테고리 id
     private String title;   // 게시글 제목
     private String content; // 게시글 내용
-    private String created; // 게시물 생성 일시
-    private String lastUpdated;    // 게시물 최종 수정 일시
+    private String createdAt; // 게시물 생성 일시
+    private String updatedAt;    // 게시물 최종 수정 일시
     private Long views;     // 조회수
     private Long likes;     // 좋아요 수
 
     public Post() {
     }
 
-    public Post(Long id, Long memberId, Integer categoryId, String title, String content, String created, String lastUpdated, Long views, Long likes) {
+    public Post(Long id, Long memberId, Integer categoryId, String title, String content, String createdAt, String updatedAt, Long views, Long likes) {
         this.id = id;
         this.memberId = memberId;
         this.categoryId = categoryId;
         this.title = title;
         this.content = content;
-        this.created = created;
-        this.lastUpdated = lastUpdated;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.views = views;
         this.likes = likes;
     }

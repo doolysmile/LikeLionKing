@@ -32,8 +32,11 @@ public class JdbcTemplatePostRepository implements PostRepository{
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
         // 파라미터
         Map<String, Object> parameters = new HashMap<>();
+        parameters.put("member_id", post.getMemberId());
+        parameters.put("category_id", post.getCategoryId());
         parameters.put("title", post.getTitle());
         parameters.put("content", post.getContent());
+
         // DB에서
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         post.setId(key.longValue());
@@ -68,11 +71,19 @@ public class JdbcTemplatePostRepository implements PostRepository{
     // 쿼리 결과값(Row 값)들을 RowMapper를 이용해 ResultSet -> 자바 객체로 변환
     private RowMapper<Post> postRowMapper() {
         return (rs, rowNum) -> {
-            Post post = new Post();
             // "컬럼명"으로 해당 타입 데이터를 받아와 Post 객체로 반환
-            post.setId(rs.getLong("id"));
-            post.setTitle(rs.getString("title"));
-            post.setContent(rs.getString("content"));
+            Post post = Post.builder()
+                    .id(rs.getLong("id"))
+                    .memberId(rs.getLong("member_id"))
+                    .categoryId(rs.getInt("category_id"))
+                    .title(rs.getString("title"))
+                    .content(rs.getString("content"))
+                    .createdAt(rs.getString("created_at"))
+                    .updatedAt(rs.getString("updated_at"))
+                    .views(rs.getLong("views"))
+                    .likes(rs.getLong("likes"))
+                    .build();
+
             return post;
         };
     }
