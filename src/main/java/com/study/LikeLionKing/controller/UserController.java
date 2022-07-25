@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/usr")
 public class UserController {
 
     private final UserService userService;
@@ -25,48 +25,6 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-      // 테스트 코드
-//    @GetMapping("/test/uc")
-//    String create(){
-//        UserDto user = new UserDto();
-//        user.setLoginId("u1");
-//        user.setLoginPw("u1");
-//        Long id = userService.save(user);
-//        System.out.println(userService.findById(id));
-//        return userService.findById(id).toString();
-//    }
-//
-//    @GetMapping("/test/ur")
-//    String find(){
-//        UserDto user  = userService.findById(1L);
-//        System.out.println(user);
-//        return user.toString();
-//    }
-//    @GetMapping("/test/ura")
-//    String findAll(){
-//        List<UserDto> users  = userService.findAll();
-//        System.out.println(users);
-//        return users.toString();
-//    }
-//
-//    @GetMapping("/test/uu")
-//    String update(){
-//        UserDto user = userService.findById(1L);
-//        user.setLoginId("change");
-//        user.setLoginPw("change");
-//        userService.update(user);
-//
-//        System.out.println(user.toString());
-//        return user.toString();
-//    }
-//    @GetMapping("/test/ud")
-//    String delete(){
-//        System.out.println(userService.findAll());
-//        userService.remove(1L);
-//        System.out.println(userService.findAll());
-//        return "delete";
-//    }
-
     // 기능 코드
     @PostMapping("/create")
     public ResponseEntity<UserDto> create(@RequestBody UserCreateRequest createRequest){
@@ -113,6 +71,8 @@ public class UserController {
         userService.remove(id);
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
+
+
 
 
 

@@ -11,4 +11,5 @@ public interface PostRepository {
     List<Post> findAll();
     void update(Post post);
     void delete(Long id);
+    void viewsInc(Long id);
 }

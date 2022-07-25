@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/usr/article")
 public class PostController {
     private final PostService postService;
 
@@ -23,89 +23,60 @@ public class PostController {
         this.postService = postService;
     }
 
-//    @GetMapping("/test/c")
-//    String create(){
-//        PostDto postDto = new PostDto();
-//        postDto.setTitle("asd");
-//        postDto.setContent("aqwe");
-//        Long id = postService.save(postDto);
-//        System.out.println(postService.findById(id));
-//        return postService.findById(id).toString();
+    // CRUD 테스트
+//    @PostMapping("/create")
+//    public ResponseEntity<PostDto> create(@RequestBody PostCreateRequest createRequest){
+//        PostDto postDto = PostDto.builder()
+//                .title(createRequest.getTitle())
+//                .content(createRequest.getContent())
+//                .postRole(createRequest.getPostRole())
+//                .build();
+//        long id = postService.save(postDto);
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
 //    }
-//    @GetMapping("/test/r")
-//    String retrieve(){
-//        PostDto temp = postService.findById(1L).get();
-//        System.out.println(temp);
-//        return temp.toString();
+//
+//    @GetMapping("/find")
+//    public ResponseEntity<PostDto> retrieve(@RequestParam("id") Long id){
+//        System.out.println(id);
+//        PostDto postDto = postService.findById(id);
+//        return  ResponseEntity.status(HttpStatus.OK).body(postDto);
 //    }
-//    // TODO 오류발생
-//    @GetMapping("/test/ra")
-//    String retrieveAll(){
-//        List<PostDto> temp = postService.findAll();
-//        System.out.println(temp.toString());
-//        return temp.toString();
+//
+//    @GetMapping("/findAll")
+//    public ResponseEntity<List<PostDto>> retrieveAll(){
+//        List<PostDto> postDtoList = postService.findAll();
+//        return  ResponseEntity.status(HttpStatus.OK).body(postDtoList);
 //    }
-//    @GetMapping("/test/u")
-//    String update(){
-//        PostDto postDto = postService.findById(1L).get();
-//        postDto.setTitle("바꿈");
-//        postDto.setContent("바꿈 내용");
+//
+//    @PostMapping("/update")
+//    public ResponseEntity<PostDto> update(@RequestBody PostModifyRequest modifyRequest){
+//        PostDto postDto = postService.findById(modifyRequest.getId());
+//
+//        System.out.println(postDto);
+//        postDto.setContent(modifyRequest.getContent());
+//        postDto.setTitle(modifyRequest.getTitle());
+//
 //        postService.update(postDto);
-//        System.out.println(postDto.toString());
-//        return postDto.toString();
+//
+//        System.out.println(postService.findById(modifyRequest.getId()));
+//        return ResponseEntity.status(HttpStatus.OK).body(postDto);
 //    }
-//    @GetMapping("/test/d")
-//    String delete(){
-//        System.out.println(postService.findAll());
-//        postService.delete(1L);
-//        System.out.println(postService.findAll());
-//        return "delete";
+//
+//    @GetMapping("/delete")
+//    public ResponseEntity<PostDto> delete(@RequestParam("id") Long id){
+//        postService.delete(id);
+//        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
 //    }
 
-    @PostMapping("/create")
-    public ResponseEntity<PostDto> create(@RequestBody PostCreateRequest createRequest){
-        PostDto postDto = PostDto.builder()
-                .title(createRequest.getTitle())
-                .content(createRequest.getContent())
-                .postRole(createRequest.getPostRole())
-                .build();
-        long id = postService.save(postDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
-    }
+    // 엔드포인트 구현
 
-    @GetMapping("/find")
-    public ResponseEntity<PostDto> retrieve(@RequestParam("id") Long id){
+    @GetMapping("/detail")
+    public ResponseEntity<PostDto> detail(@RequestParam("id")long id){
         System.out.println(id);
         PostDto postDto = postService.findById(id);
         return  ResponseEntity.status(HttpStatus.OK).body(postDto);
     }
-
-    @GetMapping("/findAll")
-    public ResponseEntity<List<PostDto>> retrieveAll(){
-        List<PostDto> postDtoList = postService.findAll();
-        return  ResponseEntity.status(HttpStatus.OK).body(postDtoList);
-    }
-
-    @PostMapping("/update")
-    public ResponseEntity<PostDto> update(@RequestBody PostModifyRequest modifyRequest){
-        PostDto postDto = postService.findById(modifyRequest.getId());
-
-        System.out.println(postDto);
-        postDto.setContent(modifyRequest.getContent());
-        postDto.setTitle(modifyRequest.getTitle());
-
-        postService.update(postDto);
-
-        System.out.println(postService.findById(modifyRequest.getId()));
-        return ResponseEntity.status(HttpStatus.OK).body(postDto);
-    }
-
-    @GetMapping("/delete")
-    public ResponseEntity<PostDto> delete(@RequestParam("id") Long id){
-        postService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
-    }
-
 }
 

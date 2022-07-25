@@ -64,6 +64,12 @@ public class JdbcPostRepository implements PostRepository
     public void delete(Long id) {
         jdbcTemplate.update("delete from post where id = ?", id);
     }
+
+    @Override
+    public void viewsInc(Long id) {
+        jdbcTemplate.update("update post set views=views+1 where id = ?",id );
+    }
+
     private RowMapper<Post> postRowMapper() {
         return (rs, rowNum) -> {
             Post post = new Post();

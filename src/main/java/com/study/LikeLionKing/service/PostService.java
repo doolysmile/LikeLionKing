@@ -34,6 +34,7 @@ public class PostService {
         if(post.isEmpty()){
             return null;
         }
+        postRepository.viewsInc(id); // 게시물 조회시 조회수 1 증가
         Post temp = post.get();
         PostDto postDto = PostDto.builder()
                 .id(temp.getId())
