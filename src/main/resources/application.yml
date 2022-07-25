@@ -34,3 +34,13 @@ spring:
   sql:
     init:
       encoding: UTF-8
+#swagger path
+springdoc:
+  api-docs:
+    path: /api-docs
+#      path: /v3/api-docs/
+  swagger-ui:
+    path: /ui-custom.html
+##      path: /swagger-ui.html
+#server:
+#  forward-headers-strategy: framework
