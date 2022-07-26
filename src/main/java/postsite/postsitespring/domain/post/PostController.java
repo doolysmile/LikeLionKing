@@ -25,7 +25,7 @@ public class PostController {
     }
 
     // Create
-    @PostMapping()
+    @PostMapping("/doWrite")
     public ResponseEntity<PostCreate.ResponseDto> articleDoWrite(
             @RequestBody PostCreate.RequestDto body
     ) {
@@ -40,7 +40,7 @@ public class PostController {
     }
 
     // Read
-    @GetMapping()
+    @GetMapping("/list")
     public ResponseEntity<List<PostRead.ResponseDto>> articleList(
             @RequestParam() Long boardId,
             @RequestParam(defaultValue = "0") Long page,
@@ -60,11 +60,11 @@ public class PostController {
                 .body(responseBody);
     }
 
-    @GetMapping("/{articleId}")
+    @GetMapping("/detail")
     public ResponseEntity<PostRead.ResponseDto> articleDetail(
-            @PathVariable() Long articleId
+            @RequestParam() Long id
     ) {
-        Post post = postService.findById(articleId);
+        Post post = postService.findById(id);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -72,12 +72,11 @@ public class PostController {
     }
 
     // Update
-    @PutMapping("/{atricleId}")
+    @PostMapping("/doModify")
     public ResponseEntity<String> articleModify(
-            @PathVariable Long atricleId,
             @RequestBody PostUpdate.RequestDto body
             ) {
-        Post post = body.toEntity(atricleId);
+        Post post = body.toEntity();
 
         postService.update(post);
 
@@ -87,11 +86,11 @@ public class PostController {
     }
 
     //Delete
-    @DeleteMapping("/{atricleId}")
+    @PostMapping("/doDelete/{articleId}")
     public ResponseEntity<String> deleteArticle(
-            @PathVariable Long atricleId
+            @PathVariable Long articleId
     ) {
-        postService.delete(atricleId);
+        postService.delete(articleId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -15,7 +15,7 @@ public class PostCreate {
     @Getter
     public static class RequestDto{
         private String title;
-        private String content;
+        private String body;
         private boolean isNotice;
 
         // dto -> entity
@@ -23,7 +23,7 @@ public class PostCreate {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             Post post = Post.builder()
                     .title(title)
-                    .content(content)
+                    .content(body)
                     .isNotice(isNotice)
                     .views(0)
                     .likes(0)

@@ -9,14 +9,15 @@ public class PostUpdate {
 
     @Getter
     public static class RequestDto{
+        private long id;
         private String title;
-        private String content;
+        private String body;
 
-        public Post toEntity(long id){
+        public Post toEntity(){
             Post post = Post.builder()
                     .id(id)
                     .title(title)
-                    .content(content)
+                    .content(body)
                     .build();
             return post;
         }
