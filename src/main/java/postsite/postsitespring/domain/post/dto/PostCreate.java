@@ -1,13 +1,9 @@
 package postsite.postsitespring.domain.post.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import postsite.postsitespring.domain.post.domain.Post;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.temporal.Temporal;
-import java.util.Date;
 
 public class PostCreate {
     // private Long boardId;
@@ -17,6 +13,7 @@ public class PostCreate {
         private String title;
         private String body;
         private boolean isNotice;
+        private int postGroupId;
 
         // dto -> entity
         public Post toEntity(){
@@ -25,6 +22,7 @@ public class PostCreate {
                     .title(title)
                     .content(body)
                     .isNotice(isNotice)
+                    .postGroupId(postGroupId)
                     .views(0)
                     .likes(0)
                     .createdAt(timestamp)
@@ -42,9 +40,9 @@ public class PostCreate {
         private boolean isNotice;
         private int views;
         private int likes;
+        private int postGroupId;
         private Timestamp createdAt;
         private Timestamp updatedAt;
-
         // entity -> dto
         public ResponseDto(Post post) {
             this.id = post.getId();
@@ -53,9 +51,9 @@ public class PostCreate {
             this.isNotice = post.isNotice();
             this.views = post.getViews();
             this.likes = post.getLikes();
+            this.postGroupId = post.getPostGroupId();
             this.createdAt = post.getCreatedAt();
             this.updatedAt = post.getUpdatedAt();
         }
-
     }
 }

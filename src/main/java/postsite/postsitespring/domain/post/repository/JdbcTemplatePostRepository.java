@@ -51,14 +51,14 @@ public class JdbcTemplatePostRepository implements PostRepository{
 
     @Override
     public List<Post> findAll(Long boardId, Long page) {
-        final String sql = "SELECT * FROM post ORDER BY id DESC LIMIT ? OFFSET ?" ;
-        return jdbcTemplate.query(sql, postRowMapper(),10,page);
+        final String sql = "SELECT * FROM post WHERE post_group_id = ? ORDER BY id DESC LIMIT ? OFFSET ?" ;
+        return jdbcTemplate.query(sql, postRowMapper(), boardId, 10, page);
     }
 
     @Override
     public List<Post> findAll(Long boardId, Long page, String searchKeyword) {
-        final String sql = "SELECT * FROM post WHERE title LIKE ? ORDER BY id DESC LIMIT ? OFFSET ?";
-        return jdbcTemplate.query(sql, postRowMapper(),'%' + searchKeyword + '%', 10, page);
+        final String sql = "SELECT * FROM post WHERE title LIKE ?  AND post_group_id = ? ORDER BY id DESC LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, postRowMapper(),'%' + searchKeyword + '%', boardId, 10, page);
     }
 
     @Override
@@ -80,6 +80,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
                     .title(rs.getString("title"))
                     .content(rs.getString("content"))
                     .isNotice(rs.getInt("is_notice") > 0)
+                    .postGroupId(rs.getInt("post_group_id"))
                     .views(rs.getInt("views"))
                     .likes(rs.getInt("likes"))
                     .createdAt(rs.getTimestamp("created_at"))
