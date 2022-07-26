@@ -79,8 +79,8 @@ class PostServiceIntegrationTest {
 
     @Test
     public void 게시글_모두조회() throws Exception {
-        List<Post> posts = postService.findPosts();
-        for (Post post : posts) {
+        List<PostDto> posts = postService.findPosts();
+        for (PostDto post : posts) {
             System.out.println("post_Id :" + post.getId() + "       post.getTitle() : " + post.getTitle() + "      post.getContent() : " + post.getContent());
 
         }

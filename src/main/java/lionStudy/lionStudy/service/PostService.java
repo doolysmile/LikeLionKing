@@ -55,9 +55,25 @@ public class PostService {
     /**
      * 전체 게시글 조회
      */
-    public List<Post> findPosts() {
-        return postRepository.findAll();
+    public List<PostDto> findPosts() {
+        List<Post> posts = postRepository.findAll();
+        List<PostDto> postDtos = new ArrayList<>();
+        for (Post post : posts) {
+            PostDto build = PostDto.builder()
+                    .id(post.getId())
+                    .userId(post.getUserId())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .views(post.getViews())
+                    .recommended(post.getRecommended())
+                    .build();
+            postDtos.add(build);
+        }
+        return postDtos;
     }
+
+
+
 
     public Optional<Post> findOne(Long postId){
         Optional<Post> findPost = postRepository.findById(postId);

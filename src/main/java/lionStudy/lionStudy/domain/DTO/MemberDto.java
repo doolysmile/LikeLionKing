@@ -41,7 +41,6 @@ public class MemberDto {
 
     public Member toEntity(){
         Member mebmer = new Member.Builder(id, loginId, loginPwd, name, role).build();
-
         return mebmer;
     }
 
