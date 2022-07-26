@@ -4,6 +4,7 @@ import lionStudy.lionStudy.domain.DTO.MemberDto;
 import lionStudy.lionStudy.domain.Member;
 import lionStudy.lionStudy.repository.MemberRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +37,21 @@ public class MemberService {
     /**
      * 전체 회원 조회
      */
-    public List<Member> findMembers() {
-        return memberRepository.findAll();
+    public List<MemberDto> findMembers() {
+        List<Member> members = memberRepository.findAll();
+        List<MemberDto> memberDtos = new ArrayList<>();
+        for (Member member : members) {
+            // (Long id, String loginId, String loginPwd, String name, int role) {
+            MemberDto memberDto = MemberDto.builder()
+                    .id(member.getId())
+                    .loginId(member.getLoginId())
+                    .loginPwd(member.getLoginPwd())
+                    .name(member.getName())
+                    .role(member.getRole())
+                    .build();
+            memberDtos.add(memberDto);
+        }
+        return memberDtos;
     }
 
     /**

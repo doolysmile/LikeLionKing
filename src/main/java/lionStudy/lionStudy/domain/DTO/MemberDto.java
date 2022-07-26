@@ -22,6 +22,15 @@ public class MemberDto {
 
     public MemberDto(){}
 
+    @Builder
+    public MemberDto(Long id, String loginId, String loginPwd, String name, int role) {
+        this.id = id;
+        this.loginId = loginId;
+        this.loginPwd = loginPwd;
+        this.name = name;
+        this.role = role;
+    }
+
     public MemberDto(Member member) {
         this.id = member.getId();
         this.loginId = member.getLoginId();
