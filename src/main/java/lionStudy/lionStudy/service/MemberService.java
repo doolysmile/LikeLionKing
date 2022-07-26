@@ -19,9 +19,7 @@ public class MemberService {
      */
     public Long join(MemberDto member){
         validateDuplicateMember(member);
-        memberRepository.save(member);
-
-        return member.getId();
+        return memberRepository.save(member.toEntity()).getId();
     }
 
     private void validateDuplicateMember(MemberDto member) {
@@ -29,6 +27,10 @@ public class MemberService {
                 .ifPresent(m -> {
                throw new IllegalStateException("이미 존재하는 회원입니다.");
            });
+        memberRepository.findByLoginId(member.getLoginId())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 ID 입니다.");
+                });
     }
 
     /**

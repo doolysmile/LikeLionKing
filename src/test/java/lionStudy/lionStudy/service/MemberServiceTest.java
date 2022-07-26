@@ -24,10 +24,10 @@ class MemberServiceIntegrationTest {
     public void 회원가입() throws Exception {
         //Given
         MemberDto member = new MemberDto();
-        member.setName("hello5");
-        member.setLoginId("likeLion");
-        member.setLoginPwd("pbs");
-        member.setRole(2);
+        member.setName("hello8");
+        member.setLoginId("likeLion12");
+        member.setLoginPwd("pbs123");
+        member.setRole(1);
         //When
         Long saveId = memberService.join(member);
         System.out.println("saveId = " + saveId);

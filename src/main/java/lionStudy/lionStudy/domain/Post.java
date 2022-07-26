@@ -7,7 +7,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
 public class Post {
 
     private Long id; // 식별자
