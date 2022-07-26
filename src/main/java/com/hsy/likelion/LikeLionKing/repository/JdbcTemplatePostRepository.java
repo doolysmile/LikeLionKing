@@ -30,6 +30,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         // 테이블명, pk, 컬럼 정보 -> insert문 자동 생성
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
+
         // 파라미터
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("member_id", post.getMemberId());
@@ -40,6 +41,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         // DB에서
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         post.setId(key.longValue());
+
         return post;    // 게시글 반환
     }
 
