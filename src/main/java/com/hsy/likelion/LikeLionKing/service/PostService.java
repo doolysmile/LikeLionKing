@@ -26,6 +26,11 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    // 게시글 카테고리 id로 조회
+    public List<Post> findByCategoryId(Integer categoryId) {
+        return postRepository.findByCategoryId(categoryId);
+    }
+
     // 게시글 id로 조회
     public Optional<Post> findById(Long id) {
         return postRepository.findById(id);

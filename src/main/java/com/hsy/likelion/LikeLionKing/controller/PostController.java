@@ -26,6 +26,7 @@ public class PostController {
         this.postService = postService;
     }
 
+    // 게시글 등록
     @PostMapping("/doWrite")
     public ResponseEntity<PostCreateDto> createPost(@RequestBody PostCreateDto postCreateDto) {
         Post post = PostCreateDto.toEntity(postCreateDto);
@@ -35,6 +36,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(PostCreateDto.toDto(createdPost));
     }
 
+    // 게시글 상세화면
     @GetMapping("/detail")
     public ResponseEntity<PostReadDto> getDetailPost(@RequestParam("id") Long id) {
         Post post = postService.findById(id).orElse(null);// 없으면 null로 반환
@@ -42,6 +44,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(PostReadDto.toDto(post));
     }
 
+    // 게시글 전체 조회
     @GetMapping
     public ResponseEntity<List<PostReadDto>> getPosts() {
         // List의 Post를 모두 PostReadDto로 변환하여 List로 반환
@@ -51,12 +54,30 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(postReadDtos);
     }
 
+    // 게시글 카테고리별로 조회
+    @GetMapping("/list")
+    public ResponseEntity<List<PostReadDto>> getPostsByCategoryId(@RequestParam("boardId") Integer categoryId) {
+        // List의 Post를 모두 PostReadDto로 변환하여 List로 반환
+        List<PostReadDto> postReadDtos = postService.findByCategoryId(categoryId).stream()
+                .map(p -> PostReadDto.toDto(p))
+                .toList();
+        return ResponseEntity.status(HttpStatus.OK).body(postReadDtos);
+    }
+
+    // 게시글 수정폼
+    @GetMapping("/modify")
+    public void updatePostForm(@RequestParam("id") Long id) {
+        Post post = postService.findById(id).orElse(null);
+    }
+
+    // 게시글 수정
     @PutMapping("/doModify")
     public void updatePost(@RequestBody PostUpdateDto postUpdateDto) {
         Post post = PostUpdateDto.toEntity(postUpdateDto);
         postService.update(post);
     }
 
+    // 게시글 삭제
     @DeleteMapping("/{postId}")
     public void deletePost(@PathVariable("postId") Long postId) {
         postService.delete(postId);

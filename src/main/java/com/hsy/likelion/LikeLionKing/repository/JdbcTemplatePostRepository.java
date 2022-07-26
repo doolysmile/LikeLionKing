@@ -57,6 +57,12 @@ public class JdbcTemplatePostRepository implements PostRepository{
         return jdbcTemplate.query("select * from post", postRowMapper());
     }
 
+    // categoryId로 조회
+    @Override
+    public List<Post> findByCategoryId(Integer categoryId) {
+        return jdbcTemplate.query("select * from post where category_id = ?", postRowMapper(), categoryId);
+    }
+
     // post update
     @Override
     public void update(Post post) {
