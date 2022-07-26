@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 // @RestController = @Controller + @ResponseBody
@@ -28,8 +29,10 @@ public class PostController {
     @PostMapping("/doWrite")
     public ResponseEntity<PostCreateDto> createPost(@RequestBody PostCreateDto postCreateDto) {
         Post post = PostCreateDto.toEntity(postCreateDto);
-        Post postCreated = postService.save(post);
-        return ResponseEntity.status(HttpStatus.OK).body(PostCreateDto.toDto(postCreated));
+        Long id = postService.save(post);   // 등록된 게시글 id
+        // 등록된 게시글
+        Post createdPost = postService.findById(id).orElse(null);
+        return ResponseEntity.status(HttpStatus.OK).body(PostCreateDto.toDto(createdPost));
     }
 
     @GetMapping("/detail")

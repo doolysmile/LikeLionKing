@@ -17,7 +17,7 @@ public class PostService {
         this.postRepository = postRepository;
     }
     // 게시글 등록
-    public Post save(Post post) {
+    public Long save(Post post) {
         return postRepository.save(post);
     }
 

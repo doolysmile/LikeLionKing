@@ -26,7 +26,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
 
     // Create
     @Override
-    public Post save(Post post) {
+    public Long save(Post post) {
         // 테이블명, pk, 컬럼 정보 -> insert문 자동 생성
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
@@ -42,7 +42,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         post.setId(key.longValue());
 
-        return post;    // 게시글 반환
+        return post.getId();    // 게시글 id 반환
     }
 
     // 해당 id의 post를 Optional로 반환하는 메서드
