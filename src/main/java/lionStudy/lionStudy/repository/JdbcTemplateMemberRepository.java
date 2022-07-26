@@ -55,9 +55,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
     }
 
     @Override
-    public Optional<Member> findByLoginId(String loginId) {
-        List<Member> result = jdbcTemplate.query("select * from member where loginid = ?", memberRowMapper(), loginId);
-        return result.stream().findAny();
+    public Optional<Member> findByLoginId(String name) {
+        return Optional.empty();
     }
 
     @Override

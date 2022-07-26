@@ -19,19 +19,23 @@ public class PostDto {
     private Long recommended; // 추천수
 
     public PostDto(){}
+
     @Builder
-    public PostDto(Post post) {
-        this.id = post.getId();
-        this.userId = post.getUserId();
-        this.title = post.getTitle();
-        this.content = post.getContent();
-        this.views = post.getViews();
-        this.recommended = post.getRecommended();
+    public PostDto(Long id, Long userId, String title, String content, Long views, Long recommended) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.views = views;
+        this.recommended = recommended;
+    }
+
+    public static PostDto from(Post post){
+        return new PostDto(post.getId(), post.getUserId(), post.getTitle(), post.getContent(), post.getViews(), post.getRecommended());
     }
 
     public Post toEntity(){
         Post post = new Post.Builder(id, userId, title, content, views, recommended).build();
-
         return post;
 
     }

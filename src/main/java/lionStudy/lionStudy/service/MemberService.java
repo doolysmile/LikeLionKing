@@ -20,7 +20,8 @@ public class MemberService {
      */
     public Long join(MemberDto member){
         validateDuplicateMember(member);
-        return memberRepository.save(member.toEntity()).getId();
+        Member memberEntity = member.toEntity();
+        return memberRepository.save(memberEntity).getId();
     }
 
     private void validateDuplicateMember(MemberDto member) {

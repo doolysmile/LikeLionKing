@@ -21,10 +21,12 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/findAll")
-    public ResponseEntity<List<MemberDto>> findAll(){
-        System.out.println("test");
-        List<MemberDto> memberDtoList = memberService.findMembers();
-        return ResponseEntity.status(HttpStatus.OK).body(memberDtoList);
-    }
+//    @GetMapping("/findAll")
+//    public ResponseEntity<List<MemberDto>> findAll(){
+//        System.out.println("test");
+//        List<MemberDto> memberDtoList = memberService.findMembers();
+//        return ResponseEntity.status(HttpStatus.OK).body(memberDtoList);
+//    }
+
+
 }

@@ -1,11 +1,13 @@
 package lionStudy.lionStudy.service;
 
+import lionStudy.lionStudy.domain.DTO.MemberDto;
 import lionStudy.lionStudy.domain.DTO.PostDto;
 import lionStudy.lionStudy.domain.Member;
 import lionStudy.lionStudy.domain.Post;
 import lionStudy.lionStudy.repository.MemberRepository;
 import lionStudy.lionStudy.repository.PostRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +22,8 @@ public class PostService {
      * 포스트 등록 CRUD- C
      */
     public Long register(PostDto post){
-
-        postRepository.save(post);
+        Post postEntity = post.toEntity();
+        postRepository.save(postEntity).getId();
 
         return post.getId();
     }
@@ -58,6 +60,7 @@ public class PostService {
     }
 
     public Optional<Post> findOne(Long postId){
-        return postRepository.findById(postId);
+        Optional<Post> findPost = postRepository.findById(postId);
+        return findPost;
     }
 }
