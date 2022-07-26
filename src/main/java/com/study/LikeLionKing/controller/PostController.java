@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -77,6 +78,12 @@ public class PostController {
         System.out.println(id);
         PostDto postDto = postService.findById(id);
         return  ResponseEntity.status(HttpStatus.OK).body(postDto);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<PostDto>> list(@RequestParam HashMap<String,String> paramMap){
+        List<PostDto> postDtos = postService.findAll(paramMap);
+        return ResponseEntity.status(HttpStatus.OK).body(postDtos);
     }
 
     @PostMapping("/doWrite")

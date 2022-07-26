@@ -12,4 +12,7 @@ public interface PostRepository {
     void update(Post post);
     void delete(Long id);
     void viewsInc(Long id);
+    List<Post> findByTitleAll(int boardId, String title);
+    List<Post> findAll(int boardId);
+    List<Post> findAll(int boardId, int page);
 }

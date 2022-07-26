@@ -71,6 +71,28 @@ public class JdbcPostRepository implements PostRepository
         jdbcTemplate.update("update post set views=views+1 where id = ?",id );
     }
 
+    @Override
+    public List<Post> findByTitleAll(int postRole, String title) {
+        String wrappedKeyword = "%"+title+"%";
+        return jdbcTemplate
+                .query("select * from post where postRole=? AND title LIKE ? limit 10", postRowMapper(),postRole,wrappedKeyword);
+    }
+
+    @Override
+    public List<Post> findAll(int postRole) {
+        return jdbcTemplate
+                .query("select * from post where postRole= ? limit 10", postRowMapper(),postRole);
+
+    }
+
+    @Override
+    public List<Post> findAll(int postRole, int page) {
+        int idNum = (page-1)*10;
+        return jdbcTemplate
+                .query("select * from post where postRole= ? AND id>= ? AND id< ? limit 10", postRowMapper(),postRole, idNum+1, idNum+11);
+
+    }
+
     private RowMapper<Post> postRowMapper() {
         return (rs, rowNum) -> {
             Post post = new Post();
