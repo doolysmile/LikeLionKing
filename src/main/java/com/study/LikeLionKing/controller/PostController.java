@@ -78,5 +78,31 @@ public class PostController {
         PostDto postDto = postService.findById(id);
         return  ResponseEntity.status(HttpStatus.OK).body(postDto);
     }
+
+    @PostMapping("/doWrite")
+    public ResponseEntity<PostDto> write(@RequestBody PostCreateRequest createRequest){
+        PostDto postDto = PostDto.builder()
+                .title(createRequest.getTitle())
+                .content(createRequest.getContent())
+                .postRole(createRequest.getPostRole())
+                .build();
+        long id = postService.save(postDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
+    }
+
+    @PostMapping("/doModify")
+    public ResponseEntity<PostDto> modify(@RequestBody PostModifyRequest modifyRequest){
+        PostDto postDto = postService.findById(modifyRequest.getId());
+
+        postDto.setContent(modifyRequest.getContent());
+        postDto.setTitle(modifyRequest.getTitle());
+
+        postService.update(postDto);
+
+        System.out.println(postService.findById(modifyRequest.getId()));
+        return ResponseEntity.status(HttpStatus.OK).body(postDto);
+    }
+
 }
 
