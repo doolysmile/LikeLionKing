@@ -29,6 +29,8 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(PostDto.from(post));
     }
 
+
+
     @PostMapping("/doWrite")
     public ResponseEntity<PostDto> write(@RequestBody PostCreateDto postCreateDto) {
         PostDto postDto = PostDto.builder()
