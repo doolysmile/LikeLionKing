@@ -16,4 +16,5 @@ public class Post extends BaseEntity {
     private boolean isNotice;
     private int views;
     private int likes;
+    private int postGroupId;
 }
