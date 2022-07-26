@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-
 class PostServiceIntegrationTest {
 
 
@@ -33,7 +32,7 @@ class PostServiceIntegrationTest {
         //Given
         PostDto post = new PostDto();
         post.setUserId(1L);
-        post.setTitle("test2");
+        post.setTitle("test3");
         post.setContent("testContent");
         post.setViews(30L);
         post.setContent("content2");
