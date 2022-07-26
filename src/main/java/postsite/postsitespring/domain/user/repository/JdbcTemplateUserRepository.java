@@ -3,19 +3,16 @@ package postsite.postsitespring.domain.user.repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 import postsite.postsitespring.domain.user.domain.User;
 import postsite.postsitespring.domain.user.domain.UserRoleTypeEnum;
-import postsite.postsitespring.domain.user.dto.UserCreate;
-import postsite.postsitespring.domain.user.dto.UserUpdate;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@Repository
 public class JdbcTemplateUserRepository implements UserRepository{
 
     private final JdbcTemplate jdbcTemplate;
