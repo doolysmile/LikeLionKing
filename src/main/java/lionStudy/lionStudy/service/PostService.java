@@ -23,9 +23,9 @@ public class PostService {
      */
     public Long register(PostDto post){
         Post postEntity = post.toEntity();
-        postRepository.save(postEntity).getId();
+        Long id = postRepository.save(postEntity).getId();
 
-        return post.getId();
+        return id;
     }
 
     /**

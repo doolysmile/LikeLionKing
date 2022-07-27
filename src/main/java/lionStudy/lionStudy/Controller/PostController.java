@@ -29,24 +29,33 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(PostDto.from(post));
     }
 
-
-
-    @PostMapping("/doWrite")
-    public ResponseEntity<PostDto> write(@RequestBody PostCreateDto postCreateDto) {
-        PostDto postDto = PostDto.builder()
-                .title(postCreateDto.getTitle())
-                .content(postCreateDto.getContent())
-                .build();
-
-        Long id = postService.register(postDto);
-        Post post = postService.findOne(id).orElse(null); // 저장 됐는지 체크
-        return ResponseEntity.status(HttpStatus.OK).body(PostDto.from(post));
+    /**
+     * 수정폼 -> id, 제목, 타이틀만 표시되도록 가정
+     */
+    @GetMapping("/modify")
+    public ResponseEntity<PostCreateDto> getModify(@RequestParam("id") Long id){
+        Post post = postService.findOne(id).orElse(null);
+        return ResponseEntity.status(HttpStatus.OK).body(PostCreateDto.from(post));
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<PostDto>> getPostLists(){
         List<PostDto> lists = postService.findPosts();
         return ResponseEntity.status(HttpStatus.OK).body(lists);
+    }
+
+    @PostMapping("/doWrite")
+    public ResponseEntity<PostDto> write(@RequestBody PostCreateDto postCreateDto) {
+
+        PostDto postDto = PostDto.builder()
+                .title(postCreateDto.getTitle())
+                .content(postCreateDto.getContent())
+                .build();
+        System.out.println("postDto = " + postDto);
+
+        Long id = postService.register(postDto);
+        Post post = postService.findOne(id).orElse(null); // 저장 됐는지 체크
+        return ResponseEntity.status(HttpStatus.OK).body(PostDto.from(post));
     }
 
     @PostMapping("/doModify")

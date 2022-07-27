@@ -26,4 +26,8 @@ public class PostCreateDto {
                 .build();
         return build;
     }
+
+    public static PostCreateDto from(Post post){
+        return new PostCreateDto(post.getId(), post.getTitle(), post.getContent());
+    }
 }
