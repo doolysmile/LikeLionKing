@@ -7,9 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class Member {
     /**
-     * 고민 -> loginId 자체를 primaryKey 지정을 할지,,
+     * 고민 -> loginId 자체를 primaryKey 지정을 할지,, -> 보안 이슈떄문에 그냥 시퀀스로 하는게 나음
      */
     private Long id;
     private String loginId;  // 로그인 아이디

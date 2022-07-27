@@ -18,6 +18,10 @@ public class MemberService {
     /**
      * 회원가입
      */
+
+    public void update(Member member){
+        memberRepository.update(member);
+    }
     public Long join(MemberDto member){
         validateDuplicateMember(member);
         Member memberEntity = member.toEntity();
@@ -60,5 +64,10 @@ public class MemberService {
      */
     public Optional<Member> findOne(Long memberId){
         return memberRepository.findById(memberId);
+    }
+
+    public void delete(Long id) {
+        memberRepository.delete(id);
+
     }
 }

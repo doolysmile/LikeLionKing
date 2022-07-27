@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usr/member")
@@ -36,6 +37,18 @@ public class MemberController {
     }
 
 
+    @PutMapping("/update")
+    public void updateMember(@RequestBody MemberUpdateDto memberUpdateDto) {
+        Member member = MemberUpdateDto.toEntity(memberUpdateDto);
+        memberService.update(member);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteMember(@PathVariable("id") Long id){
+        // 궁금한점 : 현재 해당하는 id를 가진 member 있는지를 체크하는게 맞는지
+        Member checkMember = memberService.findOne(id).orElse(null);
+        memberService.delete(checkMember.getId());
+    }
 
     @PostMapping("/signUp")
     public ResponseEntity<MemberDto> createMember(@RequestBody MemberCreateDto memberCreateDto) {
@@ -51,6 +64,7 @@ public class MemberController {
         Member checkMember = memberService.findOne(id).orElse(null);// 저장 됐는지 체크
         return ResponseEntity.status(HttpStatus.OK).body(MemberDto.from(checkMember));
     }
+
 
 
 
