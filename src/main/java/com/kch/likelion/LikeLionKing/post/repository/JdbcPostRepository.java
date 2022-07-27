@@ -66,11 +66,13 @@ public class JdbcPostRepository implements PostRepository{
         );
     }
 
-    public List<Post> findAll(int offset, int limit) {
+    public List<Post> findAll(int offset, int limit, String searchKeyword) {
         List<Post> results = jdbcTemplate.query(
-                "SELECT p.* FROM posts p ORDER BY p.postSeq LIMIT ?,?",
+                "SELECT p.* FROM posts p WHERE p.title LIKE ? ORDER BY p.postSeq LIMIT ?,?",
                 mapper,
-                offset,limit
+                '%'+ searchKeyword + '%',
+                offset,
+                limit
         );
         return results;
     }
