@@ -27,18 +27,22 @@ public class JdbcTemplatePostRepository implements PostRepository{
     // Create
     @Override
     public Long save(Post post) {
+        //jdbcTemplate.update("insert into post(member_id, category_id, title, content) values(?, ?, ?, ?)", post.getMemberId(), post.getCategoryId(), post.getTitle(), post.getContent());
         // 테이블명, pk, 컬럼 정보 -> insert문 자동 생성
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
+        jdbcInsert
+                .withTableName("post")  // 테이블명
+                .usingColumns("member_id", "category_id", "title", "content")   // 컬럼정보(insert할 때 사용할 값만, 지정안하면 디폴트로 모든값 대상)
+                .usingGeneratedKeyColumns("id");
 
-        // 파라미터
+        // 컬럼에 값 넣기
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("member_id", post.getMemberId());
         parameters.put("category_id", post.getCategoryId());
         parameters.put("title", post.getTitle());
         parameters.put("content", post.getContent());
 
-        // DB에서
+        // DB에 insert 후 pk 자동 반환
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         post.setId(key.longValue());
 
