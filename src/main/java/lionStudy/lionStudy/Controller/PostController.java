@@ -40,11 +40,11 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(PostCreateDto.from(post));
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<PostDto>> getPostLists(){
-        List<PostDto> lists = postService.findPosts();
-        return ResponseEntity.status(HttpStatus.OK).body(lists);
-    }
+//    @GetMapping("/list")
+//    public ResponseEntity<List<PostDto>> getPostLists(){
+//        List<PostDto> lists = postService.findPosts();
+//        return ResponseEntity.status(HttpStatus.OK).body(lists);
+//    }
 
     @GetMapping("/list")
     public ResponseEntity<List<PostDto>> getPostsByCategoryId(@RequestParam HashMap<String, String> param) {
