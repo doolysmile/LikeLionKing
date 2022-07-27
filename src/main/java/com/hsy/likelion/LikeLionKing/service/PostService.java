@@ -5,6 +5,7 @@ import com.hsy.likelion.LikeLionKing.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,26 @@ public class PostService {
     // 게시글 전체 조회
     public List<Post> findAll() {
         return postRepository.findAll();
+    }
+
+    // 게시글 조회
+    public List<Post> findAll(HashMap<String, String> param) {
+        if (param.containsKey("boardId")) {
+            Integer categoryId = Integer.parseInt(param.get("boardId"));
+            if (param.containsKey("page")) {
+                Integer page = Integer.parseInt(param.get("page"));
+                // boardId, page
+                return postRepository.findByCategoryPage(categoryId, page);
+            }
+            if (param.containsKey("searchKeyword")) {
+                String search = param.get("searchKeyword");
+                // boardId, searchKeyword
+                return postRepository.findByCategorySearchAll(categoryId, search);
+            }
+            // boardId
+            return postRepository.findByCategoryId(categoryId);
+        }
+        return null;
     }
 
     // 게시글 카테고리 id로 조회

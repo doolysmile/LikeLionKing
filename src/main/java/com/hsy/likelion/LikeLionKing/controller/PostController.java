@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -54,10 +55,11 @@ public class PostController {
     }
 
     // 게시글 카테고리별로 조회
+    // 파라미터 값이 몇 개가 들어올지 모르기 때문에 HashMap으로 받음
     @GetMapping("/list")
-    public ResponseEntity<List<PostReadDto>> getPostsByCategoryId(@RequestParam("boardId") Integer categoryId) {
+    public ResponseEntity<List<PostReadDto>> getPostsByCategoryId(@RequestParam HashMap<String, String> param) {
         // List의 Post를 모두 PostReadDto로 변환하여 List로 반환
-        List<PostReadDto> postReadDtos = postService.findByCategoryId(categoryId).stream()
+        List<PostReadDto> postReadDtos = postService.findAll(param).stream()
                 .map(p -> PostReadDto.toDto(p))
                 .toList();
         return ResponseEntity.status(HttpStatus.OK).body(postReadDtos);

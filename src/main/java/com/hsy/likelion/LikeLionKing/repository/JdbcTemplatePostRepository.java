@@ -61,10 +61,22 @@ public class JdbcTemplatePostRepository implements PostRepository{
         return jdbcTemplate.query("select * from post", postRowMapper());
     }
 
-    // categoryId로 조회
+    // 해당 카테고리 게시글 상위 10개 조회
     @Override
     public List<Post> findByCategoryId(Integer categoryId) {
-        return jdbcTemplate.query("select * from post where category_id = ?", postRowMapper(), categoryId);
+        return jdbcTemplate.query("select * from post where category_id = ? limit 10", postRowMapper(), categoryId);
+    }
+
+    // 해당 카테고리의 n번 페이지 게시글 10개 조회
+    @Override
+    public List<Post> findByCategoryPage(Integer categoryId, Integer page) {
+        return jdbcTemplate.query("select * from post where category_id = ? limit ?, 10", postRowMapper(), categoryId, (page - 1) * 10);
+    }
+
+    // 해당 카테고리에서 검색어로 시작하는 게시글 10개 조회
+    @Override
+    public List<Post> findByCategorySearchAll(Integer categoryId, String search) {
+        return jdbcTemplate.query("select * from post where category_id = ? and title like ? limit 10", postRowMapper(), categoryId, search + "%");
     }
 
     // post update
