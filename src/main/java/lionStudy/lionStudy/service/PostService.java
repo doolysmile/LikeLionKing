@@ -7,9 +7,7 @@ import lionStudy.lionStudy.domain.Post;
 import lionStudy.lionStudy.repository.MemberRepository;
 import lionStudy.lionStudy.repository.PostRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PostService {
 
@@ -78,5 +76,31 @@ public class PostService {
     public Optional<Post> findOne(Long postId){
         Optional<Post> findPost = postRepository.findById(postId);
         return findPost;
+    }
+
+    public List<Post> findPosts(HashMap<String, String> param) {
+
+        // boardId 포함
+        if (param.containsKey("boardId")) {
+            int categoryId = Integer.parseInt(param.get("boardId"));
+            //  boardId=1&page=2 (둘다 포함
+            if(param.containsKey("page")){
+
+                int page = Integer.parseInt(param.get("page"));
+
+                return postRepository.findByCategory_WithPageNum(categoryId, page);
+            }
+
+            if (param.containsKey("searchKeyword")) {
+
+                String searchKeyword = param.get("searchKeyword");
+                return postRepository.findByCategory_WithKeyword(categoryId, searchKeyword);
+            }
+
+            return postRepository.find_LatestPosts10(categoryId);
+        }
+
+
+        return null;
     }
 }

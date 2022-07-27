@@ -29,6 +29,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
 
+        parameters.put("categoryId", post.getCategoryId());
         parameters.put("userId", post.getUserId());
         parameters.put("title", post.getTitle());
         parameters.put("content", post.getContent());
@@ -52,6 +53,26 @@ public class JdbcTemplatePostRepository implements PostRepository{
     @Override
     public List<Post> findAll() {
         return jdbcTemplate.query("select * from post", postRowMapper());
+    }
+
+//    내용 : 1번 게시판(공지사항)의 게시물 10개 노출, 1 페이지
+    @Override
+    public List<Post> find_LatestPosts10(int categoryId) {
+        return jdbcTemplate.query("select * from post where categoryId = ? limit 10", postRowMapper(), categoryId);
+    }
+
+//    내용 : 2번 게시판(자유게시판)의 게시물 10개 노출, 1 페이지
+    @Override
+    public List<Post> findByCategory_WithPageNum(int categoryId, int pageNum) {
+        // limit 시작점, 갯수 (아래 예의 경우 5번째부터 10개 추출, 첫번째 파라미터는 0 부터 시작 )
+        // select * from {table_name} limit 4, 10;
+        return jdbcTemplate.query("select * from post where category_id = ? limit ?, 10", postRowMapper(), categoryId, (pageNum - 1) * 10);
+    }
+
+//    내용 : 2번 게시판(자유게시판)의 게시물 중에서, 제목에 11이라는 문장이 포함된 것들만 추려서 10개 노출
+    @Override
+    public List<Post> findByCategory_WithKeyword(int categoryId, String keyword) {
+        return jdbcTemplate.query("select * from post where categoryId = ? and title like ? limit 10", postRowMapper(), categoryId, keyword + "%");
     }
 
     @Override
@@ -79,6 +100,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         return (rs, rowNum) -> {
             Post post = new Post();
             post.setId(rs.getLong("id"));
+            post.setCategoryId(rs.getInt("categoryId"));
             post.setUserId(rs.getLong("userId"));
             post.setTitle(rs.getString("title"));
             post.setContent(rs.getString("content"));

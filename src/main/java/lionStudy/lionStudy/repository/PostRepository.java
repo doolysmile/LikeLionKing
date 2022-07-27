@@ -12,6 +12,10 @@ public interface PostRepository {
     Optional<Post> findById(Long id);
     List<Post> findAll();
 
+    List<Post> find_LatestPosts10(int categoryId);
+    List<Post> findByCategory_WithPageNum(int categoryId, int pageNum);
+    List<Post> findByCategory_WithKeyword(int categoryId, String keyword);
+
     void deleteById(Long id);
 
     void updateById(String title, String content, Long id);

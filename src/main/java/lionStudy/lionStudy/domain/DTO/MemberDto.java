@@ -31,9 +31,6 @@ public class MemberDto {
         this.name = name;
         this.role = role;
     }
-    public static PostDto from(Post post){
-        return new PostDto(post.getId(), post.getUserId(), post.getTitle(), post.getContent(), post.getViews(), post.getRecommended());
-    }
 
     public static MemberDto from(Member member) {
         return new MemberDto(member.getId(), member.getLoginId(), member.getLoginPwd(), member.getName(), member.getRole());
