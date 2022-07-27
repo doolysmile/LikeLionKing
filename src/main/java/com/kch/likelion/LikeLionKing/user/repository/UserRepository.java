@@ -15,4 +15,5 @@ public interface UserRepository {
 
     List<User> findAll();
 
+    Optional<User> findByLoginId(User user);
 }

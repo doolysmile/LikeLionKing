@@ -35,4 +35,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User doLogin(User loginUser) {
+        User user = userRepository.findByLoginId(loginUser).get();
+        if(user == null){
+            return null;
+        }
+        else{
+            if(user.getLoginPw() == loginUser.getLoginPw()){
+                return user;
+            }
+        }
+        // TODO : 비밀번호 틀렸다고 알려주기
+        return null;
+    }
 }

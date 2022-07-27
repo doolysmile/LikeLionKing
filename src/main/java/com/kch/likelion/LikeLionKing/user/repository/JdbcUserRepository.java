@@ -1,6 +1,5 @@
 package com.kch.likelion.LikeLionKing.user.repository;
 
-import com.kch.likelion.LikeLionKing.post.domain.Post;
 import com.kch.likelion.LikeLionKing.user.domain.User;
 import com.kch.likelion.LikeLionKing.user.domain.UserRole;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 @Repository
 public class JdbcUserRepository implements UserRepository{
@@ -64,6 +66,17 @@ public class JdbcUserRepository implements UserRepository{
                 mapper
         );
         return null;
+    }
+
+    @Override
+    public Optional<User> findByLoginId(User user) {
+        List<User> users = jdbcTemplate.query(
+                "SELECT u.* FROM users u WHERE loginId=?",
+                mapper,
+                user.getLoginId()
+        );
+
+        return ofNullable(users.isEmpty() ? null : users.get(0));
     }
 
     static RowMapper<User> mapper = (rs, rowMapper) -> new User.Builder()
