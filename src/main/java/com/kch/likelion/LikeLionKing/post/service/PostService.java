@@ -25,8 +25,9 @@ public class PostService {
     }
 
     @Transactional
-    public void update(Post post){
+    public Post update(Post post){
         postRepository.update(post);
+        return findById(post.getPostSeq());
     }
 
     @Transactional
@@ -39,4 +40,8 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public Post findById(Long id){
+        return postRepository.findById(id).get();
+    }
 }

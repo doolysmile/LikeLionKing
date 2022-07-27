@@ -13,6 +13,9 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 
 @Repository
@@ -70,6 +73,17 @@ public class JdbcPostRepository implements PostRepository{
         );
         return results;
     }
+
+    @Override
+    public Optional<Post> findById(Long id) {
+        List<Post> posts = jdbcTemplate.query(
+                "SELECT * FROM posts WHERE postSeq=?",
+                mapper,
+                id
+        );
+        return ofNullable(posts.isEmpty() ? null : posts.get(0));
+    }
+
     static RowMapper<Post> mapper = (rs, rowNum) -> new Post.Builder()
             .postSeq(rs.getLong("postSeq"))
             .userSeq(rs.getLong("userSeq"))
