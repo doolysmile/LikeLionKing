@@ -62,7 +62,6 @@ public class PostController {
                 .title(postCreateDto.getTitle())
                 .content(postCreateDto.getContent())
                 .build();
-        System.out.println("postDto = " + postDto);
 
         Long id = postService.register(postDto);
         Post post = postService.findOne(id).orElse(null); // 저장 됐는지 체크
