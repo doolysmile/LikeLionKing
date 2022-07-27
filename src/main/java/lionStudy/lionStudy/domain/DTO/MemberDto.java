@@ -2,6 +2,7 @@ package lionStudy.lionStudy.domain.DTO;
 
 
 import lionStudy.lionStudy.domain.Member;
+import lionStudy.lionStudy.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,13 +31,12 @@ public class MemberDto {
         this.name = name;
         this.role = role;
     }
+    public static PostDto from(Post post){
+        return new PostDto(post.getId(), post.getUserId(), post.getTitle(), post.getContent(), post.getViews(), post.getRecommended());
+    }
 
-    public MemberDto(Member member) {
-        this.id = member.getId();
-        this.loginId = member.getLoginId();
-        this.loginPwd = member.getLoginPwd();
-        this.name = member.getName();
-        this.role = member.getRole();
+    public static MemberDto from(Member member) {
+        return new MemberDto(member.getId(), member.getLoginId(), member.getLoginPwd(), member.getName(), member.getRole());
     }
 
     public Member toEntity(){

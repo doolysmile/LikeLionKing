@@ -1,9 +1,7 @@
 package lionStudy.lionStudy.Controller;
 
 
-import lionStudy.lionStudy.domain.DTO.MemberDto;
-import lionStudy.lionStudy.domain.DTO.MemberReadDto;
-import lionStudy.lionStudy.domain.DTO.PostDto;
+import lionStudy.lionStudy.domain.DTO.*;
 import lionStudy.lionStudy.domain.Member;
 import lionStudy.lionStudy.domain.Post;
 import lionStudy.lionStudy.service.MemberService;
@@ -11,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +33,23 @@ public class MemberController {
         Member member = memberService.findOne(id).orElse(null); // 없으면 null로 반환
         // null에 대한 처리를 어떻게 해야할까
         return ResponseEntity.status(HttpStatus.OK).body(MemberReadDto.from(member));
+    }
+
+
+
+    @PostMapping("/signUp")
+    public ResponseEntity<MemberDto> createMember(@RequestBody MemberCreateDto memberCreateDto) {
+
+        MemberDto memberDto = MemberDto.builder()
+                .loginId(memberCreateDto.getLoginId())
+                .loginPwd(memberCreateDto.getLoginPwd())
+                .name(memberCreateDto.getName())
+                .role(memberCreateDto.getRole())
+                .build();
+
+        Long id = memberService.join(memberDto);
+        Member checkMember = memberService.findOne(id).orElse(null);// 저장 됐는지 체크
+        return ResponseEntity.status(HttpStatus.OK).body(MemberDto.from(checkMember));
     }
 
 
