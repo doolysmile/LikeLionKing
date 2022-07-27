@@ -36,8 +36,8 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<Post> findAll(){
-        return postRepository.findAll();
+    public List<Post> findAll(int offset, int limit){
+        return postRepository.findAll(offset, limit);
     }
 
     @Transactional(readOnly = true)
