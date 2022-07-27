@@ -29,9 +29,6 @@ public class JdbcTemplatePostRepository implements PostRepository{
         // jdbc 설정
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
-//        Map<String, Object> parameters = new HashMap<>();
-//        parameters.put("title", post.getTitle());
-//        parameters.put("content", post.getContent());
 
         // getter를 통해 자동으로 객체의 필드값 추출.
         SqlParameterSource params = new BeanPropertySqlParameterSource(post);
