@@ -14,4 +14,5 @@ public interface PostRepository {
     void delete(Long id);
     List<Post> findByCategoryPage(Integer categoryId, Integer page);
     List<Post> findByCategorySearchAll(Integer categoryId, String search);
+    void increaseViews(Long id);
 }

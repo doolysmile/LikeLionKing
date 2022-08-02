@@ -79,6 +79,11 @@ public class JdbcTemplatePostRepository implements PostRepository{
         return jdbcTemplate.query("select * from post where category_id = ? and title like ? limit 10", postRowMapper(), categoryId, search + "%");
     }
 
+    @Override
+    public void increaseViews(Long id) {
+        jdbcTemplate.update("update post set views = views + 1 where id = ?", id);
+    }
+
     // post update
     @Override
     public void update(Post post) {

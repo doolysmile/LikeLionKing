@@ -54,6 +54,7 @@ public class PostService {
 
     // 게시글 id로 조회
     public Optional<Post> findById(Long id) {
+        increaseViews(id);
         return postRepository.findById(id);
     }
 
@@ -65,5 +66,10 @@ public class PostService {
     // 게시글 삭제
     public void delete(Long id) {
         postRepository.delete(id);
+    }
+
+    // 게시글 조회수 증가
+    public void increaseViews(Long id) {
+        postRepository.increaseViews(id);
     }
 }
