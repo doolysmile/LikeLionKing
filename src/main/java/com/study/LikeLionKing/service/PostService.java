@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,7 @@ public class PostService {
         if(post.isEmpty()){
             return null;
         }
+        postRepository.viewsInc(id); // 게시물 조회시 조회수 1 증가
         Post temp = post.get();
         PostDto postDto = PostDto.builder()
                 .id(temp.getId())
@@ -70,6 +72,25 @@ public class PostService {
         return postDtos;
     }
 
+    public List<PostDto> findAll(Map<String, String> paramMap){ // boardId는 boardRole을 의미함
+        int boardRole = Integer.parseInt(paramMap.get("boardId"));
+        List<PostDto> postDtos;
+        if(paramMap.size()==1){  //boardId만 넘겼을 때
+             postDtos = toDtoList(postRepository.findAll(boardRole));
+        }
+        else{
+            if(paramMap.containsKey("page")){ //boardId와 page를 넘겼을 때
+                int pageNum = Integer.parseInt(paramMap.get("page"));
+                postDtos = toDtoList(postRepository.findAll(boardRole, pageNum));
+            }
+            else{ //boardId와 keyword를 넘겼을 때
+                String keyword = paramMap.get("searchKeyword");
+                postDtos =toDtoList(postRepository.findByTitleAll(boardRole,keyword));
+            }
+        }
+        return postDtos;
+    }
+
     public Post update(PostDto postDto){
         LocalDateTime now = LocalDateTime.now();
         postDto.setLastModified(now.toString());
@@ -79,4 +100,24 @@ public class PostService {
     public void delete(Long id){
         postRepository.delete(id);
     }
+
+    public List<PostDto> toDtoList(List<Post> posts){
+        List<PostDto> postDtos = new ArrayList<>();
+        for(Post temp : posts){
+            PostDto postDto = PostDto.builder()
+                    .id(temp.getId())
+                    .postRole(temp.getPostRole())
+                    .content(temp.getContent())
+                    .lastModified(temp.getLastModified())
+                    .memberId(temp.getMemberId())
+                    .written(temp.getWritten())
+                    .title(temp.getTitle())
+                    .recommended(temp.getRecommended())
+                    .views(temp.getViews())
+                    .build();
+            postDtos.add(postDto);
+        }
+        return postDtos;
+    }
 }
+

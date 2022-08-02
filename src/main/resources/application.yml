@@ -9,3 +9,12 @@ spring:
     username: sa # username과 password는 자신의 설정에 맞게
     password:
     driver-class-name: org.h2.Driver
+
+springdoc:
+  swagger-ui:
+    path: '/swagger-ui-custom.html'
+    operationsSorter: method
+  version: 'v1'
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  model-and-view-allowed: true
