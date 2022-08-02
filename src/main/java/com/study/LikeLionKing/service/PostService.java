@@ -35,7 +35,9 @@ public class PostService {
         if(post.isEmpty()){
             return null;
         }
-        postRepository.viewsInc(id); // 게시물 조회시 조회수 1 증가
+        postRepository.viewsInc(id,post.get().getViews()+1); // 게시물 조회시 조회수 1 증가
+        post = postRepository.findById(id); // 조회수 증가 후 다시 객체 받아옴
+
         Post temp = post.get();
         PostDto postDto = PostDto.builder()
                 .id(temp.getId())

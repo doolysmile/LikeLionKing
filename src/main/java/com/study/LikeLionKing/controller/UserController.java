@@ -1,16 +1,13 @@
 package com.study.LikeLionKing.controller;
 
 
-import com.study.LikeLionKing.Request.UserCreateRequest;
-import com.study.LikeLionKing.Request.UserModifyRequest;
-import com.study.LikeLionKing.domain.User;
-import com.study.LikeLionKing.domain.dto.PostDto;
+import com.study.LikeLionKing.request.UserCreateRequest;
+import com.study.LikeLionKing.request.UserModifyRequest;
 import com.study.LikeLionKing.domain.dto.UserDto;
 import com.study.LikeLionKing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,10 +68,5 @@ public class UserController {
         userService.remove(id);
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
-
-
-
-
-
 }
 

@@ -1,10 +1,9 @@
-package com.study.LikeLionKing.Request;
+package com.study.LikeLionKing.request;
 
 import lombok.Getter;
 
 @Getter
-public class UserModifyRequest {
-    private long id;
+public class UserCreateRequest {
     private String loginId;
     private String loginPw;
     private int userRole;

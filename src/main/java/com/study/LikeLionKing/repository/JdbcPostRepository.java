@@ -66,9 +66,9 @@ public class JdbcPostRepository implements PostRepository
     }
 
     @Override
-    public void viewsInc(Long id) {
+    public void viewsInc(Long id, long views) {
         System.out.println("실행됨");
-        jdbcTemplate.update("update post set views=views+1 where id = ?",id );
+        jdbcTemplate.update("update post set views=? where id = ?",views,id );
     }
 
     @Override

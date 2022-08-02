@@ -1,9 +1,10 @@
 package com.study.LikeLionKing.controller;
 
 
-import com.study.LikeLionKing.Request.PostCreateRequest;
-import com.study.LikeLionKing.Request.PostModifyRequest;
+import com.study.LikeLionKing.request.PostCreateRequest;
+import com.study.LikeLionKing.request.PostModifyRequest;
 import com.study.LikeLionKing.domain.dto.PostDto;
+import com.study.LikeLionKing.response.ResponseData;
 import com.study.LikeLionKing.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,83 +24,75 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-
-    // CRUD 테스트
-//    @PostMapping("/create")
-//    public ResponseEntity<PostDto> create(@RequestBody PostCreateRequest createRequest){
-//        PostDto postDto = PostDto.builder()
-//                .title(createRequest.getTitle())
-//                .content(createRequest.getContent())
-//                .postRole(createRequest.getPostRole())
-//                .build();
-//        long id = postService.save(postDto);
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
-//    }
-//
-//    @GetMapping("/find")
-//    public ResponseEntity<PostDto> retrieve(@RequestParam("id") Long id){
-//        System.out.println(id);
-//        PostDto postDto = postService.findById(id);
-//        return  ResponseEntity.status(HttpStatus.OK).body(postDto);
-//    }
-//
-//    @GetMapping("/findAll")
-//    public ResponseEntity<List<PostDto>> retrieveAll(){
-//        List<PostDto> postDtoList = postService.findAll();
-//        return  ResponseEntity.status(HttpStatus.OK).body(postDtoList);
-//    }
-//
-//    @PostMapping("/update")
-//    public ResponseEntity<PostDto> update(@RequestBody PostModifyRequest modifyRequest){
-//        PostDto postDto = postService.findById(modifyRequest.getId());
-//
-//        System.out.println(postDto);
-//        postDto.setContent(modifyRequest.getContent());
-//        postDto.setTitle(modifyRequest.getTitle());
-//
-//        postService.update(postDto);
-//
-//        System.out.println(postService.findById(modifyRequest.getId()));
-//        return ResponseEntity.status(HttpStatus.OK).body(postDto);
-//    }
-//
-//    @GetMapping("/delete")
-//    public ResponseEntity<PostDto> delete(@RequestParam("id") Long id){
-//        postService.delete(id);
-//        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
-//    }
-
-
     // 엔드포인트 구현
 
     @GetMapping("/detail")
-    public ResponseEntity<PostDto> detail(@RequestParam("id")long id){
-        System.out.println(id);
+    public ResponseData detail(@RequestParam("id")long id){
         PostDto postDto = postService.findById(id);
-        return  ResponseEntity.status(HttpStatus.OK).body(postDto);
+        ResponseData<PostDto> responseData;
+        if(postDto == null){
+            responseData = ResponseData.failResponse("해당 id를 가진 post가 존재하지 않습니다.");
+        }
+        else{
+            responseData = ResponseData.successResponse(postDto);
+        }
+        return responseData;
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<PostDto>> list(@RequestParam HashMap<String,String> paramMap){
+    public ResponseData list(@RequestParam HashMap<String,String> paramMap){
+        if(paramMap.isEmpty()){
+            return ResponseData.failResponse("게시판 역할을 선택해주세요.");
+        }
         List<PostDto> postDtos = postService.findAll(paramMap);
-        return ResponseEntity.status(HttpStatus.OK).body(postDtos);
+
+        ResponseData<List<PostDto>> responseData;
+
+        if(postDtos.isEmpty()){
+            responseData = ResponseData.failResponse("해당 페이지에 존재하는 post가 없습니다.");
+        }
+        else{
+            responseData = ResponseData.successResponse(postDtos);
+        }
+        return responseData;
     }
 
     @PostMapping("/doWrite")
-    public ResponseEntity<PostDto> write(@RequestBody PostCreateRequest createRequest){
+    public ResponseData write(@RequestBody PostCreateRequest createRequest){
+        if(createRequest.getPostRole()==-1){
+            return ResponseData.failResponse("게시판 역할을 선택하지 않았습니다.");
+        }
+        if(createRequest.getTitle()==null ){
+            return ResponseData.failResponse("제목이 존재하지 않습니다");
+        }
+        if(createRequest.getContent()==null){
+            return ResponseData.failResponse("내용이 존재하지 않습니다");
+        }
+
         PostDto postDto = PostDto.builder()
                 .title(createRequest.getTitle())
                 .content(createRequest.getContent())
                 .postRole(createRequest.getPostRole())
                 .build();
+
         long id = postService.save(postDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(postService.findById(id));
+        ResponseData responseData = ResponseData.successResponse(postService.findById(id));
+        return responseData;
     }
 
     @PostMapping("/doModify")
-    public ResponseEntity<PostDto> modify(@RequestBody PostModifyRequest modifyRequest){
+    public ResponseData modify(@RequestBody PostModifyRequest modifyRequest){
+        if(modifyRequest.getId()==-1){
+            return ResponseData.failResponse("수정할 게시글 ID를 입력해주세요.");
+        }
+        if(modifyRequest.getTitle()==null ){
+            return ResponseData.failResponse("제목이 존재하지 않습니다");
+        }
+        if(modifyRequest.getContent()==null){
+            return ResponseData.failResponse("내용이 존재하지 않습니다");
+        }
+
         PostDto postDto = postService.findById(modifyRequest.getId());
 
         postDto.setContent(modifyRequest.getContent());
@@ -107,8 +100,7 @@ public class PostController {
 
         postService.update(postDto);
 
-        System.out.println(postService.findById(modifyRequest.getId()));
-        return ResponseEntity.status(HttpStatus.OK).body(postDto);
+        return ResponseData.successResponse(postDto);
     }
 
 }
