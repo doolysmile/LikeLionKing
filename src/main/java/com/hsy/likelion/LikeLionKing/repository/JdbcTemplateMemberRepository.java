@@ -1,6 +1,7 @@
 package com.hsy.likelion.LikeLionKing.repository;
 
 import com.hsy.likelion.LikeLionKing.domain.Member;
+import com.hsy.likelion.LikeLionKing.domain.MemberRole;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -35,7 +36,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
         parameters.put("nickname", member.getNickname());
         parameters.put("email", member.getEmail());
         parameters.put("phone", member.getPhone());
-        parameters.put("role", member.getRole());
+        // int로 넣기
+        parameters.put("role", member.getRole().getValue());
         // DB에서
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         member.setId(key.longValue());
@@ -63,15 +65,16 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
     // 쿼리 결과값(Row 값)들을 RowMapper를 이용해 ResultSet -> 자바 객체로 변환
     private RowMapper<Member> memberRowMapper() {
         return (rs, rowNum) -> {
-            Member member = new Member();
             // "컬럼명"으로 해당 타입 데이터를 받아와 Member 객체로 반환
-            member.setId(rs.getLong("id"));
-            member.setLoginId(rs.getString("login_id"));
-            member.setLoginPw(rs.getString("login_pw"));
-            member.setNickname(rs.getString("nickname"));
-            member.setEmail(rs.getString("email"));
-            member.setPhone(rs.getString("phone"));
-            member.setRole(rs.getInt("role"));
+            Member member = Member.builder()
+                    .id(rs.getLong("id"))
+                    .loginId(rs.getString("login_id"))
+                    .loginPw(rs.getString("login_pw"))
+                    .nickname(rs.getString("nickname"))
+                    .email(rs.getString("email"))
+                    .phone(rs.getString("phone"))
+                    .role(MemberRole.valueOf(rs.getInt("role")))
+                    .build();
             return member;
         };
     }
