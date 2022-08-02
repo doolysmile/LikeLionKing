@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -25,13 +26,17 @@ public class PostController {
         this.postService = postService;
     }
 
+    // 게시글 등록
     @PostMapping("/doWrite")
     public ResponseEntity<PostCreateDto> createPost(@RequestBody PostCreateDto postCreateDto) {
         Post post = PostCreateDto.toEntity(postCreateDto);
-        Post postCreated = postService.save(post);
-        return ResponseEntity.status(HttpStatus.OK).body(PostCreateDto.toDto(postCreated));
+        Long id = postService.save(post);   // 등록된 게시글 id
+        // 등록된 게시글
+        Post createdPost = postService.findById(id).orElse(null);
+        return ResponseEntity.status(HttpStatus.OK).body(PostCreateDto.toDto(createdPost));
     }
 
+    // 게시글 상세화면
     @GetMapping("/detail")
     public ResponseEntity<PostReadDto> getDetailPost(@RequestParam("id") Long id) {
         Post post = postService.findById(id).orElse(null);// 없으면 null로 반환
@@ -39,21 +44,41 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(PostReadDto.toDto(post));
     }
 
+    // 게시글 전체 조회
     @GetMapping
     public ResponseEntity<List<PostReadDto>> getPosts() {
-        // List의 Post를 도두 PostReadDto로 변환하여 List로 반환
+        // List의 Post를 모두 PostReadDto로 변환하여 List로 반환
         List<PostReadDto> postReadDtos = postService.findAll().stream()
                 .map(p -> PostReadDto.toDto(p))
                 .toList();
         return ResponseEntity.status(HttpStatus.OK).body(postReadDtos);
     }
 
+    // 게시글 카테고리별로 조회
+    // 파라미터 값이 몇 개가 들어올지 모르기 때문에 HashMap으로 받음
+    @GetMapping("/list")
+    public ResponseEntity<List<PostReadDto>> getPostsByCategoryId(@RequestParam HashMap<String, String> param) {
+        // List의 Post를 모두 PostReadDto로 변환하여 List로 반환
+        List<PostReadDto> postReadDtos = postService.findAll(param).stream()
+                .map(p -> PostReadDto.toDto(p))
+                .toList();
+        return ResponseEntity.status(HttpStatus.OK).body(postReadDtos);
+    }
+
+    // 게시글 수정폼
+    @GetMapping("/modify")
+    public void updatePostForm(@RequestParam("id") Long id) {
+        Post post = postService.findById(id).orElse(null);
+    }
+
+    // 게시글 수정
     @PutMapping("/doModify")
     public void updatePost(@RequestBody PostUpdateDto postUpdateDto) {
         Post post = PostUpdateDto.toEntity(postUpdateDto);
         postService.update(post);
     }
 
+    // 게시글 삭제
     @DeleteMapping("/{postId}")
     public void deletePost(@PathVariable("postId") Long postId) {
         postService.delete(postId);

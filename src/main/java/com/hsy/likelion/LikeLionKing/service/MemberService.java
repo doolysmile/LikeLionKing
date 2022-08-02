@@ -17,7 +17,7 @@ public class MemberService {
     }
 
     // 회원가입
-    public Member signUp(Member member) {
+    public Long signUp(Member member) {
         return memberRepository.save(member);
     }
 

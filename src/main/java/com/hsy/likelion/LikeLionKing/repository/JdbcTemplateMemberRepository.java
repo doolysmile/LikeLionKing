@@ -23,7 +23,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member save(Member member) {
+    public Long save(Member member) {
         // 테이블명, pk, 컬럼 정보 -> insert문 자동 생성
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
@@ -39,7 +39,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
         // DB에서
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         member.setId(key.longValue());
-        return member;  // 회원 반환
+
+        return member.getId();  // 회원 id 반환
     }
 
     @Override
@@ -50,7 +51,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     @Override
     public void update(Member member) {
-        jdbcTemplate.update("update member set login_pw = ?, nickname = ?, eamil= ?, phone = ? where id = ?", member.getLoginPw(), member.getNickname(), member.getEmail(), member.getPhone(), member.getId());
+        jdbcTemplate.update("update member set login_pw = ?, nickname = ?, email= ?, phone = ? where id = ?", member.getLoginPw(), member.getNickname(), member.getEmail(), member.getPhone(), member.getId());
     }
 
     @Override
