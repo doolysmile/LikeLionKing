@@ -47,18 +47,21 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findById(Long id) {
-        List<Member> members = jdbcTemplate.query("select * from member where id = ?", memberRowMapper(), id);
+        String sql = "SELECT * FROM member WHERE id = ?";
+        List<Member> members = jdbcTemplate.query(sql, memberRowMapper(), id);
         return members.stream().findAny();
     }
 
     @Override
     public void update(Member member) {
-        jdbcTemplate.update("update member set login_pw = ?, nickname = ?, email= ?, phone = ? where id = ?", member.getLoginPw(), member.getNickname(), member.getEmail(), member.getPhone(), member.getId());
+        String sql = "UPDATE member SET login_pw = ?, nickname = ?, email= ?, phone = ? WHERE id = ?";
+        jdbcTemplate.update(sql, member.getLoginPw(), member.getNickname(), member.getEmail(), member.getPhone(), member.getId());
     }
 
     @Override
     public void delete(Long id) {
-        jdbcTemplate.update("delete member where id = ?", id);
+        String sql = "DELETE member WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     // 쿼리 결과를 RowMapper로 매핑하여 원하는 자바 객체로 변환하는 메서드

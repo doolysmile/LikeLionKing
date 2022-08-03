@@ -52,48 +52,56 @@ public class JdbcTemplatePostRepository implements PostRepository{
     // 해당 id의 post를 Optional로 반환하는 메서드
     @Override
     public Optional<Post> findById(Long id) {
-        List<Post> result = jdbcTemplate.query("select * from post where id = ?", postRowMapper(), id);
+        String sql = "SELECT * FROM post WHERE id = ?";
+        List<Post> result = jdbcTemplate.query(sql, postRowMapper(), id);
         return result.stream().findAny();   // 가장 먼저 탐색되는 요소를 Optional로 리턴
     }
 
     @Override
     public List<Post> findAll() {
-        return jdbcTemplate.query("select * from post", postRowMapper());
+        String sql = "SELECT * FROM post";
+        return jdbcTemplate.query(sql, postRowMapper());
     }
 
     // 해당 카테고리 게시글 상위 10개 조회
     @Override
     public List<Post> findByCategoryId(Integer categoryId) {
-        return jdbcTemplate.query("select * from post where category_id = ? limit 10", postRowMapper(), categoryId);
+        String sql = "SELECT * FROM post WHERE category_id = ? LIMIT 10";
+        return jdbcTemplate.query(sql, postRowMapper(), categoryId);
     }
 
     // 해당 카테고리의 n번 페이지 게시글 10개 조회
     @Override
     public List<Post> findByCategoryPage(Integer categoryId, Integer page) {
-        return jdbcTemplate.query("select * from post where category_id = ? limit ?, 10", postRowMapper(), categoryId, (page - 1) * 10);
+        String sql = "SELECT * FROM post WHERE category_id = ? LIMIT ?, 10";
+        return jdbcTemplate.query(sql, postRowMapper(), categoryId, (page - 1) * 10);
     }
 
     // 해당 카테고리에서 검색어로 시작하는 게시글 10개 조회
     @Override
     public List<Post> findByCategorySearchAll(Integer categoryId, String search) {
-        return jdbcTemplate.query("select * from post where category_id = ? and title like ? limit 10", postRowMapper(), categoryId, search + "%");
+        String sql = "SELECT * FROM post WHERE category_id = ? AND title LIKE ? LIMIT 10";
+        return jdbcTemplate.query(sql, postRowMapper(), categoryId, search + "%");
     }
 
     @Override
     public void increaseViews(Long id) {
-        jdbcTemplate.update("update post set views = views + 1 where id = ?", id);
+        String sql = "UPDATE post SET views = views + 1 WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     // post update
     @Override
     public void update(Post post) {
-        jdbcTemplate.update("update post set title = ?, content = ? where id = ?", post.getTitle(), post.getContent(), post.getId());
+        String sql = "UPDATE post SET title = ?, content = ? WHERE id = ?";
+        jdbcTemplate.update(sql, post.getTitle(), post.getContent(), post.getId());
     }
 
     // 해당 id의 post delete
     @Override
     public void delete(Long id) {
-        jdbcTemplate.update("delete from post where id = ?", id);
+        String sql = "DELETE FROM post WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     // 쿼리 결과를 RowMapper로 매핑하여 원하는 자바 객체로 변환하는 메서드

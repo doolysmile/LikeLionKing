@@ -54,6 +54,7 @@ public class PostService {
 
     // 게시글 id로 조회
     public Optional<Post> findById(Long id) {
+        // TODO: id로 조회할 때 증가하도록 하면 등록할 때 조회수가 1로 시작하게됨(고민해보기)
         increaseViews(id);
         return postRepository.findById(id);
     }
