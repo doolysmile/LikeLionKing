@@ -32,9 +32,9 @@ public class UserController {
         User newUser = userService.insert(userRequestDto.newUser());
         // TODO : user가 없을 떄 반환 생각하기
         if(newUser != null){
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body(UserDto.toDto(newUser));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(UserDto.toDto(newUser));
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @PostMapping("/doLogin")

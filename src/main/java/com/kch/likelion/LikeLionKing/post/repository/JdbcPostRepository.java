@@ -80,7 +80,7 @@ public class JdbcPostRepository implements PostRepository{
     @Override
     public Optional<Post> findById(Long id) {
         List<Post> posts = jdbcTemplate.query(
-                "SELECT * FROM posts WHERE postSeq=?",
+                "SELECT p.* FROM posts p WHERE postSeq=?",
                 mapper,
                 id
         );
