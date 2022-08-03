@@ -68,11 +68,12 @@ public class PostController {
         // TODO exception 공통 처리. RestControllerAdvice 사용.
         // TODO exception message 중복 제거해보기.
         // TODO message 응답 안되는부분 고쳐보기
+        // TODO findById 너무 중복됨. 방법 없을까?
         Post post = postService
                 .findById(articleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :" + articleId));
 
-
+        // TODO 매번 ResponseEntity 적용 너무 중복됨. 방법 찾아보자.
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new PostRead.ResponseDto(post));
@@ -102,7 +103,11 @@ public class PostController {
     @DeleteMapping("/{articleId}")
     public ResponseEntity<String> deleteArticle(
             @PathVariable Long articleId
-    ) {
+    ) throws ResourceNotFoundException {
+        postService
+        .findById(articleId)
+        .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :" + articleId));
+
         postService.delete(articleId);
 
         return ResponseEntity

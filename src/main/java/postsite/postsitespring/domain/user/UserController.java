@@ -84,7 +84,11 @@ public class UserController {
     @DeleteMapping({"/{memberId}"})
     public ResponseEntity<String> deleteMember(
             @PathVariable Long memberId
-    ){
+    ) throws ResourceNotFoundException {
+        userService
+        .oneMember(memberId)
+        .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
+
         this.userService.deleteMember(memberId);
 
         return ResponseEntity
