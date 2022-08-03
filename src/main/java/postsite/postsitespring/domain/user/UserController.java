@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import postsite.postsitespring.common.exception.ResourceNotFoundException;
 import postsite.postsitespring.domain.user.domain.User;
 import postsite.postsitespring.domain.user.dto.UserCreate;
 import postsite.postsitespring.domain.user.dto.UserRead;
@@ -50,10 +51,10 @@ public class UserController {
     @GetMapping({"/{memberId}"})
     public ResponseEntity<UserRead.ResponseDto> oneMember(
             @PathVariable Long memberId
-    ){
+    ) throws ResourceNotFoundException {
         User user = userService
                 .oneMember(memberId)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -65,10 +66,10 @@ public class UserController {
     public ResponseEntity<String> updateMember(
             @PathVariable Long memberId,
             @RequestBody UserUpdate.RequestDto body
-    ){
+    ) throws ResourceNotFoundException {
         User user = userService
                 .oneMember(memberId)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
 
         body.updateEntity(user);
 

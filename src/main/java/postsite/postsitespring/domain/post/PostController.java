@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import postsite.postsitespring.common.exception.ResourceNotFoundException;
 import postsite.postsitespring.domain.post.domain.Post;
 import postsite.postsitespring.domain.post.dto.PostCreate;
 import postsite.postsitespring.domain.post.dto.PostRead;
@@ -34,10 +35,9 @@ public class PostController {
         long id = postService.save(post);
         post.setId(id);
 
-        ResponseEntity result =  ResponseEntity
+        return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new PostCreate.ResponseDto(post));
-        return result;
     }
 
     // Read
@@ -64,10 +64,13 @@ public class PostController {
     @GetMapping("/{articleId}")
     public ResponseEntity<PostRead.ResponseDto> articleDetail(
             @PathVariable() Long articleId
-    ) {
+    ) throws ResourceNotFoundException {
+        // TODO exception 공통 처리. RestControllerAdvice 사용.
+        // TODO exception message 중복 제거해보기.
+        // TODO message 응답 안되는부분 고쳐보기
         Post post = postService
                 .findById(articleId)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :" + articleId));
 
 
         return ResponseEntity
@@ -80,11 +83,11 @@ public class PostController {
     public ResponseEntity<String> articleModify(
             @PathVariable Long articleId,
             @RequestBody PostUpdate.RequestDto body
-            ) {
+            ) throws ResourceNotFoundException {
 
         Post post = postService
                 .findById(articleId)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :" + articleId));
 
         body.updateEntity(post);
 
