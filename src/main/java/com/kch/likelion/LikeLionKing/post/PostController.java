@@ -73,7 +73,7 @@ public class PostController {
 //    }
 
     @GetMapping("list")
-    public ResponseEntity<List<PostDto>> listPost(@RequestParam(value = "boardId", defaultValue = "0") int boardType,
+    public ResponseEntity<List<PostDto>> listPost(@RequestParam(value = "boardId", defaultValue = "1") int boardType,
                                                   @RequestParam(value="offset", defaultValue = "0") int offset,
                                                   @RequestParam(value = "limit", defaultValue = "5") int limit,
                                                   @RequestParam(value = "searchKeyword", defaultValue = "")String searchKeyword){
