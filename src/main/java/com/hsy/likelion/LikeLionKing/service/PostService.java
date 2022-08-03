@@ -29,27 +29,21 @@ public class PostService {
 
     // 게시글 조회
     public List<Post> findAll(HashMap<String, String> param) {
+        // size = 10(default)
+        Integer size = Integer.parseInt(param.getOrDefault("size", "10"));
         if (param.containsKey("boardId")) {
             Integer categoryId = Integer.parseInt(param.get("boardId"));
-            if (param.containsKey("page")) {
-                Integer page = Integer.parseInt(param.get("page"));
-                // boardId, page
-                return postRepository.findByCategoryPage(categoryId, page);
-            }
             if (param.containsKey("searchKeyword")) {
                 String search = param.get("searchKeyword");
                 // boardId, searchKeyword
-                return postRepository.findByCategorySearchAll(categoryId, search);
+                return postRepository.findByCategorySearchAll(categoryId, search, size);
             }
-            // boardId
-            return postRepository.findByCategoryId(categoryId);
+            // page = 1(default)
+            Integer page = Integer.parseInt(param.getOrDefault("page", "1"));
+            // boardId, page
+            return postRepository.findByCategoryPage(categoryId, page, size);
         }
         return null;
-    }
-
-    // 게시글 카테고리 id로 조회
-    public List<Post> findByCategoryId(Integer categoryId) {
-        return postRepository.findByCategoryId(categoryId);
     }
 
     // 게시글 id로 조회

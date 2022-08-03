@@ -9,10 +9,9 @@ public interface PostRepository {
     Long save(Post post);
     Optional<Post> findById(Long id);
     List<Post> findAll();
-    List<Post> findByCategoryId(Integer categoryId);
+    List<Post> findByCategoryPage(Integer categoryId, Integer page, Integer size);
+    List<Post> findByCategorySearchAll(Integer categoryId, String search, Integer size);
     void update(Post post);
     void delete(Long id);
-    List<Post> findByCategoryPage(Integer categoryId, Integer page);
-    List<Post> findByCategorySearchAll(Integer categoryId, String search);
     void increaseViews(Long id);
 }

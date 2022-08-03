@@ -63,25 +63,18 @@ public class JdbcTemplatePostRepository implements PostRepository{
         return jdbcTemplate.query(sql, postRowMapper());
     }
 
-    // 해당 카테고리 게시글 상위 10개 조회
-    @Override
-    public List<Post> findByCategoryId(Integer categoryId) {
-        String sql = "SELECT * FROM post WHERE category_id = ? LIMIT 10";
-        return jdbcTemplate.query(sql, postRowMapper(), categoryId);
-    }
-
     // 해당 카테고리의 n번 페이지 게시글 10개 조회
     @Override
-    public List<Post> findByCategoryPage(Integer categoryId, Integer page) {
-        String sql = "SELECT * FROM post WHERE category_id = ? LIMIT ?, 10";
-        return jdbcTemplate.query(sql, postRowMapper(), categoryId, (page - 1) * 10);
+    public List<Post> findByCategoryPage(Integer categoryId, Integer page, Integer size) {
+        String sql = "SELECT * FROM post WHERE category_id = ? LIMIT ?, ?";
+        return jdbcTemplate.query(sql, postRowMapper(), categoryId, (page - 1) * size, size);
     }
 
     // 해당 카테고리에서 검색어로 시작하는 게시글 10개 조회
     @Override
-    public List<Post> findByCategorySearchAll(Integer categoryId, String search) {
-        String sql = "SELECT * FROM post WHERE category_id = ? AND title LIKE ? LIMIT 10";
-        return jdbcTemplate.query(sql, postRowMapper(), categoryId, search + "%");
+    public List<Post> findByCategorySearchAll(Integer categoryId, String search, Integer size) {
+        String sql = "SELECT * FROM post WHERE category_id = ? AND title LIKE ? LIMIT ?";
+        return jdbcTemplate.query(sql, postRowMapper(), categoryId, "%" + search + "%", size);
     }
 
     @Override
