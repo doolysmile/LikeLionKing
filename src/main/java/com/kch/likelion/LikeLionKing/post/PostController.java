@@ -73,11 +73,12 @@ public class PostController {
 //    }
 
     @GetMapping("list")
-    public ResponseEntity<List<PostDto>> listPost(@RequestParam(value="offset", defaultValue = "0") int offset,
+    public ResponseEntity<List<PostDto>> listPost(@RequestParam(value = "boardId", defaultValue = "0") int boardType,
+                                                  @RequestParam(value="offset", defaultValue = "0") int offset,
                                                   @RequestParam(value = "limit", defaultValue = "5") int limit,
                                                   @RequestParam(value = "searchKeyword", defaultValue = "")String searchKeyword){
 
-        List<PostDto> postDtoLists= postService.findAll(offset, limit, searchKeyword).stream()
+        List<PostDto> postDtoLists= postService.findAll(boardType, offset, limit, searchKeyword).stream()
                 .map(PostDto::toDto).collect(toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(postDtoLists);

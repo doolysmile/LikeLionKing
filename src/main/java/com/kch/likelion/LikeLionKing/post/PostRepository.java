@@ -14,7 +14,7 @@ public interface PostRepository {
 
     void delete(long postId);
 
-    List<Post> findAll(int offset, int limit, String searchKeyword);
+    List<Post> findAll(int boardType, int offset, int limit, String searchKeyword);
 
     Optional<Post> findById(Long id);
 }
