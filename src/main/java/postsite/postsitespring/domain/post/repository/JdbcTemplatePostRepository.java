@@ -71,7 +71,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
                     .id(rs.getLong("id"))
                     .title(rs.getString("title"))
                     .content(rs.getString("content"))
-                    .isNotice(rs.getInt("is_notice") > 0)
+                    .isNotice(rs.getByte("is_notice"))
                     .postGroupId(rs.getInt("post_group_id"))
                     .views(rs.getInt("views"))
                     .likes(rs.getInt("likes"))

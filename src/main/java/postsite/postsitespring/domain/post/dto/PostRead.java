@@ -14,7 +14,7 @@ public class PostRead {
         private long id;
         private String title;
         private String content;
-        private boolean isNotice;
+        private Boolean isNotice;
         private int views;
         private int likes;
         private int postGroupId;
@@ -26,7 +26,7 @@ public class PostRead {
             this.id = post.getId();
             this.title = post.getTitle();
             this.content = post.getContent();
-            this.isNotice = post.isNotice();
+            this.isNotice = post.getIsNotice() > 0;
             this.views = post.getViews();
             this.likes = post.getLikes();
             this.postGroupId = post.getPostGroupId();

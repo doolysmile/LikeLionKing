@@ -1,5 +1,6 @@
 package postsite.postsitespring.domain.post.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import postsite.postsitespring.domain.post.domain.Post;
 
@@ -12,23 +13,23 @@ public class PostCreate {
     public static class RequestDto{
         private String title;
         private String body;
-        private boolean isNotice;
+        // is를 붙인 변수를 사용하려면 boolean => Boolean 사용하자.
+        private Boolean isNotice;
         private int postGroupId;
 
         // dto -> entity
         public Post toEntity(){
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            Post post = Post.builder()
+            return Post.builder()
                     .title(title)
                     .content(body)
-                    .isNotice(isNotice)
+                    .isNotice((byte) (isNotice? 1 : 0))
                     .postGroupId(postGroupId)
                     .views(0)
                     .likes(0)
                     .createdAt(timestamp)
                     .updatedAt(timestamp)
                     .build();
-            return post;
         }
     }
 
@@ -37,7 +38,7 @@ public class PostCreate {
         private long id;
         private String title;
         private String content;
-        private boolean isNotice;
+        private Boolean isNotice;
         private int views;
         private int likes;
         private int postGroupId;
@@ -48,7 +49,7 @@ public class PostCreate {
             this.id = post.getId();
             this.title = post.getTitle();
             this.content = post.getContent();
-            this.isNotice = post.isNotice();
+            this.isNotice = post.getIsNotice() > 0;
             this.views = post.getViews();
             this.likes = post.getLikes();
             this.postGroupId = post.getPostGroupId();
