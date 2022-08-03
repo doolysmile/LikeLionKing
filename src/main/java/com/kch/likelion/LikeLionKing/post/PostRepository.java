@@ -17,4 +17,6 @@ public interface PostRepository {
     List<Post> findAll(int boardType, int offset, int limit, String searchKeyword);
 
     Optional<Post> findById(Long id);
+
+    void increaseViews(Post post);
 }

@@ -88,6 +88,15 @@ public class JdbcPostRepository implements PostRepository{
         return ofNullable(posts.isEmpty() ? null : posts.get(0));
     }
 
+    @Override
+    public void increaseViews(Post post) {
+        jdbcTemplate.update(
+                "UPDATE posts SET views=? WHERE postSeq=?",
+                post.getViews(),
+                post.getPostSeq()
+        );
+    }
+
     static RowMapper<Post> mapper = (rs, rowNum) -> new Post.Builder()
             .postSeq(rs.getLong("postSeq"))
             .userSeq(rs.getLong("userSeq"))

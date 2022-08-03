@@ -41,6 +41,11 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public Post findById(Long id){
-        return postRepository.findById(id).get();
+        Post findPost = postRepository.findById(id).get();
+        if(findPost != null){
+            findPost.increaseViews();
+            postRepository.increaseViews(findPost);
+        }
+        return findPost;
     }
 }
