@@ -15,14 +15,10 @@ public class UserController {
 
     private final UserService userService;
 
-//    @GetMapping("/login")
-//    public ResponseEntity<Object> loginForm(){
-//
-//    }
+
 
     @PostMapping("/signUp")
     public ResponseEntity<UserDto> joinUser(@RequestBody UserRequestDto userRequestDto){
-
         User newUser = userService.insert(userRequestDto.newUser());
         // TODO : user가 없을 떄 반환 생각하기
         if(newUser != null){

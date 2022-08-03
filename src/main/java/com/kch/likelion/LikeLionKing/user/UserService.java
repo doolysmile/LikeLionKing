@@ -17,6 +17,9 @@ public class UserService {
 
     @Transactional
     public User insert(User user){
+        if(findByLoginId(user) != null){
+            return null;
+        }
         return userRepository.insert(user);
     }
 
@@ -34,7 +37,10 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
-
+    @Transactional(readOnly = true)
+    public User findByLoginId(User user) {
+        return userRepository.findByLoginId(user).get();
+    }
     public User doLogin(User loginUser) {
         User user = userRepository.findByLoginId(loginUser).get();
         if(user == null){
