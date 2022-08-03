@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.post.controller;
+package com.kch.likelion.LikeLionKing.post;
 
 
 
@@ -6,13 +6,11 @@ import com.kch.likelion.LikeLionKing.post.domain.Post;
 import com.kch.likelion.LikeLionKing.post.domain.PostDto;
 import com.kch.likelion.LikeLionKing.post.domain.PostRequestDto;
 import com.kch.likelion.LikeLionKing.post.domain.PostResponseDto;
-import com.kch.likelion.LikeLionKing.post.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;

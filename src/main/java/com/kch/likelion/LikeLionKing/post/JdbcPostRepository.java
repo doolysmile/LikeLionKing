@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.post.repository;
+package com.kch.likelion.LikeLionKing.post;
 
 
 import com.kch.likelion.LikeLionKing.post.domain.BoardType;

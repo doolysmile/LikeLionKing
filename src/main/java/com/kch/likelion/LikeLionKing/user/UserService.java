@@ -1,7 +1,7 @@
-package com.kch.likelion.LikeLionKing.user.service;
+package com.kch.likelion.LikeLionKing.user;
 
 import com.kch.likelion.LikeLionKing.user.domain.User;
-import com.kch.likelion.LikeLionKing.user.repository.UserRepository;
+import com.kch.likelion.LikeLionKing.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

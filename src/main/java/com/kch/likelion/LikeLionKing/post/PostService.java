@@ -1,8 +1,7 @@
-package com.kch.likelion.LikeLionKing.post.service;
+package com.kch.likelion.LikeLionKing.post;
 
 
 import com.kch.likelion.LikeLionKing.post.domain.Post;
-import com.kch.likelion.LikeLionKing.post.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
