@@ -16,21 +16,24 @@ public class PostCreateDto {
 
 
     @Builder
-    public PostCreateDto(Long id, String title, String content) {
+    public PostCreateDto(Long id, String title, String content, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.createdAt = createdAt;
     }
 
     public static Post toEntity(PostCreateDto postCreateDto) {
         Post build = Post.builder()
                 .title(postCreateDto.getTitle())
                 .content(postCreateDto.getContent())
+                .createdAt(postCreateDto.getCreatedAt())
                 .build();
+
         return build;
     }
 
     public static PostCreateDto from(Post post){
-        return new PostCreateDto(post.getId(), post.getTitle(), post.getContent());
+        return new PostCreateDto(post.getId(), post.getTitle(), post.getContent(), post.getCreatedAt());
     }
 }

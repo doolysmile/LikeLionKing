@@ -23,9 +23,5 @@ public interface PostRepository {
     void updateContentById(String content, Long id);
 
 
-
-
-
-
-
+    void increaseView(Long id);
 }

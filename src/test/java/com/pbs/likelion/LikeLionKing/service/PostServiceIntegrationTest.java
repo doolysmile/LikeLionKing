@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,8 +34,7 @@ class PostServiceIntegrationTest {
         post.setUserId(1L);
         post.setTitle("test3");
         post.setContent("testContent");
-        post.setViews(30L);
-        post.setContent("content2");
+        post.setCreatedAt(LocalDateTime.now().withNano(0));
         //When
         Long saveId = postService.register(post);
         //Then

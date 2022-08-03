@@ -100,4 +100,8 @@ public class PostService {
 
         return null;
     }
+
+    public void increaseView(Long id) {
+        postRepository.increaseView(id);
+    }
 }

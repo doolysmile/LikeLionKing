@@ -14,8 +14,9 @@ create table post
     userId bigint,
     categoryId int,
     title varchar(255),
-    views bigint,
-    recommended bigint,
+    content varchar(255),
+    views bigint default 0,
+    recommended bigint default 0,
     createdAt datetime DEFAULT current_timestamp,
     primary key (id),
     FOREIGN key(userId) references member(id) ON UPDATE CASCADE

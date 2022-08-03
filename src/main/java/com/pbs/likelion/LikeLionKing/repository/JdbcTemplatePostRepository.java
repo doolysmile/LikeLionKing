@@ -25,7 +25,9 @@ public class JdbcTemplatePostRepository implements PostRepository{
     @Override
     public Post save(Post post) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
+        jdbcInsert.withTableName("post")
+                .usingColumns("userId","categoryId","title","content")
+                .usingGeneratedKeyColumns("id");
         Map<String, Object> parameters = new HashMap<>();
 
         parameters.put("categoryId", post.getCategoryId());
@@ -94,6 +96,11 @@ public class JdbcTemplatePostRepository implements PostRepository{
         jdbcTemplate.update("update post set content =? where id = ?", content, id);
     }
 
+    @Override
+    public void increaseView(Long id) {
+        jdbcTemplate.update("update post set views = views+1 where id = ?", id);
+    }
+
 
     private RowMapper<Post> postRowMapper(){
         return (rs, rowNum) -> {
@@ -102,8 +109,8 @@ public class JdbcTemplatePostRepository implements PostRepository{
             post.setCategoryId(rs.getInt("categoryId"));
             post.setUserId(rs.getLong("userId"));
             post.setTitle(rs.getString("title"));
-            post.setContent(rs.getString("content"));
             post.setViews(rs.getLong("views"));
+            post.setContent(rs.getString("content"));
             post.setRecommended(rs.getLong("recommended"));
             post.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
 

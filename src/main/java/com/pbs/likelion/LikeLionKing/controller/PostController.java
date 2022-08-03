@@ -25,10 +25,17 @@ public class PostController {
         this.postService = postService;
     }
 
-
+    /**
+     * 8/3 일자 고민했던점)
+     * 조회수(views)가 올라가는 경우는 detail 밖에 없을거 같음.
+     */
     @GetMapping("/detail")
     public ResponseEntity<PostDto> getDetail(@RequestParam("id") Long id) {
+        postService.increaseView(id);
         Post post = postService.findOne(id).orElse(null); // Optional -> 없으면 null값 반환
+        System.out.println("post.getTitle() = " + post.getTitle());
+        System.out.println("post.getViews() = " + post.getViews());
+
         return ResponseEntity.status(HttpStatus.OK).body(PostDto.from(post));
     }
 
@@ -62,7 +69,7 @@ public class PostController {
         PostDto postDto = PostDto.builder()
                 .title(postCreateDto.getTitle())
                 .content(postCreateDto.getContent())
-                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now().withNano(0))
                 .build();
 
         Long id = postService.register(postDto);
