@@ -11,7 +11,6 @@ import postsite.postsitespring.domain.post.dto.PostUpdate;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -35,9 +34,10 @@ public class PostController {
         long id = postService.save(post);
         post.setId(id);
 
-        return ResponseEntity
+        ResponseEntity result =  ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new PostCreate.ResponseDto(post));
+        return result;
     }
 
     // Read
@@ -66,19 +66,18 @@ public class PostController {
             @PathVariable() Long articleId
     ) {
         Post post = postService.findById(articleId);
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new PostRead.ResponseDto(post));
     }
 
     // Update
-    @PutMapping("/{atricleId}")
+    @PutMapping("/{articleId}")
     public ResponseEntity<String> articleModify(
-            @PathVariable Long atricleId,
+            @PathVariable Long articleId,
             @RequestBody PostUpdate.RequestDto body
             ) {
-        Post post = body.toEntity(atricleId);
+        Post post = body.toEntity(articleId);
 
         postService.update(post);
 
@@ -88,11 +87,11 @@ public class PostController {
     }
 
     //Delete
-    @DeleteMapping("/{atricleId}")
+    @DeleteMapping("/{articleId}")
     public ResponseEntity<String> deleteArticle(
-            @PathVariable Long atricleId
+            @PathVariable Long articleId
     ) {
-        postService.delete(atricleId);
+        postService.delete(articleId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

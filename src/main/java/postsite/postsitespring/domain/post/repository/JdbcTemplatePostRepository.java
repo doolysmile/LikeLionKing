@@ -3,23 +3,20 @@ package postsite.postsitespring.domain.post.repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 import postsite.postsitespring.domain.post.domain.Post;
-import postsite.postsitespring.domain.post.dto.PostCreate;
 
-import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@Repository
 public class JdbcTemplatePostRepository implements PostRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcTemplatePostRepository(DataSource dataSource){
-        jdbcTemplate = new JdbcTemplate(dataSource);
+    public JdbcTemplatePostRepository(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
@@ -27,9 +24,6 @@ public class JdbcTemplatePostRepository implements PostRepository{
         // jdbc 설정
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
-//        Map<String, Object> parameters = new HashMap<>();
-//        parameters.put("title", post.getTitle());
-//        parameters.put("content", post.getContent());
 
         // getter를 통해 자동으로 객체의 필드값 추출.
         SqlParameterSource params = new BeanPropertySqlParameterSource(post);
@@ -49,14 +43,14 @@ public class JdbcTemplatePostRepository implements PostRepository{
 
     @Override
     public List<Post> findAll(Long boardId, Long page) {
-        final String sql = "SELECT * FROM post ORDER BY id DESC LIMIT ? OFFSET ?" ;
-        return jdbcTemplate.query(sql, postRowMapper(),10,page);
+        final String sql = "SELECT * FROM post WHERE post_group_id = ? ORDER BY id DESC LIMIT ? OFFSET ?" ;
+        return jdbcTemplate.query(sql, postRowMapper(), boardId, 10, page);
     }
 
     @Override
     public List<Post> findAll(Long boardId, Long page, String searchKeyword) {
-        final String sql = "SELECT * FROM post WHERE title LIKE ? ORDER BY id DESC LIMIT ? OFFSET ?";
-        return jdbcTemplate.query(sql, postRowMapper(),'%' + searchKeyword + '%', 10, page);
+        final String sql = "SELECT * FROM post WHERE title LIKE ?  AND post_group_id = ? ORDER BY id DESC LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, postRowMapper(),'%' + searchKeyword + '%', boardId, 10, page);
     }
 
     @Override
@@ -77,7 +71,8 @@ public class JdbcTemplatePostRepository implements PostRepository{
                     .id(rs.getLong("id"))
                     .title(rs.getString("title"))
                     .content(rs.getString("content"))
-                    .isNotice(rs.getInt("is_notice") > 0)
+                    .isNotice(rs.getByte("is_notice"))
+                    .postGroupId(rs.getInt("post_group_id"))
                     .views(rs.getInt("views"))
                     .likes(rs.getInt("likes"))
                     .createdAt(rs.getTimestamp("created_at"))

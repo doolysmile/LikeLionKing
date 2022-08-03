@@ -1,8 +1,6 @@
 package postsite.postsitespring.domain.user.repository;
 
 import postsite.postsitespring.domain.user.domain.User;
-import postsite.postsitespring.domain.user.dto.UserCreate;
-import postsite.postsitespring.domain.user.dto.UserUpdate;
 
 import java.util.List;
 
