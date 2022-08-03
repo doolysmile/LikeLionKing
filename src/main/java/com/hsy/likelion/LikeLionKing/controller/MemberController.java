@@ -47,4 +47,12 @@ public class MemberController {
     public void deleteMember(@PathVariable("id") Long id) {
         memberService.delete(id);
     }
+
+    // 중복 ID 검사
+    @GetMapping("/idCheck")
+    public ResponseEntity<Integer> checkMemberId(@RequestParam("id") Long id) {
+        int res = memberService.checkId(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
 }

@@ -64,6 +64,13 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
         jdbcTemplate.update(sql, id);
     }
 
+    @Override
+    public int checkId(Long id) {
+        String sql = "SELECT COUNT(*) FROM member WHERE id = ?";
+
+        return 0;
+    }
+
     // 쿼리 결과를 RowMapper로 매핑하여 원하는 자바 객체로 변환하는 메서드
     // 쿼리 결과값(Row 값)들을 RowMapper를 이용해 ResultSet -> 자바 객체로 변환
     private RowMapper<Member> memberRowMapper() {

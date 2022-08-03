@@ -35,4 +35,14 @@ public class MemberService {
     public void delete(Long id) {
         memberRepository.delete(id);
     }
+
+    public int checkId(Long id) {
+        // TODO: 아이디 중복검사할 때 findById 사용해도 되는지
+        // 중복 아이디: 1, 아니면: 0
+        if (memberRepository.findById(id).orElse(null) == null) {
+            return 0;
+        }
+        return 1;
+        //        return memberRepository.checkId(id);
+    }
 }
