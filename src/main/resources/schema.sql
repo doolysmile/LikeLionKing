@@ -16,6 +16,7 @@ create table post
     title varchar(255),
     views bigint,
     recommended bigint,
+    createdAt datetime DEFAULT current_timestamp,
     primary key (id),
     FOREIGN key(userId) references member(id) ON UPDATE CASCADE
 );

@@ -4,12 +4,16 @@ import com.pbs.likelion.LikeLionKing.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 public class PostCreateDto {
     private Long id;
     private String title;
     private String content;
+    private LocalDateTime createdAt; // 생성날짜
+
 
     @Builder
     public PostCreateDto(Long id, String title, String content) {

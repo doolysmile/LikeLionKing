@@ -34,7 +34,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
         parameters.put("content", post.getContent());
         parameters.put("views", post.getViews());
         parameters.put("recommended", post.getRecommended());
-
+        parameters.put("createdAt", post.getCreatedAt());
 
         Number key = jdbcInsert.executeAndReturnKey(new
                 MapSqlParameterSource(parameters));
@@ -105,6 +105,7 @@ public class JdbcTemplatePostRepository implements PostRepository{
             post.setContent(rs.getString("content"));
             post.setViews(rs.getLong("views"));
             post.setRecommended(rs.getLong("recommended"));
+            post.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
 
             return post;
 

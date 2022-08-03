@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -21,10 +23,12 @@ public class PostDto {
     private Long views; // 조회수
     private Long recommended; // 추천수
 
+    private LocalDateTime createdAt; // 생성날짜
+
     public PostDto(){}
 
     @Builder
-    public PostDto(Long id, Long userId, int categoryId, String title, String content, Long views, Long recommended) {
+    public PostDto(Long id, Long userId, int categoryId, String title, String content, Long views, Long recommended, LocalDateTime createdAt) {
         this.id = id;
         this.userId = userId;
         this.categoryId = categoryId;
@@ -32,10 +36,11 @@ public class PostDto {
         this.content = content;
         this.views = views;
         this.recommended = recommended;
+        this.createdAt = createdAt;
     }
 
     public static PostDto from(Post post){
-        return new PostDto(post.getId(), post.getUserId(), post.getCategoryId(),post.getTitle(), post.getContent(), post.getViews(), post.getRecommended());
+        return new PostDto(post.getId(), post.getUserId(), post.getCategoryId(),post.getTitle(), post.getContent(), post.getViews(), post.getRecommended(), post.getCreatedAt());
     }
 
     public Post toEntity(){
@@ -47,7 +52,9 @@ public class PostDto {
                 .content(content)
                 .views(views)
                 .recommended(recommended)
+                .createdAt(createdAt)
                 .build();
+
         return post;
 
     }
