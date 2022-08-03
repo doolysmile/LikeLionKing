@@ -34,7 +34,7 @@ public class UserController {
         if(newUser != null){
             return ResponseEntity.status(HttpStatus.OK).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(newUser));
+        return ResponseEntity.status(HttpStatus.OK).body(UserDto.toDto(newUser));
     }
 
     @PostMapping("/doLogin")
@@ -45,7 +45,7 @@ public class UserController {
         if(findUser != null){
             return ResponseEntity.status(HttpStatus.OK).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(findUser));
+        return ResponseEntity.status(HttpStatus.OK).body(UserDto.toDto(findUser));
     }
 
 }

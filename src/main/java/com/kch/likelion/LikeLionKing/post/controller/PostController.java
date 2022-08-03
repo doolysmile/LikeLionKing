@@ -34,11 +34,9 @@ public class PostController {
     @PostMapping("/doWrite")
     public ResponseEntity<PostDto> doWritePost(@RequestBody PostRequestDto postRequest){
 
-        System.out.println(postRequest.getContent());
         Post newPost = postService.insert(postRequest.newPost());
-        System.out.println(newPost.getPostSeq());
         if(newPost != null){
-            return ResponseEntity.status(HttpStatus.OK).body(new PostDto(newPost));
+            return ResponseEntity.status(HttpStatus.OK).body(PostDto.toDto(newPost));
         }
         // TODO 리턴 값 생각 해보기
         return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -47,17 +45,17 @@ public class PostController {
     @GetMapping("/modify")
     public ResponseEntity<PostDto> modifyPostForm(@RequestParam("id") Long id){
 
-        return ResponseEntity.status(HttpStatus.OK).body(new PostDto(postService.findById(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(PostDto.toDto(postService.findById(id)));
     }
     @PostMapping("/doModify")
     public ResponseEntity<PostDto> doModifyPost(@RequestBody PostRequestDto postWriteRequest){
 
-        return ResponseEntity.status(HttpStatus.OK).body(new PostDto(postService.update(postWriteRequest.newPost())));
+        return ResponseEntity.status(HttpStatus.OK).body(PostDto.toDto(postService.update(postWriteRequest.newPost())));
     }
 
     @GetMapping("/detail")
     public ResponseEntity<PostDto> detailPost(@RequestParam("id") Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(new PostDto(postService.findById(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(PostDto.toDto(postService.findById(id)));
     }
 
     // TODO : 실패 했을 때 예외 처리 해줘야함.
@@ -82,7 +80,7 @@ public class PostController {
                                                   @RequestParam(value = "searchKeyword", defaultValue = "")String searchKeyword){
 
         List<PostDto> postDtoLists= postService.findAll(offset, limit, searchKeyword).stream()
-                .map(PostDto::new).collect(toList());
+                .map(PostDto::toDto).collect(toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(postDtoLists);
     }
