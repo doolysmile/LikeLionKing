@@ -4,6 +4,7 @@ package com.kch.likelion.LikeLionKing.post.repository;
 import com.kch.likelion.LikeLionKing.post.domain.Post;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PostRepository {
 
@@ -13,6 +14,7 @@ public interface PostRepository {
 
     void delete(long postId);
 
-    List<Post> findAll();
+    List<Post> findAll(int offset, int limit, String searchKeyword);
 
+    Optional<Post> findById(Long id);
 }

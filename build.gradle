@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.kch.likelion'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 configurations {
 	compileOnly {
@@ -28,6 +28,11 @@ dependencies {
 
 	//mysql
 	runtimeOnly 'mysql:mysql-connector-java:8.0.20'
+
+	// swagger
+	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.9'
+
 }
 
 tasks.named('test') {
