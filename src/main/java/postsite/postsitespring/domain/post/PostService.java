@@ -3,10 +3,10 @@ package postsite.postsitespring.domain.post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import postsite.postsitespring.domain.post.domain.Post;
-import postsite.postsitespring.domain.post.dto.PostCreate;
 import postsite.postsitespring.domain.post.repository.PostRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -29,7 +29,7 @@ public class PostService {
     }
 
     // 해당 post 조회
-    public Post findById(Long id){
+    public Optional<Post> findById(Long id){
         return postRepository.findById(id);
     }
 

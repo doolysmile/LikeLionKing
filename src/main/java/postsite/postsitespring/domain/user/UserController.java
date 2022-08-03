@@ -51,7 +51,9 @@ public class UserController {
     public ResponseEntity<UserRead.ResponseDto> oneMember(
             @PathVariable Long memberId
     ){
-        User user =  this.userService.oneMember(memberId);
+        User user = userService
+                .oneMember(memberId)
+                .orElseThrow();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -64,16 +66,13 @@ public class UserController {
             @PathVariable Long memberId,
             @RequestBody UserUpdate.RequestDto body
     ){
-        User user = userService.oneMember(memberId);
-
-        if(user == null){
-            // 에러
-
-        }
+        User user = userService
+                .oneMember(memberId)
+                .orElseThrow();
 
         body.updateEntity(user);
 
-       userService.updateMember(user);
+        userService.updateMember(user);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

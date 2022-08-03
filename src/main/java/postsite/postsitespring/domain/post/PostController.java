@@ -65,7 +65,10 @@ public class PostController {
     public ResponseEntity<PostRead.ResponseDto> articleDetail(
             @PathVariable() Long articleId
     ) {
-        Post post = postService.findById(articleId);
+        Post post = postService
+                .findById(articleId)
+                .orElseThrow();
+
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -78,11 +81,10 @@ public class PostController {
             @PathVariable Long articleId,
             @RequestBody PostUpdate.RequestDto body
             ) {
-        Post post = postService.findById(articleId);
 
-        if(post == null){
-            //에러
-        }
+        Post post = postService
+                .findById(articleId)
+                .orElseThrow();
 
         body.updateEntity(post);
 
