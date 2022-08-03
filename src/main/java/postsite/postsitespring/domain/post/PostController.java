@@ -66,6 +66,7 @@ public class PostController {
             @PathVariable() Long articleId
     ) {
         Post post = postService.findById(articleId);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new PostRead.ResponseDto(post));
@@ -77,7 +78,15 @@ public class PostController {
             @PathVariable Long articleId,
             @RequestBody PostUpdate.RequestDto body
             ) {
-        Post post = body.toEntity(articleId);
+        Post post = postService.findById(articleId);
+
+        if(post == null){
+            //에러
+        }
+
+        // TODO 간단하게 만드는법 고민하기.
+        post.setTitle(body.getTitle());
+        post.setContent(body.getBody());
 
         postService.update(post);
 

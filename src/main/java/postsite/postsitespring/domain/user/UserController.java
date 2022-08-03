@@ -64,9 +64,13 @@ public class UserController {
             @PathVariable Long memberId,
             @RequestBody UserUpdate.RequestDto body
     ){
-        User user = body.toEntity(memberId);
+        User user = userService.oneMember(memberId);
 
-        this.userService.updateMember(user);
+        if(user == null){
+            // 에러
+        }
+
+       userService.updateMember(user);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
