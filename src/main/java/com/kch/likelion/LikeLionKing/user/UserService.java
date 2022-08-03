@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -17,6 +18,7 @@ public class UserService {
 
     @Transactional
     public User insert(User user){
+        // 회원 가입할 loginID가 있을 경우
         if(findByLoginId(user) != null){
             return null;
         }
@@ -38,9 +40,10 @@ public class UserService {
         return userRepository.findAll();
     }
     @Transactional(readOnly = true)
-    public User findByLoginId(User user) {
-        return userRepository.findByLoginId(user).get();
+    public Optional<User> findByLoginId(User user) {
+        return userRepository.findByLoginId(user);
     }
+
     public User doLogin(User loginUser) {
         User user = userRepository.findByLoginId(loginUser).get();
         if(user == null){
