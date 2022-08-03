@@ -29,7 +29,6 @@ public class MemberController {
 
     @GetMapping("/info")
     public ResponseEntity<MemberReadDto> getMember(@RequestParam("id") Long id) {
-        System.out.println("test");
         Member member = memberService.findOne(id).orElse(null); // 없으면 null로 반환
         // null에 대한 처리를 어떻게 해야할까
         return ResponseEntity.status(HttpStatus.OK).body(MemberReadDto.from(member));
