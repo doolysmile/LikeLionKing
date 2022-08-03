@@ -67,7 +67,7 @@ public class UserController {
     @GetMapping("/delete")
     public ResponseData delete(@RequestParam("id") Long id){
         userService.remove(id);
-        return return ResponseData.successResponse("삭제가 되었습니다");;
+        return ResponseData.successResponse("삭제가 되었습니다");
     }
 }
 
