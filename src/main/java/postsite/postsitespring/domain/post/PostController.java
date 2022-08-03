@@ -84,9 +84,7 @@ public class PostController {
             //에러
         }
 
-        // TODO 간단하게 만드는법 고민하기.
-        post.setTitle(body.getTitle());
-        post.setContent(body.getBody());
+        body.updateEntity(post);
 
         postService.update(post);
 

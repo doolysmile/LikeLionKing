@@ -68,7 +68,10 @@ public class UserController {
 
         if(user == null){
             // 에러
+
         }
+
+        body.updateEntity(user);
 
        userService.updateMember(user);
 

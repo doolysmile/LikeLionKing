@@ -7,19 +7,14 @@ public class UserUpdate {
 
     @Getter
     public static class RequestDto{
-        private long id;
         private String loginId;
         private String loginPw;
         private String nickname;
 
-        public User toEntity(long id){
-            User user = User.builder()
-                    .id(id)
-                    .loginId(loginId)
-                    .loginPw(loginPw)
-                    .nickname(nickname)
-                    .build();
-            return user;
+        public void updateEntity(User user){
+            user.setLoginId(loginId);
+            user.setLoginPw(loginPw);
+            user.setNickname(loginPw);
         }
     }
 }
