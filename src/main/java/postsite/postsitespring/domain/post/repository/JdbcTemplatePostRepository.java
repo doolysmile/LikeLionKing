@@ -3,25 +3,20 @@ package postsite.postsitespring.domain.post.repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import postsite.postsitespring.domain.post.domain.Post;
-import postsite.postsitespring.domain.post.dto.PostCreate;
 
-import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class JdbcTemplatePostRepository implements PostRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcTemplatePostRepository(DataSource dataSource){
-        jdbcTemplate = new JdbcTemplate(dataSource);
+    public JdbcTemplatePostRepository(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
