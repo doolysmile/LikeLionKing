@@ -17,6 +17,7 @@ public class PostCreate {
 
         // DTO -> Entity
         public Post toEntity(){
+            if(isNotice == null) isNotice = false;
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             return Post.builder()
                     .title(title)

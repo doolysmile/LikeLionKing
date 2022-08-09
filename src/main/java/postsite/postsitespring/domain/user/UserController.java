@@ -80,9 +80,9 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
 
         // DTO -> Entity
-        body.toEntity(user);
+        User newUser = body.toEntity(user);
 
-        userService.updateMember(user);
+        userService.updateMember(newUser);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

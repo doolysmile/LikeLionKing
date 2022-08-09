@@ -97,9 +97,9 @@ public class PostController {
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :" + articleId));
 
         // DTO => Entity
-        body.toEntity(post);
+        Post newPost = body.toEntity(post);
 
-        postService.update(post);
+        postService.update(newPost);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
