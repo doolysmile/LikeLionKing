@@ -7,19 +7,17 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class PostRead {
-    // private Long boardId;
-
     @Getter
     public static class ResponseDto {
-        private long id;
-        private String title;
-        private String content;
-        private Boolean isNotice;
-        private int views;
-        private int likes;
-        private int postGroupId;
-        private Timestamp createdAt;
-        private Timestamp updatedAt;
+        private final long id;
+        private final String title;
+        private final String content;
+        private final Boolean isNotice;
+        private final int views;
+        private final int likes;
+        private final int postGroupId;
+        private final Timestamp createdAt;
+        private final Timestamp updatedAt;
 
         // entity -> dto
         public ResponseDto(Post post) {

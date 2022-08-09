@@ -9,9 +9,8 @@ import java.sql.Timestamp;
 
 
 @Getter
-@Setter
 public class PostGroup extends BaseEntity {
-    private String name;
+    private final String name;
 
     @Builder
     private PostGroup(Long id, Timestamp createdAt, Timestamp updatedAt, String name) {

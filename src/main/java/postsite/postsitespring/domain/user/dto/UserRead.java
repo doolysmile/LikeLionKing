@@ -10,14 +10,14 @@ public class UserRead {
 
     @Getter
     public static class ResponseDto {
-        private long id;
-        private String loginId;
-        private String loginPw;
-        private String nickname;
-        private short level;
-        private UserRoleTypeEnum role;
-        private Timestamp createdAt;
-        private Timestamp updatedAt;
+        private final long id;
+        private final String loginId;
+        private final String loginPw;
+        private final String nickname;
+        private final short level;
+        private final UserRoleTypeEnum role;
+        private final Timestamp createdAt;
+        private final Timestamp updatedAt;
 
         public ResponseDto(User user){
             this.id = user.getId();
