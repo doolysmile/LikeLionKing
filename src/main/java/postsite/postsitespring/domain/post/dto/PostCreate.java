@@ -25,7 +25,7 @@ public class PostCreate {
                     .isNotice((byte) (isNotice? 1 : 0))
                     .views(0)
                     .likes(0)
-                    .postGroupId(postGroupId)
+                    .postGroupId(postGroupId == 0 ? 2 : postGroupId)
                     .createdAt(timestamp)
                     .updatedAt(timestamp)
                     .build();
