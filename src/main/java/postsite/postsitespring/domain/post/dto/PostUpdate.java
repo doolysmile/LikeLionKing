@@ -12,13 +12,9 @@ public class PostUpdate {
         private String title;
         private String body;
 
-        public Post toEntity(long id){
-            Post post = Post.builder()
-                    .id(id)
-                    .title(title)
-                    .content(body)
-                    .build();
-            return post;
+        public void updateEntity(Post post){
+            post.setTitle(title);
+            post.setContent(body);
         }
     }
 

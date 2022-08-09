@@ -11,6 +11,7 @@ import postsite.postsitespring.domain.user.domain.UserRoleTypeEnum;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JdbcTemplateUserRepository implements UserRepository{
@@ -44,9 +45,10 @@ public class JdbcTemplateUserRepository implements UserRepository{
     }
 
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         final String sql = "SELECT * from user where id = ?";
-        return jdbcTemplate.queryForObject(sql, userRowMapper(),id);
+        List<User> result = jdbcTemplate.query(sql, userRowMapper(),id);
+        return result.stream().findAny();
     }
 
     @Override

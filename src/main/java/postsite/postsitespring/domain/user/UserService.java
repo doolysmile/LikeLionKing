@@ -6,6 +6,7 @@ import postsite.postsitespring.domain.user.domain.User;
 import postsite.postsitespring.domain.user.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User oneMember(Long id){
+    public Optional<User> oneMember(Long id){
         return userRepository.findById(id);
     }
 

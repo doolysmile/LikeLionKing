@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import postsite.postsitespring.domain.post.domain.Post;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JdbcTemplatePostRepository implements PostRepository{
@@ -34,10 +35,10 @@ public class JdbcTemplatePostRepository implements PostRepository{
     }
 
     @Override
-    public Post findById(Long id) {
+    public Optional<Post> findById(Long id) {
         final String sql = "select * from post where id = ?";
-        Post result = jdbcTemplate.queryForObject(sql, postRowMapper(), id);
-        return result;
+        List<Post> result =  jdbcTemplate.query(sql, postRowMapper(), id);
+        return result.stream().findAny();
     }
 
 
