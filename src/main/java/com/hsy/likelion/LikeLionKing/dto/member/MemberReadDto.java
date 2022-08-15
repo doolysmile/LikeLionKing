@@ -1,6 +1,7 @@
 package com.hsy.likelion.LikeLionKing.dto.member;
 
 import com.hsy.likelion.LikeLionKing.domain.Member;
+import com.hsy.likelion.LikeLionKing.domain.MemberRole;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ public class MemberReadDto {
     private String nickname;    // 닉네임
     private String email;   // email
     private String phone;   // 핸드폰 번호
-    private Integer role;       // 회원 종류
+    private MemberRole role;       // 회원 종류
 
     // Member -> MemberDto로 변환(of)
     public static MemberReadDto toDto(Member member) {

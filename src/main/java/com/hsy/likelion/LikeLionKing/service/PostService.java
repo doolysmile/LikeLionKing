@@ -29,31 +29,27 @@ public class PostService {
 
     // 게시글 조회
     public List<Post> findAll(HashMap<String, String> param) {
+        // size = 10(default)
+        Integer size = Integer.parseInt(param.getOrDefault("size", "10"));
         if (param.containsKey("boardId")) {
             Integer categoryId = Integer.parseInt(param.get("boardId"));
-            if (param.containsKey("page")) {
-                Integer page = Integer.parseInt(param.get("page"));
-                // boardId, page
-                return postRepository.findByCategoryPage(categoryId, page);
-            }
             if (param.containsKey("searchKeyword")) {
                 String search = param.get("searchKeyword");
                 // boardId, searchKeyword
-                return postRepository.findByCategorySearchAll(categoryId, search);
+                return postRepository.findByCategorySearchAll(categoryId, search, size);
             }
-            // boardId
-            return postRepository.findByCategoryId(categoryId);
+            // page = 1(default)
+            Integer page = Integer.parseInt(param.getOrDefault("page", "1"));
+            // boardId, page
+            return postRepository.findByCategoryPage(categoryId, page, size);
         }
         return null;
     }
 
-    // 게시글 카테고리 id로 조회
-    public List<Post> findByCategoryId(Integer categoryId) {
-        return postRepository.findByCategoryId(categoryId);
-    }
-
     // 게시글 id로 조회
     public Optional<Post> findById(Long id) {
+        // TODO: id로 조회할 때 증가하도록 하면 등록할 때 조회수가 1로 시작하게됨(고민해보기)
+        increaseViews(id);
         return postRepository.findById(id);
     }
 
@@ -65,5 +61,10 @@ public class PostService {
     // 게시글 삭제
     public void delete(Long id) {
         postRepository.delete(id);
+    }
+
+    // 게시글 조회수 증가
+    public void increaseViews(Long id) {
+        postRepository.increaseViews(id);
     }
 }
