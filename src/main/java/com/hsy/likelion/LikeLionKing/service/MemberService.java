@@ -36,13 +36,12 @@ public class MemberService {
         memberRepository.delete(id);
     }
 
-    public int checkId(Long id) {
-        // TODO: 아이디 중복검사할 때 findById 사용해도 되는지
-        // 중복 아이디: 1, 아니면: 0
-        if (memberRepository.findById(id).orElse(null) == null) {
-            return 0;
+    // 중복되지 않은 유효한 id인지 검사
+    public Boolean checkId(String loginId) {
+        int n = memberRepository.checkId(loginId);
+        if(n == 0) {
+            return true;
         }
-        return 1;
-        //        return memberRepository.checkId(id);
+        return false;
     }
 }

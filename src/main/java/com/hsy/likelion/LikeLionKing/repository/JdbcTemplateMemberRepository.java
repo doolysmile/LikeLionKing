@@ -65,10 +65,10 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
     }
 
     @Override
-    public int checkId(Long id) {
-        String sql = "SELECT COUNT(*) FROM member WHERE id = ?";
-
-        return 0;
+    public int checkId(String loginId) {
+        String sql = "SELECT * FROM member WHERE login_id = ?";
+        List<Member> members = jdbcTemplate.query(sql, memberRowMapper(), loginId);
+        return members.size();
     }
 
     // 쿼리 결과를 RowMapper로 매핑하여 원하는 자바 객체로 변환하는 메서드

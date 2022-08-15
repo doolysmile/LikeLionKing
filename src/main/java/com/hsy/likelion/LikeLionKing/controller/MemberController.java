@@ -49,10 +49,13 @@ public class MemberController {
     }
 
     // 중복 ID 검사
-    @GetMapping("/idCheck")
-    public ResponseEntity<Integer> checkMemberId(@RequestParam("id") Long id) {
-        int res = memberService.checkId(id);
-
-        return ResponseEntity.status(HttpStatus.OK).body(res);
+    @GetMapping("/idcheck")
+    public ResponseEntity<String> checkMemberId(@RequestParam("login_id") String loginId) {
+        Boolean isAvailable = memberService.checkId(loginId);
+        if (isAvailable) {
+            return ResponseEntity.status(HttpStatus.OK).body("success");
+        }
+        // 중복 ID: 409
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("fail");
     }
 }
