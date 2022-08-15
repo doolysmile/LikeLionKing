@@ -39,7 +39,8 @@ public class PostController {
     // 게시글 상세화면
     @GetMapping("/detail")
     public ResponseEntity<PostReadDto> getDetailPost(@RequestParam("id") Long id) {
-        Post post = postService.findById(id).orElse(null);// 없으면 null로 반환
+        Post post = postService.getDetails(id).orElse(null);
+//        Post post = postService.findById(id).orElse(null);// 없으면 null로 반환
         // null 처리 추가구현 필요
         return ResponseEntity.status(HttpStatus.OK).body(PostReadDto.toDto(post));
     }
