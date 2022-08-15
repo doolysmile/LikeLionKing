@@ -24,6 +24,10 @@ public class MemberController {
     public ResponseEntity<MemberCreateDto> createMember(@RequestBody MemberCreateDto memberCreateDto) {
         // MemberCreateDto 적용
         Member member = MemberCreateDto.toEntity(memberCreateDto);
+        boolean isAvailable = memberService.checkId(memberCreateDto.getLoginId());
+        if (!isAvailable) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(MemberCreateDto.toDto(member));
+        }
         Long id = memberService.signUp(member);   // 회원가입한 회원의 id
         member.setId(id);
         return ResponseEntity.status(HttpStatus.OK).body(MemberCreateDto.toDto(member));
