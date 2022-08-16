@@ -1,16 +1,14 @@
 package com.study.LikeLionKing.controller;
 
 
-import com.study.LikeLionKing.Request.UserCreateRequest;
-import com.study.LikeLionKing.Request.UserModifyRequest;
-import com.study.LikeLionKing.domain.User;
-import com.study.LikeLionKing.domain.dto.PostDto;
+import com.study.LikeLionKing.request.UserCreateRequest;
+import com.study.LikeLionKing.request.UserModifyRequest;
 import com.study.LikeLionKing.domain.dto.UserDto;
+import com.study.LikeLionKing.response.ResponseData;
 import com.study.LikeLionKing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class UserController {
     }
     // 기능 코드
     @PostMapping("/create")
-    public ResponseEntity<UserDto> create(@RequestBody UserCreateRequest createRequest){
+    public ResponseData create(@RequestBody UserCreateRequest createRequest){
         UserDto userDto = UserDto.builder()
                 .loginPw(createRequest.getLoginPw())
                 .loginId(createRequest.getLoginId())
@@ -35,24 +33,24 @@ public class UserController {
                 .build();
         long id = userService.save(userDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
+        return ResponseData.successResponse(userService.findById(id));
     }
 
     @GetMapping("/find")
-    public ResponseEntity<UserDto> retrieve(@RequestParam("id") Long id){
+    public ResponseData retrieve(@RequestParam("id") Long id){
         System.out.println(id);
         UserDto userDto = userService.findById(id);
-        return  ResponseEntity.status(HttpStatus.OK).body(userDto);
+        return  ResponseData.successResponse(userDto);
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<UserDto>> retrieveAll(){
+    public ResponseData retrieveAll(){
         List<UserDto> userDtoList = userService.findAll();
-        return  ResponseEntity.status(HttpStatus.OK).body(userDtoList);
+        return  ResponseData.successResponse(userDtoList);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<UserDto> update(@RequestBody UserModifyRequest modifyRequest){
+    public ResponseData update(@RequestBody UserModifyRequest modifyRequest){
         UserDto userDto = userService.findById(modifyRequest.getId());
 
         System.out.println(userDto);
@@ -63,18 +61,13 @@ public class UserController {
         userService.update(userDto);
 
         System.out.println(userService.findById(modifyRequest.getId()));
-        return ResponseEntity.status(HttpStatus.OK).body(userDto);
+        return ResponseData.successResponse(userDto);
     }
 
     @GetMapping("/delete")
-    public ResponseEntity<UserDto> delete(@RequestParam("id") Long id){
+    public ResponseData delete(@RequestParam("id") Long id){
         userService.remove(id);
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
+        return ResponseData.successResponse("삭제가 되었습니다");
     }
-
-
-
-
-
 }
 

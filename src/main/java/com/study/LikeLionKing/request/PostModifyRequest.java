@@ -1,11 +1,11 @@
-package com.study.LikeLionKing.Request;
+package com.study.LikeLionKing.request;
 
 
 import lombok.Getter;
 
 @Getter
 public class PostModifyRequest {
-    long id;
+    long id=-1;
     String title;
     String content;
 }
