@@ -15,4 +15,5 @@ public interface PostRepository {
     List<Post> findByTitleAll(int boardId, String title);
     List<Post> findAll(int boardId);
     List<Post> findAll(int boardId, int page);
+    void recommendedInc(long recommended,long id);
 }

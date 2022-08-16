@@ -93,6 +93,11 @@ public class JdbcPostRepository implements PostRepository
 
     }
 
+    @Override
+    public void recommendedInc(long recommended,long id) {
+        jdbcTemplate.update("update post set recommended=? where id = ?",recommended,id );
+    }
+
     private RowMapper<Post> postRowMapper() {
         return (rs, rowNum) -> {
             Post post = new Post();
