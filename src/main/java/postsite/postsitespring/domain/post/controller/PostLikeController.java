@@ -1,6 +1,8 @@
 package postsite.postsitespring.domain.post.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.common.exception.ResourceNotFoundException;
 import postsite.postsitespring.domain.post.domain.PostLike;
@@ -11,7 +13,7 @@ import postsite.postsitespring.domain.user.UserService;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/usr/article/{articleId}/likes/user/{userId}")
+@RequestMapping("/usr/article/{articleId}/likes/user")
 @RequiredArgsConstructor
 public class PostLikeController {
     private final PostLikeService postLikeService;
@@ -19,10 +21,10 @@ public class PostLikeController {
     private final UserService userService;
 
     // 좋아요 생성
-    @PostMapping()
-    public void createPostLike(
-            @PathVariable long articleId,
-            @PathVariable long userId //TODO 로그인 세션으로 처리
+    @PostMapping("/{userId}")
+    public ResponseEntity<String> createPostLike(
+            @PathVariable("articleId") long articleId,
+            @PathVariable("userId") long userId //TODO 로그인 세션으로 처리
     ) throws ResourceNotFoundException {
         // post 체크
         postService
@@ -41,13 +43,17 @@ public class PostLikeController {
                 .build();
 
         postLikeService.createPostLike(postLike);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("success");
     }
 
     // 좋아요 삭제
-    @DeleteMapping()
-    public void deleteLike(
-            @PathVariable long userId, //TODO 로그인 세션으로 처리
-            @PathVariable long articleId
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteLike(
+            @PathVariable("articleId") long articleId,
+            @PathVariable("userId") long userId //TODO 로그인 세션으로 처리
     ) throws ResourceNotFoundException {
         // post 체크
         postService
@@ -59,5 +65,9 @@ public class PostLikeController {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :" + articleId));
 
         postLikeService.removePostLike(articleId, userId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("success");
     }
 }

@@ -12,14 +12,18 @@ import postsite.postsitespring.domain.post.domain.PostLike;
 import java.time.LocalDateTime;
 
 @Repository
-@RequiredArgsConstructor
 public class JdbcTemplatePostLikeRepository implements PostLikeRepository {
     private final JdbcTemplate jdbcTemplate;
+
+    public JdbcTemplatePostLikeRepository(JdbcTemplate jdbcTemplate){
+
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public void save(PostLike postLike) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        jdbcInsert.withTableName("post_like").usingGeneratedKeyColumns("user_id", "post_id");
+        jdbcInsert.withTableName("post_like");
 
         SqlParameterSource params = new BeanPropertySqlParameterSource(postLike);
 
