@@ -21,7 +21,6 @@ public class PostUpdate {
                     .content(body)
                     .isNotice(post.getIsNotice())
                     .views(post.getViews())
-                    .likes(post.getLikes())
                     .postGroupId(post.getPostGroupId())
                     .createdAt(post.getCreatedAt())
                     .updatedAt(timestamp)

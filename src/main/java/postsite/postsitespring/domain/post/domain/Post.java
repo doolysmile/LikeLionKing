@@ -13,17 +13,15 @@ public class Post extends BaseEntity {
     private final String content;
     private final byte isNotice; // true: 1, false: 0
     private final int views;
-    private final int likes;
     private final int postGroupId;
 
     @Builder
-    private Post(Long id, Timestamp createdAt, Timestamp updatedAt, String title, String content, byte isNotice, int views, int likes, int postGroupId) {
+    private Post(Long id, Timestamp createdAt, Timestamp updatedAt, String title, String content, byte isNotice, int views, int postGroupId) {
         super(id, createdAt, updatedAt);
         this.title = title;
         this.content = content;
         this.isNotice = isNotice;
         this.views = views;
-        this.likes = likes;
         this.postGroupId = postGroupId;
     }
 }

@@ -14,7 +14,6 @@ public class PostRead {
         private final String content;
         private final Boolean isNotice;
         private final int views;
-        private final int likes;
         private final int postGroupId;
         private final Timestamp createdAt;
         private final Timestamp updatedAt;
@@ -26,7 +25,6 @@ public class PostRead {
             this.content = post.getContent();
             this.isNotice = post.getIsNotice() > 0;
             this.views = post.getViews();
-            this.likes = post.getLikes();
             this.postGroupId = post.getPostGroupId();
             this.createdAt = post.getCreatedAt();
             this.updatedAt = post.getUpdatedAt();

@@ -24,7 +24,6 @@ public class PostCreate {
                     .content(body)
                     .isNotice((byte) (isNotice? 1 : 0))
                     .views(0)
-                    .likes(0)
                     .postGroupId(postGroupId == 0 ? 2 : postGroupId)
                     .createdAt(timestamp)
                     .updatedAt(timestamp)
@@ -39,7 +38,6 @@ public class PostCreate {
         private final String content;
         private final Boolean isNotice;
         private final int views;
-        private final int likes;
         private final int postGroupId;
         private final Timestamp createdAt;
         private final Timestamp updatedAt;
@@ -50,7 +48,6 @@ public class PostCreate {
             this.content = post.getContent();
             this.isNotice = post.getIsNotice() > 0;
             this.views = post.getViews();
-            this.likes = post.getLikes();
             this.postGroupId = post.getPostGroupId();
             this.createdAt = post.getCreatedAt();
             this.updatedAt = post.getUpdatedAt();
