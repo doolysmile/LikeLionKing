@@ -1,5 +1,6 @@
 package com.pbs.likelion.LikeLionKing.domain.dto;
 
+import com.pbs.likelion.LikeLionKing.domain.Likes;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +10,18 @@ import lombok.Setter;
 @Builder
 public class LikesDto {
 
-    private long id;
-    private long memberId;
-    private long postId;
+    private Long id;
+    private Long memberId;
+    private Long postId;
+
+    public static Likes toEntity(LikesDto likesDto) {
+
+        Likes like = Likes.builder()
+                .id(likesDto.getId())
+                .memberId(likesDto.getMemberId())
+                .postId(likesDto.getPostId())
+                .build();
+        return like;
+    }
 
 }
