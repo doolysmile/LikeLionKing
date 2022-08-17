@@ -20,5 +20,5 @@ public interface MemberRepository {
     void delete(Long id);
 
 
-
+    int checkId(Long id);
 }

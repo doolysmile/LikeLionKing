@@ -72,6 +72,12 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
         jdbcTemplate.update("delete member where id = ?", id);
     }
 
+    @Override
+    public int checkId(Long id) {
+        List<Member> query = jdbcTemplate.query("SELECT * FROM member WHERE login_id =?", memberRowMapper(), id);
+        return query.size();
+    }
+
     private RowMapper<Member> memberRowMapper(){
         return (rs, rowNum) -> {
             Member member = new Member();

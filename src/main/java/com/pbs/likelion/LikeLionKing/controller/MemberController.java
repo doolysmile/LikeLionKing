@@ -42,7 +42,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteMember(@PathVariable("id") Long id){
+    public void deleteMember(@PathVariable("id") Long id) {
         // 궁금한점 : 현재 해당하는 id를 가진 member 있는지를 체크하는게 맞는지
         Member checkMember = memberService.findOne(id).orElse(null);
         memberService.delete(checkMember.getId());
@@ -63,7 +63,20 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(MemberDto.from(checkMember));
     }
 
+    /**
+     * 중복 ID 체크
+     *
+     * 아이디 충복 체크에서는 사용자가 충돌되지 않는 다른 아이디를 사용해서 충돌을 해결해야 되기 때문에
+     * 리소스 충돌 발생을 의미하는 409코드를 사용.
+     */
+    @GetMapping("/check-id")
+    public ResponseEntity<String> checkMemberId(@RequestParam("id")Long id){
+        boolean check = memberService.checkId(id);
 
+        return (check) ?
+                ResponseEntity.status(HttpStatus.OK).body("success") :
+                ResponseEntity.status(HttpStatus.CONFLICT).body("fail");
+    }
 
 
 //    @GetMapping("/findAll")

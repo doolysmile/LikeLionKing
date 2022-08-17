@@ -70,4 +70,10 @@ public class MemberService {
         memberRepository.delete(id);
 
     }
+
+    public boolean checkId(Long id) {
+        int size = memberRepository.checkId(id);
+        return (size == 0) ? true : false;
+
+    }
 }
