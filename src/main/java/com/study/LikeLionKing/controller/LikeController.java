@@ -69,7 +69,7 @@ public class LikeController {
 
         LikeDto found = likeService.findByUserIdAndPostId(likeDeleteRequest.getUserId(), likeDeleteRequest.getPostId());
 
-        likeService.delete(found.getId());
+        likeService.delete(found.getId(), found.getPostId());
 
         return ResponseData.successResponse("좋아요 삭제 완료");
     }

@@ -20,6 +20,9 @@ public class LikeService {
 
     public long save(LikeDto likeDto) {
         Long id = likeRepository.save(likeDto.toEntity());
+        if(id != 0){
+            likeRepository.increaseLike(likeDto.getPostId());
+        }
         return id;
     }
 
@@ -56,7 +59,8 @@ public class LikeService {
         return likeDto;
     }
 
-    public void delete(long id) {
+    public void delete(long id, long postId) {
         likeRepository.delete(id);
+        likeRepository.decreaseLike(postId);
     }
 }

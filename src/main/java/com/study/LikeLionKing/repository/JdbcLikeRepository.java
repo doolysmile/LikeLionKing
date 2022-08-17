@@ -57,6 +57,16 @@ public class JdbcLikeRepository implements LikeRepository{
         jdbcTemplate.update("delete from like where id = ?", id);
     }
 
+    @Override
+    public void increaseLike(Long postId) {
+        jdbcTemplate.update("UPDATE post SET recommended = recommended + 1 WHERE id = ?", postId);
+    }
+
+    @Override
+    public void decreaseLike(Long postId) {
+        jdbcTemplate.update("UPDATE post SET recommended = recommended - 1 WHERE id = ?", postId);
+    }
+
     private RowMapper<Like> likeRowMapper() {
         return (rs, rowNum) -> {
             Like like = new Like();

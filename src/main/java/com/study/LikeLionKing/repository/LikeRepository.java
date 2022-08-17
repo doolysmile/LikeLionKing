@@ -9,4 +9,6 @@ public interface LikeRepository {
     Optional<Like> findById(Long id);
     Optional<Like> findByUserIdAndPostId(Long userId,Long postId);
     void delete(Long id);
+    void increaseLike(Long postId);
+    void decreaseLike(Long postId);
 }
