@@ -1,11 +1,11 @@
-package com.kch.likelion.LikeLionKing.post;
+package com.kch.likelion.LikeLionKing.domain.post;
 
 
 
-import com.kch.likelion.LikeLionKing.post.domain.Post;
-import com.kch.likelion.LikeLionKing.post.domain.PostDto;
-import com.kch.likelion.LikeLionKing.post.domain.PostRequestDto;
-import com.kch.likelion.LikeLionKing.post.domain.PostResponseDto;
+import com.kch.likelion.LikeLionKing.domain.post.domain.Post;
+import com.kch.likelion.LikeLionKing.domain.post.domain.PostDto;
+import com.kch.likelion.LikeLionKing.domain.post.domain.PostRequestDto;
+import com.kch.likelion.LikeLionKing.domain.post.domain.PostResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,6 @@
-package com.kch.likelion.LikeLionKing.post.domain;
+package com.kch.likelion.LikeLionKing.domain.post.domain;
 
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 

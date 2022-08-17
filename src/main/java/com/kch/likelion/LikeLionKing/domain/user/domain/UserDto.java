@@ -1,7 +1,5 @@
-package com.kch.likelion.LikeLionKing.user.domain;
+package com.kch.likelion.LikeLionKing.domain.user.domain;
 
-import com.kch.likelion.LikeLionKing.post.domain.Post;
-import com.kch.likelion.LikeLionKing.post.domain.PostDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

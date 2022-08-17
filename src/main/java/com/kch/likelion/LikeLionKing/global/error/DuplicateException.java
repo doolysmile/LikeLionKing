@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.error;
+package com.kch.likelion.LikeLionKing.global.error;
 
 public class DuplicateException extends RuntimeException{
 

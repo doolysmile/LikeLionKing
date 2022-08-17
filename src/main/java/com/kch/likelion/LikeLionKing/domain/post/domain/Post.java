@@ -1,8 +1,6 @@
-package com.kch.likelion.LikeLionKing.post.domain;
+package com.kch.likelion.LikeLionKing.domain.post.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

@@ -1,9 +1,9 @@
-package com.kch.likelion.LikeLionKing.user;
+package com.kch.likelion.LikeLionKing.domain.user;
 
-import com.kch.likelion.LikeLionKing.error.DuplicateException;
-import com.kch.likelion.LikeLionKing.user.domain.User;
-import com.kch.likelion.LikeLionKing.user.domain.UserDto;
-import com.kch.likelion.LikeLionKing.user.domain.UserRequestDto;
+import com.kch.likelion.LikeLionKing.domain.user.domain.User;
+import com.kch.likelion.LikeLionKing.domain.user.domain.UserDto;
+import com.kch.likelion.LikeLionKing.domain.user.domain.UserRequestDto;
+import com.kch.likelion.LikeLionKing.global.error.DuplicateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

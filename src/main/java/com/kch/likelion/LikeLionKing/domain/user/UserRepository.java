@@ -1,6 +1,6 @@
-package com.kch.likelion.LikeLionKing.user;
+package com.kch.likelion.LikeLionKing.domain.user;
 
-import com.kch.likelion.LikeLionKing.user.domain.User;
+import com.kch.likelion.LikeLionKing.domain.user.domain.User;
 
 import java.util.List;
 import java.util.Optional;

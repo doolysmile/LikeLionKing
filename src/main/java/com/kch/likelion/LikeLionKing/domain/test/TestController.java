@@ -1,7 +1,7 @@
-package com.kch.likelion.LikeLionKing.test;
+package com.kch.likelion.LikeLionKing.domain.test;
 
-import com.kch.likelion.LikeLionKing.post.domain.PostDto;
-import com.kch.likelion.LikeLionKing.user.domain.UserDto;
+import com.kch.likelion.LikeLionKing.domain.post.domain.PostDto;
+import com.kch.likelion.LikeLionKing.domain.user.domain.UserDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

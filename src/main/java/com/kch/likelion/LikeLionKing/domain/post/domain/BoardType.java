@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.post.domain;
+package com.kch.likelion.LikeLionKing.domain.post.domain;
 
 public enum BoardType {
     NOTICE_BOARD(1),

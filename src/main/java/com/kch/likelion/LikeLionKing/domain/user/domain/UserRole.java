@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.user.domain;
+package com.kch.likelion.LikeLionKing.domain.user.domain;
 
 public enum UserRole {
     ADMIN_USER(1),

@@ -1,7 +1,7 @@
-package com.kch.likelion.LikeLionKing.user;
+package com.kch.likelion.LikeLionKing.domain.user;
 
-import com.kch.likelion.LikeLionKing.user.domain.User;
-import com.kch.likelion.LikeLionKing.user.domain.UserRole;
+import com.kch.likelion.LikeLionKing.domain.user.domain.User;
+import com.kch.likelion.LikeLionKing.domain.user.domain.UserRole;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
