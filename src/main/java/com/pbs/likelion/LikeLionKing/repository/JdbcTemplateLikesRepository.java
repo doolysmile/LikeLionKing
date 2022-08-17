@@ -56,17 +56,6 @@ public class JdbcTemplateLikesRepository implements LikesRepository {
          jdbcTemplate.update("DELETE likes WHERE id = ?", id);
     }
 
-    @Override
-    public void increaseLikes(Long postId) {
-        jdbcTemplate.update("UPDATE post set RECOMMENDED  = RECOMMENDED  + 1 WHERE id = ?"
-                , likeRowMapper(), postId);
-    }
-
-    @Override
-    public void decreaseLikes(Long postId) {
-        jdbcTemplate.update("UPDATE post set RECOMMENDED  = RECOMMENDED  - 1 WHERE id = ?"
-                , likeRowMapper(), postId);
-    }
 
     private RowMapper<Likes> likeRowMapper() {
         return (rs, rowNum) -> {
