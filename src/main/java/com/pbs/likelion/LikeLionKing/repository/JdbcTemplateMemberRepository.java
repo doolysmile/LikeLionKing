@@ -6,12 +6,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 
 public class JdbcTemplateMemberRepository implements MemberRepository{
 
@@ -70,6 +73,12 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
     @Override
     public void delete(Long id) {
         jdbcTemplate.update("delete member where id = ?", id);
+    }
+
+    @Override
+    public int checkId(Long id) {
+        List<Member> query = jdbcTemplate.query("SELECT * FROM member WHERE login_id =?", memberRowMapper(), id);
+        return query.size();
     }
 
     private RowMapper<Member> memberRowMapper(){

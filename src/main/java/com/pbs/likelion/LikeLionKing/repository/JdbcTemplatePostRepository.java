@@ -6,12 +6,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 
 public class JdbcTemplatePostRepository implements PostRepository{
 
@@ -100,6 +102,17 @@ public class JdbcTemplatePostRepository implements PostRepository{
     public void increaseView(Long id) {
         jdbcTemplate.update("update post set views = views+1 where id = ?", id);
     }
+
+    @Override
+    public void increaseLikes(Long id) {
+        jdbcTemplate.update("UPDATE post set RECOMMENDED  = RECOMMENDED  + 1 WHERE id = ?",id);
+    }
+
+    @Override
+    public void decreaseLikes(Long id) {
+        jdbcTemplate.update("UPDATE post set RECOMMENDED  = RECOMMENDED  - 1 WHERE id = ?", id);
+    }
+
 
 
     private RowMapper<Post> postRowMapper(){
