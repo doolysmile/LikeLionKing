@@ -43,7 +43,7 @@ public class LikesController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("fail");
         }
         // 좋아요 삭제
-        likesService.delete(findLikes.getId());
+        likesService.delete(findLikes.getId(), findLikes.getPostId());
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 }

@@ -50,6 +50,20 @@ public class JdbcTemplateLikesRepository implements LikesRepository {
         jdbcTemplate.update(sql, id);
     }
 
+    @Override
+    public void increaseLikes(Long postId) {
+        // 게시글 좋아요 수 1 증가
+        String sql = "UPDATE post SET likes = likes + 1 WHERE id = ?";
+        jdbcTemplate.update(sql, postId);
+    }
+
+    @Override
+    public void decreaseLikes(Long postId) {
+        // 게시글 좋아요 수 1 감소
+        String sql = "UPDATE post SET likes = likes - 1 WHERE id = ?";
+        jdbcTemplate.update(sql, postId);
+    }
+
     private RowMapper<Likes> likesRowMapper() {
         return (rs, rowNum) -> {
             // "컬럼명"으로 해당 타입 데이터를 받아와 Member 객체로 반환

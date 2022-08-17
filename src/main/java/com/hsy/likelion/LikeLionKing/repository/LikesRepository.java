@@ -10,4 +10,7 @@ public interface LikesRepository {
     Optional<Likes> findByMemberIdAndPostId(Likes likes);
 
     void delete(Long id);
+    void increaseLikes(Long postId);
+
+    void decreaseLikes(Long postId);
 }
