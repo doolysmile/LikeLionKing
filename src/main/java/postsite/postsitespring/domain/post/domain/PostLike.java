@@ -1,4 +1,4 @@
-package postsite.postsitespring.domain.like.domain;
+package postsite.postsitespring.domain.post.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,15 +10,14 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
-public class Like{
+public class PostLike{
     private final int id;
     private final Post post;
     private final User user;
-
     private final LocalDateTime createdAt;
 
     @Builder
-    private Like(int id, Post post, User user, LocalDateTime createdAt) {
+    private PostLike(int id, Post post, User user, LocalDateTime createdAt) {
         this.id = id;
         this.post = post;
         this.user = user;

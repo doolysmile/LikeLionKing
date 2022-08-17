@@ -1,10 +1,11 @@
-package postsite.postsitespring.domain.post;
+package postsite.postsitespring.domain.post.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.common.exception.ResourceNotFoundException;
+import postsite.postsitespring.domain.post.service.PostService;
 import postsite.postsitespring.domain.post.domain.Post;
 import postsite.postsitespring.domain.post.dto.PostCreate;
 import postsite.postsitespring.domain.post.dto.PostRead;

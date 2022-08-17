@@ -1,4 +1,4 @@
-package postsite.postsitespring.domain.post;
+package postsite.postsitespring.domain.post.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
