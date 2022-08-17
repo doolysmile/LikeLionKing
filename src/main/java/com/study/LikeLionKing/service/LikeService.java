@@ -55,4 +55,8 @@ public class LikeService {
 
         return likeDto;
     }
+
+    public void delete(long id) {
+        likeRepository.delete(id);
+    }
 }

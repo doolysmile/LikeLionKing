@@ -2,6 +2,7 @@ package com.study.LikeLionKing.controller;
 
 import com.study.LikeLionKing.domain.dto.LikeDto;
 import com.study.LikeLionKing.request.LikeCreateRequest;
+import com.study.LikeLionKing.request.LikeDeleteRequest;
 import com.study.LikeLionKing.response.ResponseData;
 import com.study.LikeLionKing.service.LikeService;
 import com.study.LikeLionKing.service.PostService;
@@ -52,5 +53,25 @@ public class LikeController {
         return ResponseData.successResponse(likeService.findById(id));
     }
 
+    @PostMapping("delete")
+    public ResponseData delete(@RequestBody LikeDeleteRequest likeDeleteRequest){
+        if(postService.findById(likeDeleteRequest.getPostId())==null){
+            ResponseData.failResponse("해당 post는 존재하지 않습니다.");
+        }
+
+        if(userService.findById(likeDeleteRequest.getUserId())==null){
+            ResponseData.failResponse("해당 user는 존재하지 않습니다.");
+        }
+
+        if(likeService.findByUserIdAndPostId(likeDeleteRequest.getUserId(), likeDeleteRequest.getPostId())==null){
+            return ResponseData.failResponse("삭제할 좋아요 데이터가 없습니다.");
+        }
+
+        LikeDto found = likeService.findByUserIdAndPostId(likeDeleteRequest.getUserId(), likeDeleteRequest.getPostId());
+
+        likeService.delete(found.getId());
+
+        return ResponseData.successResponse("좋아요 삭제 완료");
+    }
 
 }
