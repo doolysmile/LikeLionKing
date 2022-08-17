@@ -6,17 +6,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@Repository
 public class JdbcTemplateLikesRepository implements LikesRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    public JdbcTemplateLikesRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public Long save(Likes likes) {
@@ -24,8 +28,8 @@ public class JdbcTemplateLikesRepository implements LikesRepository {
         jdbcInsert.withTableName("likes").usingGeneratedKeyColumns("id");
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("member_id", likes.getMemberId());
-        parameters.put("post_id", likes.getPostId());
+        parameters.put("memberId", likes.getMemberId());
+        parameters.put("postId", likes.getPostId());
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         likes.setId(key.longValue());
@@ -49,19 +53,18 @@ public class JdbcTemplateLikesRepository implements LikesRepository {
 
     @Override
     public void delete(Long id) {
-         jdbcTemplate.update("DELETE likes WHERE id = ?"
-                , likeRowMapper(), id);
+         jdbcTemplate.update("DELETE likes WHERE id = ?", id);
     }
 
     @Override
     public void increaseLikes(Long postId) {
-        jdbcTemplate.update("UPDATE post set likes = likes + 1 WHERE id = ?"
+        jdbcTemplate.update("UPDATE post set RECOMMENDED  = RECOMMENDED  + 1 WHERE id = ?"
                 , likeRowMapper(), postId);
     }
 
     @Override
     public void decreaseLikes(Long postId) {
-        jdbcTemplate.update("UPDATE post set likes = likes - 1 WHERE id = ?"
+        jdbcTemplate.update("UPDATE post set RECOMMENDED  = RECOMMENDED  - 1 WHERE id = ?"
                 , likeRowMapper(), postId);
     }
 

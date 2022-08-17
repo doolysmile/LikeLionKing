@@ -24,4 +24,7 @@ public interface PostRepository {
 
 
     void increaseView(Long id);
+
+    void increaseLikes(Long id);
+    void decreaseLikes(Long id);
 }

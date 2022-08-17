@@ -3,10 +3,12 @@ package com.pbs.likelion.LikeLionKing.service;
 import com.pbs.likelion.LikeLionKing.repository.MemberRepository;
 import com.pbs.likelion.LikeLionKing.domain.dto.MemberDto;
 import com.pbs.likelion.LikeLionKing.domain.Member;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 public class MemberService {
 

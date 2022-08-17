@@ -3,8 +3,10 @@ package com.pbs.likelion.LikeLionKing.service;
 import com.pbs.likelion.LikeLionKing.domain.dto.PostDto;
 import com.pbs.likelion.LikeLionKing.domain.Post;
 import com.pbs.likelion.LikeLionKing.repository.PostRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
+
 
 public class PostService {
 

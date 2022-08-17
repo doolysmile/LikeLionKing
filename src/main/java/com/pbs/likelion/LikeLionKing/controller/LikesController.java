@@ -24,8 +24,8 @@ public class LikesController {
      * 고민했던 점
      * 게시글에서 "좋아요"를 클릭 시,
      * 1. 먼저 테이블에 있는지 확인을 거침
-     * 2. 테이블에 있는 경우 -> 좋아요를 누른 상태 -> 좋아요를 감소 시켜야됨
-     * 3. 테이블에 없는 경우 -> 좋아요를 누르지 않은 상태 -> 좋아요를 증가 시켜야됨.
+     * 2. 테이블에 있는 경우 -> 좋아요를 누른 상태 -> (Likes 테이블)에서 해당 데이터 삭제 -> (Post 테이블)좋아요를 감소 시켜야됨
+     * 3. 테이블에 없는 경우 -> 좋아요를 누르지 않은 상태 -> (Post 테이블) 좋아요를 증가 시켜야됨.
      */
 
     @PostMapping("/save")
@@ -36,12 +36,15 @@ public class LikesController {
        if(findLikes != null){
            /**
             *  고민했던점 -> 좋아요를 다시 누르면 그저 취소가 아닐련지
-            *   postService.decreaseLike(likesDto.getPostId());
             */
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(findLikes.getId());
+           likesService.delete(findLikes);
+           likesService.decrease(findLikes);
+           return ResponseEntity.status(HttpStatus.OK).body(findLikes.getId());
         }
 
-        Long id = likesService.save(findLikes);
+
+       Long id = likesService.save(likesDto);
+       likesService.increase(likesDto);
 
        return ResponseEntity.status(HttpStatus.OK).body(id);
     }
