@@ -20,7 +20,6 @@ public class Post {
 
 
     @Builder
-
     public Post(Long id, Long memberId, String written, String lastModified, Long views, Long recommended, String title, String content, int postRole) {
         this.id = id;
         this.memberId = memberId;

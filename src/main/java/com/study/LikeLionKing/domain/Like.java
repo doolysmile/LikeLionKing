@@ -1,9 +1,6 @@
 package com.study.LikeLionKing.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
@@ -13,4 +10,11 @@ public class Like {
     long id;
     long userId;
     long postId;
+
+    @Builder
+    public Like(long id, long userId, long postId) {
+        this.id = id;
+        this.userId = userId;
+        this.postId = postId;
+    }
 }
