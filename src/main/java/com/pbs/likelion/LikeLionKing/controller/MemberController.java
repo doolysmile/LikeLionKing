@@ -58,6 +58,10 @@ public class MemberController {
                 .role(memberCreateDto.getRole())
                 .build();
 
+        boolean check = memberService.checkId(memberCreateDto.getId());
+        if(!check)
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(memberDto);
+
         Long id = memberService.join(memberDto);
         Member checkMember = memberService.findOne(id).orElse(null);// 저장 됐는지 체크
         return ResponseEntity.status(HttpStatus.OK).body(MemberDto.from(checkMember));
