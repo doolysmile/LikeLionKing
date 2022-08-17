@@ -97,6 +97,22 @@ public class JdbcPostRepository implements PostRepository{
         );
     }
 
+    @Override
+    public void increaseLikes(Long postSeq) {
+        jdbcTemplate.update(
+                "UPDATE posts SET likes = likes + 1 WHERE postSeq=?",
+                postSeq
+        );
+    }
+
+    @Override
+    public void decreaseLikes(Long postSeq) {
+        jdbcTemplate.update(
+                "UPDATE posts SET likes = likes -1 WHERE postSeq=?",
+                postSeq
+        );
+    }
+
     static RowMapper<Post> mapper = (rs, rowNum) -> new Post.Builder()
             .postSeq(rs.getLong("postSeq"))
             .userSeq(rs.getLong("userSeq"))

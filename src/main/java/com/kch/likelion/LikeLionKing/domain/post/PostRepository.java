@@ -19,4 +19,8 @@ public interface PostRepository {
     Optional<Post> findById(Long id);
 
     void increaseViews(Post post);
+
+    void increaseLikes(Long postSeq);
+
+    void decreaseLikes(Long postSeq);
 }
