@@ -26,12 +26,14 @@ public class LikeService {
         return null;
     }
 
-    public void delete(Like deleteLike) {
+    public Optional<Like> delete(Like deleteLike) {
         // 좋아요 한 적이 있는 경우
-        if(findByUserIdAndPostId(deleteLike).isPresent()){
+        Optional<Like> findLike = findByUserIdAndPostId(deleteLike);
+        if(findLike.isPresent()){
             jdbcPostRepository.decreaseLikes(deleteLike.getPostId());
             jdbcLikeRepository.delete(deleteLike.getUserId(), deleteLike.getPostId());
         }
+        return findLike;
     }
 
 
