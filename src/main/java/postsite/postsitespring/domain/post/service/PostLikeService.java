@@ -2,10 +2,11 @@ package postsite.postsitespring.domain.post.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import postsite.postsitespring.domain.like.domain.Like;
-import postsite.postsitespring.domain.like.repository.LikeRepository;
+import postsite.postsitespring.common.exception.ResourceNotFoundException;
+import postsite.postsitespring.domain.post.domain.Post;
 import postsite.postsitespring.domain.post.domain.PostLike;
 import postsite.postsitespring.domain.post.repository.PostLikeRepository;
+import postsite.postsitespring.domain.user.domain.User;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +19,9 @@ public class PostLikeService {
 
     public void createPostLike(PostLike postLike) {
         postLikeRepository.save(postLike);
+    }
+
+    public void removePostLike(long articleId, long userId) {
+        postLikeRepository.delete(articleId, userId);
     }
 }

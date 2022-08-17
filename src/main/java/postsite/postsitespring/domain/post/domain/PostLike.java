@@ -11,16 +11,15 @@ import java.time.LocalDateTime;
 
 @Getter
 public class PostLike{
-    private final int id;
-    private final Post post;
-    private final User user;
+    private final long postId;
+
+    private final long userId;
     private final LocalDateTime createdAt;
 
     @Builder
-    private PostLike(int id, Post post, User user, LocalDateTime createdAt) {
-        this.id = id;
-        this.post = post;
-        this.user = user;
+    public PostLike(long postId, long userId, LocalDateTime createdAt) {
+        this.postId = postId;
+        this.userId = userId;
         this.createdAt = createdAt;
     }
 }

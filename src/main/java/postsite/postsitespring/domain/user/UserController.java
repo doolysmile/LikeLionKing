@@ -57,7 +57,7 @@ public class UserController {
             @PathVariable Long memberId
     ) throws ResourceNotFoundException {
         User user = userService
-                .oneMember(memberId)
+                .findById(memberId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
 
         // Entity => DTO
@@ -76,7 +76,7 @@ public class UserController {
     ) throws ResourceNotFoundException {
         // Is id Not NULL?
         User user = userService
-                .oneMember(memberId)
+                .findById(memberId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
 
         // DTO -> Entity
@@ -96,7 +96,7 @@ public class UserController {
     ) throws ResourceNotFoundException {
         // Is id Not NULL?
         userService
-        .oneMember(memberId)
+        .findById(memberId)
         .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
 
         this.userService.deleteMember(memberId);
