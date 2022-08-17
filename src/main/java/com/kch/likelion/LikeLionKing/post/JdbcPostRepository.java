@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.post.repository;
+package com.kch.likelion.LikeLionKing.post;
 
 
 import com.kch.likelion.LikeLionKing.post.domain.BoardType;
@@ -66,11 +66,12 @@ public class JdbcPostRepository implements PostRepository{
         );
     }
 
-    public List<Post> findAll(int offset, int limit, String searchKeyword) {
+    public List<Post> findAll(int boardType, int offset, int limit, String searchKeyword) {
         List<Post> results = jdbcTemplate.query(
-                "SELECT p.* FROM posts p WHERE p.title LIKE ? ORDER BY p.postSeq LIMIT ?,?",
+                "SELECT p.* FROM posts p WHERE p.boardType=? and p.title LIKE ? ORDER BY p.postSeq LIMIT ?,?",
                 mapper,
                 '%'+ searchKeyword + '%',
+                boardType,
                 offset,
                 limit
         );
@@ -80,11 +81,20 @@ public class JdbcPostRepository implements PostRepository{
     @Override
     public Optional<Post> findById(Long id) {
         List<Post> posts = jdbcTemplate.query(
-                "SELECT * FROM posts WHERE postSeq=?",
+                "SELECT p.* FROM posts p WHERE postSeq=?",
                 mapper,
                 id
         );
         return ofNullable(posts.isEmpty() ? null : posts.get(0));
+    }
+
+    @Override
+    public void increaseViews(Post post) {
+        jdbcTemplate.update(
+                "UPDATE posts SET views=? WHERE postSeq=?",
+                post.getViews(),
+                post.getPostSeq()
+        );
     }
 
     static RowMapper<Post> mapper = (rs, rowNum) -> new Post.Builder()

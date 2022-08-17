@@ -1,11 +1,12 @@
-package com.kch.likelion.LikeLionKing.user.service;
+package com.kch.likelion.LikeLionKing.user;
 
 import com.kch.likelion.LikeLionKing.user.domain.User;
-import com.kch.likelion.LikeLionKing.user.repository.UserRepository;
+import com.kch.likelion.LikeLionKing.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -17,6 +18,10 @@ public class UserService {
 
     @Transactional
     public User insert(User user){
+        // 회원 가입할 loginID가 있을 경우
+        if(findByLoginId(user) != null){
+            return null;
+        }
         return userRepository.insert(user);
     }
 
@@ -33,6 +38,10 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+    @Transactional(readOnly = true)
+    public Optional<User> findByLoginId(User user) {
+        return userRepository.findByLoginId(user);
     }
 
     public User doLogin(User loginUser) {

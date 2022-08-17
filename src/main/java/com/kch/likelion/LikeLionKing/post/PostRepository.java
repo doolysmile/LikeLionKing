@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.post.repository;
+package com.kch.likelion.LikeLionKing.post;
 
 
 import com.kch.likelion.LikeLionKing.post.domain.Post;
@@ -14,7 +14,9 @@ public interface PostRepository {
 
     void delete(long postId);
 
-    List<Post> findAll(int offset, int limit, String searchKeyword);
+    List<Post> findAll(int boardType, int offset, int limit, String searchKeyword);
 
     Optional<Post> findById(Long id);
+
+    void increaseViews(Post post);
 }

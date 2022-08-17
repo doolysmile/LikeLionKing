@@ -1,9 +1,6 @@
 package com.kch.likelion.LikeLionKing.post.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@Builder
 public class PostDto {
 
     private Long postSeq;
@@ -28,14 +26,18 @@ public class PostDto {
 
     private LocalDateTime createAt;
 
-    public PostDto(Post post){
-        this.postSeq = post.getPostSeq();
-        this.userSeq = post.getUserSeq();
-        this.views = post.getViews();
-        this.likes = post.getLikes();
-        this.title = post.getTitle();
-        this.content = post.getContent();
-        this.boardType = post.getBoardType();
-        this.createAt = post.getCreateAt();
+    public static PostDto toDto(Post post){
+        PostDto postDto = PostDto.builder()
+                .postSeq(post.getPostSeq())
+                .userSeq(post.getUserSeq())
+                .views(post.getViews())
+                .likes(post.getLikes())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .boardType(post.getBoardType())
+                .createAt(post.getCreateAt())
+                .build();
+        return postDto;
     }
+
 }

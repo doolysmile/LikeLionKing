@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.post.controller;
+package com.kch.likelion.LikeLionKing.post;
 
 
 
@@ -6,13 +6,11 @@ import com.kch.likelion.LikeLionKing.post.domain.Post;
 import com.kch.likelion.LikeLionKing.post.domain.PostDto;
 import com.kch.likelion.LikeLionKing.post.domain.PostRequestDto;
 import com.kch.likelion.LikeLionKing.post.domain.PostResponseDto;
-import com.kch.likelion.LikeLionKing.post.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -34,11 +32,9 @@ public class PostController {
     @PostMapping("/doWrite")
     public ResponseEntity<PostDto> doWritePost(@RequestBody PostRequestDto postRequest){
 
-        System.out.println(postRequest.getContent());
         Post newPost = postService.insert(postRequest.newPost());
-        System.out.println(newPost.getPostSeq());
         if(newPost != null){
-            return ResponseEntity.status(HttpStatus.OK).body(new PostDto(newPost));
+            return ResponseEntity.status(HttpStatus.OK).body(PostDto.toDto(newPost));
         }
         // TODO 리턴 값 생각 해보기
         return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -47,17 +43,17 @@ public class PostController {
     @GetMapping("/modify")
     public ResponseEntity<PostDto> modifyPostForm(@RequestParam("id") Long id){
 
-        return ResponseEntity.status(HttpStatus.OK).body(new PostDto(postService.findById(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(PostDto.toDto(postService.findById(id)));
     }
     @PostMapping("/doModify")
     public ResponseEntity<PostDto> doModifyPost(@RequestBody PostRequestDto postWriteRequest){
 
-        return ResponseEntity.status(HttpStatus.OK).body(new PostDto(postService.update(postWriteRequest.newPost())));
+        return ResponseEntity.status(HttpStatus.OK).body(PostDto.toDto(postService.update(postWriteRequest.newPost())));
     }
 
     @GetMapping("/detail")
     public ResponseEntity<PostDto> detailPost(@RequestParam("id") Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(new PostDto(postService.findById(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(PostDto.toDto(postService.findById(id)));
     }
 
     // TODO : 실패 했을 때 예외 처리 해줘야함.
@@ -77,12 +73,13 @@ public class PostController {
 //    }
 
     @GetMapping("list")
-    public ResponseEntity<List<PostDto>> listPost(@RequestParam(value="offset", defaultValue = "0") int offset,
+    public ResponseEntity<List<PostDto>> listPost(@RequestParam(value = "boardId", defaultValue = "1") int boardType,
+                                                  @RequestParam(value="offset", defaultValue = "0") int offset,
                                                   @RequestParam(value = "limit", defaultValue = "5") int limit,
                                                   @RequestParam(value = "searchKeyword", defaultValue = "")String searchKeyword){
 
-        List<PostDto> postDtoLists= postService.findAll(offset, limit, searchKeyword).stream()
-                .map(PostDto::new).collect(toList());
+        List<PostDto> postDtoLists= postService.findAll(boardType, offset, limit, searchKeyword).stream()
+                .map(PostDto::toDto).collect(toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(postDtoLists);
     }

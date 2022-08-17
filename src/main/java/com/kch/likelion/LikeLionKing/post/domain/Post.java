@@ -26,7 +26,9 @@ public class Post {
     public Post(Long postSeq, String title, String content) {
         this(postSeq, 0L, 0, 0, title, content, BoardType.FREE_BOARD, null);
     }
-
+    public void increaseViews(){
+        this.views++;
+    }
     public Post(Long postSeq, Long userSeq, int views, int likes, String title, String content, BoardType boardType, LocalDateTime createAt) {
         this.postSeq = postSeq;
         this.userSeq = userSeq;

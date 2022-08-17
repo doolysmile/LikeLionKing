@@ -1,4 +1,4 @@
-package com.kch.likelion.LikeLionKing.user.repository;
+package com.kch.likelion.LikeLionKing.user;
 
 import com.kch.likelion.LikeLionKing.user.domain.User;
 

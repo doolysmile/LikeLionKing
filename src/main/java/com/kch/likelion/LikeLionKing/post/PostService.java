@@ -1,8 +1,7 @@
-package com.kch.likelion.LikeLionKing.post.service;
+package com.kch.likelion.LikeLionKing.post;
 
 
 import com.kch.likelion.LikeLionKing.post.domain.Post;
-import com.kch.likelion.LikeLionKing.post.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,12 +35,17 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<Post> findAll(int offset, int limit, String searchKeyword){
-        return postRepository.findAll(offset, limit, searchKeyword);
+    public List<Post> findAll(int boardType, int offset, int limit, String searchKeyword){
+        return postRepository.findAll(boardType, offset, limit, searchKeyword);
     }
 
     @Transactional(readOnly = true)
     public Post findById(Long id){
-        return postRepository.findById(id).get();
+        Post findPost = postRepository.findById(id).get();
+        if(findPost != null){
+            findPost.increaseViews();
+            postRepository.increaseViews(findPost);
+        }
+        return findPost;
     }
 }
