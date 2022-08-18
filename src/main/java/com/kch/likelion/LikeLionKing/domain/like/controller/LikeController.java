@@ -21,7 +21,7 @@ import java.util.Optional;
 public class LikeController {
 
     private final LikeService likeService;
-
+    // TODO : pathvariable
     @PostMapping("/like")
     public ApiResult<Like> likePost(@RequestBody LikeDto likeDto){
         Like findLike = likeService.save(likeDto.toEntity(likeDto));
