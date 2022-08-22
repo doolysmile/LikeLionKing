@@ -1,5 +1,6 @@
 package com.study.LikeLionKing.service;
 
+import com.study.LikeLionKing.common.PostNotFoundException;
 import com.study.LikeLionKing.domain.Post;
 import com.study.LikeLionKing.domain.dto.PostDto;
 import com.study.LikeLionKing.repository.PostRepository;
@@ -33,7 +34,7 @@ public class PostService {
     public PostDto findById(Long id){
         Optional<Post> post = postRepository.findById(id);
         if(post.isEmpty()){
-            return null;
+            throw new PostNotFoundException("해당 ID의 post가 존재하지 않습니다.");
         }
         postRepository.viewsInc(id,post.get().getViews()+1); // 게시물 조회시 조회수 1 증가
         post = postRepository.findById(id); // 조회수 증가 후 다시 객체 받아옴
@@ -120,6 +121,17 @@ public class PostService {
             postDtos.add(postDto);
         }
         return postDtos;
+    }
+
+    public void recommendedInc(long id) {
+        Optional<Post> post = postRepository.findById(id);
+
+        if(post.isEmpty()){
+            throw new PostNotFoundException("해당 ID의 post가 존재하지 않습니다.");
+        }
+
+        long recommended = post.get().getRecommended()+1;
+        postRepository.recommendedInc(recommended, id);
     }
 }
 

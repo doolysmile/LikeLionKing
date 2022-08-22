@@ -17,6 +17,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usr/article")
+
+// TODO: 2022-08-04  
+/**
+ * https://velog.io/@banjjoknim/RestControllerAdvice 여기있는 RestControllerAdvice사용해보기
+ */
 public class PostController {
     private final PostService postService;
 
@@ -101,6 +106,11 @@ public class PostController {
         postService.update(postDto);
 
         return ResponseData.successResponse(postDto);
+    }
+
+    @GetMapping("/recommended/{id}")
+    public void recommended(@PathVariable long id){
+        postService.recommendedInc(id);
     }
 
 }
