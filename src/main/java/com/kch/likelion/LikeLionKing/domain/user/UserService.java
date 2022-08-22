@@ -1,0 +1,59 @@
+package com.kch.likelion.LikeLionKing.domain.user;
+
+import com.kch.likelion.LikeLionKing.domain.user.domain.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Transactional
+    public User insert(User user){
+        // 회원 가입할 loginID가 있을 경우
+        if(findByLoginId(user) != null){
+            return null;
+        }
+        return userRepository.insert(user);
+    }
+
+    @Transactional
+    public void update(User user){
+        userRepository.update(user);
+    }
+
+    @Transactional
+    public void delete(long userId){
+        userRepository.delete(userId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+    @Transactional(readOnly = true)
+    public Optional<User> findByLoginId(User user) {
+        return userRepository.findByLoginId(user);
+    }
+
+    public User doLogin(User loginUser) {
+        User user = userRepository.findByLoginId(loginUser).get();
+        if(user == null){
+            return null;
+        }
+        else{
+            if(user.getLoginPw() == loginUser.getLoginPw()){
+                return user;
+            }
+        }
+        // TODO : 비밀번호 틀렸다고 알려주기
+        return null;
+    }
+}
