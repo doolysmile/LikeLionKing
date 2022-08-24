@@ -3,6 +3,8 @@ package postsite.postsitespring.domain.user.dto;
 import lombok.Getter;
 import postsite.postsitespring.domain.user.domain.User;
 
+import java.sql.Timestamp;
+
 public class UserUpdate {
 
     @Getter
@@ -11,10 +13,19 @@ public class UserUpdate {
         private String loginPw;
         private String nickname;
 
-        public void updateEntity(User user){
-            user.setLoginId(loginId);
-            user.setLoginPw(loginPw);
-            user.setNickname(loginPw);
+        public User toEntity(User user){
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            return User.builder()
+                    .id(user.getId())
+                    .loginId(loginId)
+                    .loginPw(loginPw)
+                    .nickname(user.getNickname())
+                    .level(user.getLevel())
+                    .role(user.getRole())
+                    .createdAt(user.getCreatedAt())
+                    .updatedAt(timestamp)
+                    .build();
+
         }
     }
 }

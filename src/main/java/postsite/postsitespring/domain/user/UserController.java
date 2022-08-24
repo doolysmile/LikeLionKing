@@ -24,13 +24,17 @@ public class UserController {
     public ResponseEntity<UserCreate.ResponseDto> createMember(
             @RequestBody UserCreate.RequestDto body
     ){
+        // DTO => Entity
         User user = body.toEntity();
+
         long id = this.userService.createMember(user);
-        user.setId(id);
+
+        // Entity => DTO
+        UserCreate.ResponseDto responseDto = new UserCreate.ResponseDto(id, user);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new UserCreate.ResponseDto(user));
+                .body(responseDto);
     }
 
     // Read
@@ -38,7 +42,7 @@ public class UserController {
     public ResponseEntity<List<UserRead.ResponseDto>> allMembers(){
         List<User> users = this.userService.allMembers();
 
-        // entity => dto
+        // Entity => DTO
         List<UserRead.ResponseDto> responseBody = users.stream()
                 .map(UserRead.ResponseDto::new).
                 toList();
@@ -53,12 +57,15 @@ public class UserController {
             @PathVariable Long memberId
     ) throws ResourceNotFoundException {
         User user = userService
-                .oneMember(memberId)
+                .findById(memberId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
+
+        // Entity => DTO
+        UserRead.ResponseDto responseBody = new UserRead.ResponseDto(user);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new UserRead.ResponseDto(user));
+                .body(responseBody);
     }
 
     // Update
@@ -67,13 +74,15 @@ public class UserController {
             @PathVariable Long memberId,
             @RequestBody UserUpdate.RequestDto body
     ) throws ResourceNotFoundException {
+        // Is id Not NULL?
         User user = userService
-                .oneMember(memberId)
+                .findById(memberId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
 
-        body.updateEntity(user);
+        // DTO -> Entity
+        User newUser = body.toEntity(user);
 
-        userService.updateMember(user);
+        userService.updateMember(newUser);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -85,8 +94,9 @@ public class UserController {
     public ResponseEntity<String> deleteMember(
             @PathVariable Long memberId
     ) throws ResourceNotFoundException {
+        // Is id Not NULL?
         userService
-        .oneMember(memberId)
+        .findById(memberId)
         .orElseThrow(() -> new ResourceNotFoundException("user not found for this id :" + memberId));
 
         this.userService.deleteMember(memberId);

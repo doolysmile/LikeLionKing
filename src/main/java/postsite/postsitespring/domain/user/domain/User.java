@@ -8,13 +8,12 @@ import postsite.postsitespring.common.entity.BaseEntity;
 import java.sql.Timestamp;
 
 @Getter
-@Setter
 public class User extends BaseEntity {
-    private String loginId;
-    private String loginPw;
-    private String nickname;
-    private short level;
-    private UserRoleTypeEnum role;
+    private final String loginId;
+    private final String loginPw;
+    private final String nickname;
+    private final short level;
+    private final UserRoleTypeEnum role;
 
     @Builder
     private User(Long id, Timestamp createdAt, Timestamp updatedAt, String loginId, String loginPw, String nickname, short level, UserRoleTypeEnum role) {

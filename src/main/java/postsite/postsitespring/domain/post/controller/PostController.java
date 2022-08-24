@@ -1,10 +1,11 @@
-package postsite.postsitespring.domain.post;
+package postsite.postsitespring.domain.post.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import postsite.postsitespring.common.exception.ResourceNotFoundException;
+import postsite.postsitespring.domain.post.service.PostService;
 import postsite.postsitespring.domain.post.domain.Post;
 import postsite.postsitespring.domain.post.dto.PostCreate;
 import postsite.postsitespring.domain.post.dto.PostRead;
@@ -30,14 +31,17 @@ public class PostController {
     public ResponseEntity<PostCreate.ResponseDto> articleDoWrite(
             @RequestBody PostCreate.RequestDto body
     ) {
+        // DTO => Entity
         Post post = body.toEntity();
 
         long id = postService.save(post);
-        post.setId(id);
+
+        // Entity => DTO
+        PostCreate.ResponseDto responseBody = new PostCreate.ResponseDto(id, post);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new PostCreate.ResponseDto(post));
+                .body(responseBody);
     }
 
     // Read
@@ -51,7 +55,7 @@ public class PostController {
                 postService.findAll(boardId, page) :
                 postService.findAll(boardId, page, searchKeyword);
 
-        // entity => dto
+        // Entity => DTO
         List<PostRead.ResponseDto> responseBody = posts.stream()
                 .map(PostRead.ResponseDto::new)
                 .toList();
@@ -73,10 +77,13 @@ public class PostController {
                 .findById(articleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :" + articleId));
 
+        // Entity => DTO
+        PostRead.ResponseDto responseBody = new PostRead.ResponseDto(post);
+
         // TODO 매번 ResponseEntity 적용 너무 중복됨. 방법 찾아보자.
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new PostRead.ResponseDto(post));
+                .body(responseBody);
     }
 
     // Update
@@ -85,14 +92,15 @@ public class PostController {
             @PathVariable Long articleId,
             @RequestBody PostUpdate.RequestDto body
             ) throws ResourceNotFoundException {
-
+        // Is id Not NULL?
         Post post = postService
                 .findById(articleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :" + articleId));
 
-        body.updateEntity(post);
+        // DTO => Entity
+        Post newPost = body.toEntity(post);
 
-        postService.update(post);
+        postService.update(newPost);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -104,6 +112,7 @@ public class PostController {
     public ResponseEntity<String> deleteArticle(
             @PathVariable Long articleId
     ) throws ResourceNotFoundException {
+        // Is id Not NULL?
         postService
         .findById(articleId)
         .orElseThrow(() -> new ResourceNotFoundException("Post not found for this id :" + articleId));
